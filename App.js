@@ -4,6 +4,7 @@ import { AppLoading } from "expo";
 import { StatusBar } from "expo-status-bar";
 
 import { StyleSheet, Text, View } from "react-native";
+import AppText from './components/AppText'
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -26,7 +27,7 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <AppText>Open up App.js to start working on your app!</AppText>
       <StatusBar style="auto" />
     </View>
   );
