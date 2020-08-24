@@ -4,11 +4,12 @@ import { AppLoading } from "expo";
 import { StatusBar } from "expo-status-bar";
 
 import { StyleSheet, Text, View } from "react-native";
-import AppText from './components/AppText'
+import AppText from "./components/AppText";
+import AppNavigator from "./navigation/AppNavigator";
 
 const fetchFonts = () => {
   return Font.loadAsync({
-    "roboto": require("./assets/fonts/Roboto-Regular.ttf"),
+    roboto: require("./assets/fonts/Roboto-Regular.ttf"),
     "roboto-bold": require("./assets/fonts/Roboto-Bold.ttf"),
   });
 };
@@ -25,12 +26,7 @@ export default function App() {
     );
   }
 
-  return (
-    <View style={styles.container}>
-      <AppText>Open up App.js to start working on your app!</AppText>
-      <StatusBar style="auto" />
-    </View>
-  );
+  return <AppNavigator />;
 }
 
 const styles = StyleSheet.create({
