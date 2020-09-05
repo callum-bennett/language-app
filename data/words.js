@@ -2,7 +2,7 @@
 
 import word from "../models/word";
 
-const words = [
+export default [
   // Top 100
   new word(1, "que", [1]),
   new word(2, "de", [1]),
