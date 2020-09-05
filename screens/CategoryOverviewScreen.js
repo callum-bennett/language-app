@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Image, StyleSheet, Text, View, Button } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+
 import * as Colors from "../constants/Colors";
-import apiClient from "../api/client";
+import { selectCategoryById } from "../store/selectors/category";
+import { fetchWords } from "../store/actions/words";
+import { selectWordsByCategoryId } from "../store/selectors/word";
 
 const CategoryOverviewScreen = (props) => {
-  const [words, setWords] = useState([]);
-
+  const dispatch = useDispatch();
   const categoryId = props.navigation.getParam("categoryId");
-  const categories = props.navigation.getParam("categories");
-  const category = categories.find((cat) => cat.id === categoryId);
+
+  const category = useSelector((state) =>
+    selectCategoryById(state, categoryId)
+  );
+  const words = useSelector((state) =>
+    selectWordsByCategoryId(state, categoryId)
+  );
 
   useEffect(() => {
-    (async () => {
-      const res = await apiClient.get(`/category/${categoryId}/words/`);
-      if (res.data) {
-        const wordData = JSON.parse(res.data);
-        setWords(wordData);
-      }
-    })();
+    dispatch(fetchWords());
   }, []);
 
   const handlePressLearn = () => {
@@ -42,7 +44,7 @@ const CategoryOverviewScreen = (props) => {
     <View style={styles.screen}>
       <Image source={category.imageUrl} style={styles.headerBg} />
       <Text>{category.name}</Text>
-      {/*<Text>Total words</Text>*/}
+      <Text>Total words: {words.length}</Text>
       {/*<Text>Completion</Text>*/}
       {/*<Text>Practice</Text>*/}
       {/*<Text>Last par</Text>*/}
@@ -62,12 +64,10 @@ const CategoryOverviewScreen = (props) => {
 };
 
 CategoryOverviewScreen.navigationOptions = (navData) => {
-  const categoryId = navData.navigation.getParam("categoryId");
-  const categories = navData.navigation.getParam("categories");
-  const category = categories.find((cat) => cat.id === categoryId);
+  const title = navData.navigation.getParam("title");
 
   return {
-    headerTitle: category.name,
+    headerTitle: title,
   };
 };
 

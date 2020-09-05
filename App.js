@@ -3,6 +3,9 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 
 import AppNavigator from "./navigation/AppNavigator";
+import { Provider } from "react-redux";
+
+import store from "./store/store";
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -23,5 +26,9 @@ export default function App() {
     );
   }
 
-  return <AppNavigator />;
+  return (
+    <Provider store={store}>
+      <AppNavigator />
+    </Provider>
+  );
 }

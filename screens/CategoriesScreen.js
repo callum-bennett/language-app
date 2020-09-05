@@ -1,30 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { FlatList, Button, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 
 import CATEGORIES from "../data/categories";
 import WORDS from "../data/words";
-import CategoryTile from "../components/CategoryTile";
 import apiClient from "../api/client";
+import { fetchCategories } from "../store/actions/categories";
+import CategoryTile from "../components/CategoryTile";
+import { selectCategoriesAsArray } from "../store/selectors/category";
 
 const CategoryScreen = (props) => {
-  const [categories, setCategories] = useState([]);
+  const dispatch = useDispatch();
+  const categories = useSelector(selectCategoriesAsArray);
 
   useEffect(() => {
-    (async () => {
-      const res = await apiClient.get("/category/");
-      if (res.data) {
-        const categoryData = JSON.parse(res.data);
-        setCategories(categoryData);
-      }
-    })();
+    dispatch(fetchCategories());
   }, []);
+
+  const renderCategoryTile = ({ item }) => (
+    <CategoryTile
+      category={item}
+      onSelectCategory={() => {
+        handleSelectCategory(item);
+      }}
+    />
+  );
 
   const handleSelectCategory = (item) => {
     props.navigation.navigate({
       routeName: "Category",
       params: {
-        categories,
         categoryId: item.id,
+        title: item.name,
       },
     });
   };
@@ -39,14 +46,7 @@ const CategoryScreen = (props) => {
       <FlatList
         style={{ paddingHorizontal: 10 }}
         data={categories}
-        renderItem={({ item }) => (
-          <CategoryTile
-            category={item}
-            onSelectCategory={() => {
-              handleSelectCategory(item);
-            }}
-          />
-        )}
+        renderItem={renderCategoryTile}
       />
       <View style={{ margin: 20 }}>
         <Button title="Create data" onPress={createData} />
