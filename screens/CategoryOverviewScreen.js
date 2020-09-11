@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, Text, View, Button } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import * as Colors from "../constants/Colors";
 import { selectCategoryById } from "../store/selectors/category";
 import { fetchWords } from "../store/actions/words";
 import { selectWordsByCategoryId } from "../store/selectors/word";
+import AppButton from "../components/AppButton";
 
 const CategoryOverviewScreen = (props) => {
   const dispatch = useDispatch();
@@ -31,15 +31,6 @@ const CategoryOverviewScreen = (props) => {
     });
   };
 
-  const handlePressPlay = () => {
-    props.navigation.navigate({
-      routeName: "CategoryGame",
-      params: {
-        categoryId: categoryId,
-      },
-    });
-  };
-
   return (
     <View style={styles.screen}>
       <Image source={category.imageUrl} style={styles.headerBg} />
@@ -51,13 +42,7 @@ const CategoryOverviewScreen = (props) => {
       {/*<Text>View word list</Text>*/}
 
       <View style={styles.buttonContainer}>
-        <Button
-          color={Colors.primary}
-          onPress={handlePressLearn}
-          title="Learn"
-        />
-
-        <Button color={Colors.accent} onPress={handlePressPlay} title="Play" />
+        <AppButton onPress={handlePressLearn}>Learn</AppButton>
       </View>
     </View>
   );

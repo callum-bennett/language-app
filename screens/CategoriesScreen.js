@@ -37,13 +37,26 @@ const CategoryScreen = (props) => {
   };
 
   const createData = () => {
-    CATEGORIES.forEach((category) => apiClient.post("/category/", category));
-    WORDS.forEach((word) => apiClient.post("/word/", word));
+    CATEGORIES.forEach(async (category) => {
+      try {
+        await apiClient.post("/category/", category);
+      } catch (err) {
+        console.log(err);
+      }
+    });
+    WORDS.forEach(async (word) => {
+      try {
+        await apiClient.post("/word/", word);
+      } catch (err) {
+        console.log(err);
+      }
+    });
   };
 
   return (
     <>
       <FlatList
+        keyExtractor={(item) => item.id.toString()}
         style={{ paddingHorizontal: 10 }}
         data={categories}
         renderItem={renderCategoryTile}
