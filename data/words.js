@@ -4,12 +4,12 @@ import word from "../models/word";
 
 export default [
   // Top 100
-  new word(1, "que", [1]),
-  new word(2, "de", [1]),
-  new word(3, "no", [1]),
-  new word(4, "a", [1]),
-  new word(5, "la", [1]),
-  new word(6, "el", [1]),
+  new word(1, "que", [1], "That/Than"),
+  new word(2, "de", [1], "Of"),
+  new word(3, "no", [1], "No"),
+  new word(4, "a", [1], "To"),
+  new word(5, "la", [1], "The (feminine)"),
+  new word(6, "el", [1], "The (masculine)"),
   new word(7, "es", [1]),
   new word(8, "y", [1]),
   new word(9, "en", [1]),
