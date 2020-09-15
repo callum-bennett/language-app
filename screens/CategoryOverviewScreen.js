@@ -41,9 +41,11 @@ const CategoryOverviewScreen = (props) => {
       {/*<Text>Last par</Text>*/}
       {/*<Text>View word list</Text>*/}
 
-      <View style={styles.buttonContainer}>
-        <AppButton onPress={handlePressLearn}>Learn</AppButton>
-      </View>
+      {words.length > 0 && (
+        <View style={styles.buttonContainer}>
+          <AppButton onPress={handlePressLearn}>Learn</AppButton>
+        </View>
+      )}
     </View>
   );
 };
