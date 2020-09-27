@@ -45,7 +45,7 @@ const Lesson = (props) => {
 const styles = StyleSheet.create({
   carousel: {},
   item: {
-    height: 200,
+    height: 400,
     flex: 1,
   },
 });

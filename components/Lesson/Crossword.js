@@ -1,64 +1,78 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { generateCrossword } from "../../utils/crosswordGenerator";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Keyboard,
+  TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  ScrollView,
+} from "react-native";
+import { people1 as crosswordConfig } from "../../data/crosswords";
+
+import Grid from "../Game/Crossword/Grid";
+import Clues from "../Game/Crossword/Clues";
+import { useDispatch, useSelector } from "react-redux";
+import { setActiveAnswer, startCrossword } from "../../store/actions/crossword";
+import AppButton from "../AppButton";
 
 const Crossword = (props) => {
-  const [crossword, setCrossword] = useState(null);
+  const dispatch = useDispatch();
+  const [complete, dirty, initialized] = useSelector(({ crossword }) => [
+    crossword.complete,
+    crossword.dirty,
+    crossword.initialized,
+  ]);
 
   useEffect(() => {
-    const data = generateCrossword(props.words);
-    if (data) {
-      setCrossword(data);
-    } else {
-      //@todo navigate away
-    }
+    dispatch(startCrossword(crosswordConfig.answers));
   }, [0]);
 
-  const CrosswordCell = ({ cellData, cellDimension, k }) => {
-    const widthHeight = {
-      width: cellDimension,
-      height: 26, // @todo unfix this height
-    };
-    const extraStyle = cellData === null ? styles.cellEmpty : styles.cellWord;
-    return <View style={{ ...widthHeight, ...extraStyle }} key={k} />;
+  const handleReset = () => {
+    dispatch(startCrossword(crosswordConfig.answers));
   };
 
-  const CrosswordGrid = () => {
-    const cellDimension = Math.floor(100 / crossword[0].length) + "%";
-
-    return (
-      <View style={styles.crosswordGrid}>
-        {crossword.map((row, i) => {
-          return row.map((cellData, j) => (
-            <CrosswordCell
-              cellData={cellData}
-              cellDimension={cellDimension}
-              k={`${i}${j}`}
-            />
-          ));
-        })}
-      </View>
-    );
+  const handleTouchAway = () => {
+    Keyboard.dismiss();
+    dispatch(setActiveAnswer(null));
   };
 
-  return <View>{crossword ? <CrosswordGrid /> : <Text>Loading</Text>}</View>;
+  return initialized ? (
+    <ScrollView>
+      <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={30}>
+        <TouchableWithoutFeedback onPress={handleTouchAway}>
+          <View style={styles.container}>
+            <Clues words={props.words} />
+            <Grid />
+            {complete && <AppButton>Continue</AppButton>}
+            {dirty && (
+              <View style={styles.buttonContainer}>
+                <AppButton onPress={handleReset}>Reset</AppButton>
+              </View>
+            )}
+          </View>
+        </TouchableWithoutFeedback>
+      </KeyboardAvoidingView>
+    </ScrollView>
+  ) : (
+    <Text>Loading...</Text>
+  );
 };
 
 const styles = StyleSheet.create({
-  crosswordGrid: {
-    display: "flex",
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginTop: 20,
+    width: "100%",
+  },
+  buttonContainer: {
+    // @todo remove this style
+    flex: 1,
     flexDirection: "row",
-    flexWrap: "wrap",
-    width: "90%",
-  },
-  cellEmpty: {
-    backgroundColor: "#333",
-    borderStyle: "solid",
-    borderColor: "#FFF",
-    borderWidth: 1,
-  },
-  cellWord: {
-    backgroundColor: "#FFF",
+    justifyContent: "space-around",
+    margin: 20,
   },
 });
 
