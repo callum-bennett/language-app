@@ -1,46 +1,56 @@
-// const placeWord = (word) => {
-//   let attempts = 0;
-//
-//   return true;
-// };
-//
-// const getLetterAt = (row, col) => {
-//   return grid[row][col];
-// };
+import { people1 as crosswordConfig } from "../data/crosswords";
 
-const generateGrid = (size) => {
-  let grid = [],
-    i = 0;
-  while (i < size) {
+export const DIR_HORIZONTAL = "h";
+export const DIR_VERTICAL = "v";
+
+export const drawCrossword = (crosswordConfig) => {
+  const { width, height, answers } = crosswordConfig;
+  const grid = generateGrid(width, height);
+  for (let answer of answers) {
+    addAnswer(grid, answer);
+  }
+  return grid;
+};
+
+const generateGrid = (width, height) => {
+  let grid = [];
+  let i = 0;
+  while (i < height) {
     let j = 0;
     grid.push([]);
-
-    while (j < size) {
+    while (j < width) {
       grid[i].push(null);
       j++;
     }
     i++;
   }
+
   return grid;
 };
 
-export const generateCrossword = (words) => {
-  let wordsPlaced = 0;
+const addAnswer = (grid, answer) => {
+  const { text, number, direction, originX, originY } = answer;
+  let x = originX - 1;
+  let y = originY - 1;
+  let i = 0;
 
-  const sortedWords = words.sort((a, b) => {
-    return a.name.length < b.name.length;
-  });
+  for (let char of answer.text) {
+    if (grid[y][x] === null) {
+      grid[y][x] = {
+        number: i === 0 ? number : null,
+        answers: [text],
+        value: char,
+      };
+    } else {
+      grid[y][x].answers.push(text);
+    }
 
-  // const gridSize = sortedWords[0].name.length;
-  const gridSize = 12;
-  const grid = generateGrid(gridSize);
+    if (direction === DIR_HORIZONTAL) {
+      x++;
+    } else {
+      y++;
+    }
 
-  // while (wordsPlaced < sortedWords.length) {
-  //   const word = sortedWords.unshift();
-  //   if (placeWord(word)) {
-  //     wordsPlaced++;
-  //   }
-  // }
-
-  return grid;
+    i++;
+  }
 };
