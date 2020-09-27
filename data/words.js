@@ -1,9 +1,6 @@
-// Top 100 words
-
 import word from "../models/word";
 
-export default [
-  // Top 100
+export const top100Words = [
   new word(1, "que", [1], "That/Than"),
   new word(2, "de", [1], "Of"),
   new word(3, "no", [1], "No"),
@@ -34,7 +31,9 @@ export default [
   new word(28, "las", [1]),
   new word(29, "sí", [1]),
   new word(30, "su", [1]),
-  // People
+];
+
+export const peopleWords = [
   new word(101, "yo", [2], "Me"),
   new word(102, "madre", [2], "Mother"),
   new word(103, "padre", [2], "Father"),
@@ -65,3 +64,5 @@ export default [
   new word(128, "mama", [2], "Mum"),
   new word(129, "papa", [2], "Dad"),
 ];
+
+export default [...top100Words, ...peopleWords];
