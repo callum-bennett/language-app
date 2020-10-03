@@ -3,14 +3,15 @@ import {
   SET_ACTIVE_ANSWER,
   SET_ACTIVE_CELL,
   START_CROSSWORD,
-  CHECK_ANSWER_STATUS,
+  CLEAR_ACTIVE_ANSWER,
+  SHOW_ANSWERS,
 } from "../actions/crossword";
 import { arrayToObjectByKey } from "../../util";
 
 const initialState = {
   initialized: false,
   activeCell: null,
-  activeAnswer: null,
+  activeAnswerText: null,
   complete: false,
   dirty: false,
   answers: {},
@@ -41,11 +42,33 @@ export default (state = initialState, action) => {
     }
 
     case SET_ACTIVE_ANSWER: {
-      const answer = action.payload;
+      const { answerText, col, row } = action.payload;
+      let newState = { ...state, activeAnswerText: answerText };
 
+      const answer = state.answers[answerText];
+      const inProgress = answer.progress.some((char) => char);
+
+      if (inProgress) {
+        newState.activeCell = answer.cells.find(
+          ({ x, y }) => x - 1 === col && y - 1 === row
+        );
+      } else if (
+        !state.activeCell ||
+        !answer.cells.includes(state.activeCell)
+      ) {
+        newState.activeCell = state.answers[answerText].cells[0];
+      }
+
+      return newState;
+
+      break;
+    }
+
+    case CLEAR_ACTIVE_ANSWER: {
       return {
         ...state,
-        activeAnswer: answer,
+        activeAnswerText: initialState.activeAnswerText,
+        activeCell: initialState.activeCell,
       };
       break;
     }
@@ -53,55 +76,44 @@ export default (state = initialState, action) => {
     case ENTER_CHARACTER: {
       const { character, col, row } = action.payload;
 
-      let updatedAnswers = { ...state.answers };
-      Object.keys(updatedAnswers).forEach((key) => {
-        const answer = updatedAnswers[key];
+      let newState = { ...state, dirty: true };
+
+      const { answers, activeCell, activeAnswerText } = state;
+      const activeAnswer = answers[activeAnswerText];
+
+      Object.keys(newState.answers).forEach((key) => {
+        const answer = newState.answers[key];
         const pos = answer.cells.findIndex(
-          (cell) => cell.x - 1 === col && cell.y - 1 === row
+          ({ x, y }) => x - 1 === col && y - 1 === row
         );
         if (pos > -1) {
           answer.progress[pos] = character;
         }
       });
 
-      return {
-        ...state,
-        answers: updatedAnswers,
-        dirty: true,
-      };
+      const posInActiveAnswer = activeAnswer.cells.findIndex(
+        ({ x, y }) => x === activeCell.x && y === activeCell.y
+      );
+
+      if (posInActiveAnswer < activeAnswer.cells.length - 1) {
+        newState.activeCell = activeAnswer.cells[posInActiveAnswer + 1];
+      } else {
+        newState.activeCell = null;
+        newState.activeAnswerText = null;
+      }
+
+      return newState;
       break;
     }
 
-    case CHECK_ANSWER_STATUS: {
-      const answerText = action.payload;
-      const answer = state.answers[answerText];
-      const charsAttempted = answer.progress.filter((char) => char);
+    case SHOW_ANSWERS: {
+      let newState = { ...state };
 
-      if (charsAttempted.length === answer.text.length) {
-        if (answer.text == answer.progress.join("")) {
-          answer.status = ANSWER_CORRECT;
+      Object.values(newState.answers).forEach((answer) => {
+        answer.progress = answer.text.split("");
+      });
 
-          const correctCount = Object.values(state.answers).filter(
-            ({ status }) => status === ANSWER_CORRECT
-          );
-
-          if (correctCount === state.answers.length) {
-            state.complete = true;
-          }
-        } else {
-          // @todo mark word as incorrect
-          answer.status = ANSWER_INCORRECT;
-        }
-
-        return {
-          ...state,
-          activeAnswer: null,
-          answers: {
-            ...state.answers,
-            [answerText]: answer,
-          },
-        };
-      }
+      return newState;
     }
 
     case SET_ACTIVE_CELL: {

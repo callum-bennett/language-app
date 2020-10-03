@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import {
   StyleSheet,
-  Text,
   View,
   Keyboard,
   TouchableWithoutFeedback,
@@ -12,66 +13,101 @@ import { people1 as crosswordConfig } from "../../data/crosswords";
 
 import Grid from "../Game/Crossword/Grid";
 import Clues from "../Game/Crossword/Clues";
-import { useDispatch, useSelector } from "react-redux";
-import { setActiveAnswer, startCrossword } from "../../store/actions/crossword";
+import {
+  clearActiveAnswer,
+  startCrossword,
+  showAnswers,
+} from "../../store/actions/crossword";
 import AppButton from "../AppButton";
+import { AppLoading } from "expo";
+import { selectAllAnswersAttempted } from "../../store/selectors/crossword";
+import { submitAttempt } from "../../store/actions/words";
+import { arrayToObjectByKey } from "../../util";
 
 const Crossword = (props) => {
+  const [submitted, setSubmitted] = useState(false);
   const dispatch = useDispatch();
-  const [complete, dirty, initialized] = useSelector(({ crossword }) => [
-    crossword.complete,
+
+  const [
+    answers,
+    dirty,
+    initialized,
+    allAnswersAttempted,
+  ] = useSelector(({ crossword }) => [
+    crossword.answers,
     crossword.dirty,
     crossword.initialized,
+    selectAllAnswersAttempted(crossword),
   ]);
 
   useEffect(() => {
     dispatch(startCrossword(crosswordConfig.answers));
   }, [0]);
 
-  const handleReset = () => {
-    dispatch(startCrossword(crosswordConfig.answers));
+  const handleSubmit = () => {
+    // @todo check answers
+
+    if (!submitted) {
+      const wordsByText = arrayToObjectByKey(props.words, "name");
+      Object.values(answers).forEach((answer) => {
+        const status = answer.text === answer.progress.join("");
+        // @todo this should be referenced by Id
+        const word = wordsByText[answer.text];
+        submitAttempt(word.id, status);
+      });
+      setSubmitted(true);
+    }
+  };
+
+  const handleShowAnswers = () => {
+    dispatch(showAnswers());
   };
 
   const handleTouchAway = () => {
     Keyboard.dismiss();
-    dispatch(setActiveAnswer(null));
+    dispatch(clearActiveAnswer());
   };
 
   return initialized ? (
-    <ScrollView>
+    <ScrollView keyboardShouldPersistTaps="always">
       <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={30}>
-        <TouchableWithoutFeedback onPress={handleTouchAway}>
+        <TouchableWithoutFeedback
+          onPress={handleTouchAway}
+          style={{ backgroundColor: "red", width: "100%", height: "100%" }}
+        >
           <View style={styles.container}>
             <Clues words={props.words} />
             <Grid />
-            {complete && <AppButton>Continue</AppButton>}
-            {dirty && (
-              <View style={styles.buttonContainer}>
-                <AppButton onPress={handleReset}>Reset</AppButton>
-              </View>
-            )}
+
+            <View style={styles.buttonContainer}>
+              {allAnswersAttempted && !submitted && (
+                <AppButton onPress={handleSubmit}>Submit answers</AppButton>
+              )}
+            </View>
+
+            {/*//@ todo add this to header*/}
+            {/*{dirty && (*/}
+            {/*  <View style={styles.buttonContainer}>*/}
+            {/*    <AppButton onPress={handleReset}>Reset</AppButton>*/}
+            {/*  </View>*/}
+            {/*)}*/}
           </View>
         </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     </ScrollView>
   ) : (
-    <Text>Loading...</Text>
+    <AppLoading />
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    display: "flex",
     alignItems: "center",
     justifyContent: "flex-start",
     marginTop: 20,
-    width: "100%",
   },
   buttonContainer: {
-    // @todo remove this style
-    flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-around",
     margin: 20,
   },
 });

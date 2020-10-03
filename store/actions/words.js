@@ -11,3 +11,10 @@ export const fetchWords = () => async (dispatch) => {
     });
   }
 };
+
+export const submitAttempt = (id, status) => async (dispatch) => {
+  //@todo tidy up
+  const res = await apiClient.put(`/${id}/attempt`, {
+    status,
+  });
+};

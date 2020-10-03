@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableHighlight, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { DIR_HORIZONTAL } from "../../../utils/crosswordGenerator";
 import { useDispatch, useSelector } from "react-redux";
 import AppText from "../../AppText";
@@ -10,7 +10,7 @@ const Clues = (props) => {
   const dispatch = useDispatch();
   const [answers, activeAnswerText] = useSelector(({ crossword }) => [
     crossword.answers,
-    crossword.activeAnswer,
+    crossword.activeAnswerText,
   ]);
 
   const wordsByText = arrayToObjectByKey(props.words, "name");
@@ -37,17 +37,21 @@ const Clues = (props) => {
   let i = 1;
   for (let answer of sortedAnswers) {
     let textStyle = styles.clue;
-    if (answer.status === "correct") {
-      textStyle = { ...textStyle, ...styles.complete };
+    if (answer.progress.every((char) => char)) {
+      textStyle = { ...textStyle, ...styles.guessed };
     } else if (answer.text === activeAnswerText) {
       textStyle = { ...textStyle, ...styles.active };
     }
     const instruction = (
-      <TouchableHighlight key={answer.text} onPress={() => handleTouch(answer)}>
+      <TouchableOpacity
+        activeOpacity={0.9}
+        key={answer.text}
+        onPress={() => handleTouch(answer)}
+      >
         <AppText style={textStyle}>
           {answer.number}. {wordsByText[answer.text].translation}
         </AppText>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
 
     if (answer.direction === DIR_HORIZONTAL) {
@@ -61,12 +65,16 @@ const Clues = (props) => {
   return (
     <View style={styles.instructions}>
       <View>
-        <AppText style={styles.heading}>Across</AppText>
+        <AppText key="across" style={styles.heading}>
+          Across
+        </AppText>
         {instructions.across.map((item) => item)}
       </View>
 
       <View>
-        <AppText style={styles.heading}>Down</AppText>
+        <AppText key="down" style={styles.heading}>
+          Down
+        </AppText>
         {instructions.down.map((item) => item)}
       </View>
     </View>
@@ -88,7 +96,7 @@ const styles = StyleSheet.create({
   active: {
     textDecorationLine: "underline",
   },
-  complete: {
+  guessed: {
     textDecorationLine: "line-through",
   },
   heading: {

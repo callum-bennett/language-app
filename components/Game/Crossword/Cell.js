@@ -32,12 +32,9 @@ const Cell = ({ active, cellData, cellDimension, row, col }) => {
 
   const handleTouch = (row, col) => {
     if (cellData !== null) {
-      const answerText = cellData.answers[0];
-      dispatch(setActiveAnswer(answerText));
       // @ todo check if multiple answers
-      // @ todo if selecting specific cell
-      // const selectedCell = new CrosswordCell(col, row);
-      // dispatch(setActiveCell(selectedCell));
+      const answerText = cellData.answers[0];
+      dispatch(setActiveAnswer(answerText, col, row));
     }
   };
 
@@ -66,6 +63,8 @@ const Cell = ({ active, cellData, cellDimension, row, col }) => {
             maxLength={1}
             onChange={handleChange}
             autoCapitalize="none"
+            placeholder={value}
+            placeholderTextColor="#888"
           />
         ) : (
           <AppText style={styles.letter}>{value}</AppText>

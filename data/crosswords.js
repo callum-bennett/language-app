@@ -12,7 +12,7 @@ export const people1 = {
     new CrosswordAnswer("niña", 7, 6, DIR_VERTICAL, 7),
     new CrosswordAnswer("hijo", 4, 4, DIR_HORIZONTAL, 4),
     new CrosswordAnswer("hija", 7, 1, DIR_VERTICAL, 6),
-    new CrosswordAnswer("bebé", 5, 1, DIR_HORIZONTAL, 5),
+    new CrosswordAnswer("bebe", 5, 1, DIR_HORIZONTAL, 5), //bebé
     new CrosswordAnswer("hermana", 7, 1, DIR_HORIZONTAL, 6),
     new CrosswordAnswer("hermano", 4, 4, DIR_VERTICAL, 4),
   ],
