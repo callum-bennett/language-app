@@ -1,5 +1,3 @@
-import { people1 as crosswordConfig } from "../data/crosswords";
-
 export const DIR_HORIZONTAL = "h";
 export const DIR_VERTICAL = "v";
 
