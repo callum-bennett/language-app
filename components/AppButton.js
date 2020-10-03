@@ -17,16 +17,14 @@ const AppButton = (props) => {
       : TouchableOpacity;
 
   return (
-    <View>
-      <Touchable
-        hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
-        onPress={props.onPress}
-      >
-        <View style={styles.button}>
-          <Text style={styles.text}>{props.children}</Text>
-        </View>
-      </Touchable>
-    </View>
+    <Touchable
+      hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
+      onPress={props.onPress}
+    >
+      <View style={styles.button}>
+        <Text style={styles.text}>{props.children}</Text>
+      </View>
+    </Touchable>
   );
 };
 
@@ -36,7 +34,7 @@ const styles = StyleSheet.create({
     paddingVertical: 18,
     paddingHorizontal: 32,
     borderRadius: 4,
-    flex: 1,
+    display: "flex",
     justifyContent: "center",
     alignItems: "center",
   },

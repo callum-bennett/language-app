@@ -2,7 +2,8 @@ export const ENTER_CHARACTER = "enter_character";
 export const START_CROSSWORD = "start_crossword";
 export const SET_ACTIVE_CELL = "set_active_cell";
 export const SET_ACTIVE_ANSWER = "set_active_answer";
-export const CHECK_ANSWER_STATUS = "check_answer_status";
+export const CLEAR_ACTIVE_ANSWER = "clear_active_answer";
+export const SHOW_ANSWERS = "show_answers";
 
 export const startCrossword = (answers) => {
   return {
@@ -18,16 +19,20 @@ export const setActiveCell = (cell) => {
   };
 };
 
-export const setActiveAnswer = (answer) => {
+export const setActiveAnswer = (answerText, col, row) => {
   return {
     type: SET_ACTIVE_ANSWER,
-    payload: answer,
+    payload: {
+      answerText,
+      col,
+      row,
+    },
   };
 };
 
-export const unsetActiveAnswer = () => {
+export const clearActiveAnswer = () => {
   return {
-    type: SET_ACTIVE_ANSWER,
+    type: CLEAR_ACTIVE_ANSWER,
     payload: null,
   };
 };
@@ -43,9 +48,8 @@ export const enterCharacter = (character, col, row) => {
   };
 };
 
-export const checkAnswerStatus = (answerText) => {
+export const showAnswers = () => {
   return {
-    type: CHECK_ANSWER_STATUS,
-    payload: answerText,
+    type: SHOW_ANSWERS,
   };
 };

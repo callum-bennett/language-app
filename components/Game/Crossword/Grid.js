@@ -1,42 +1,20 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import Cell from "./Cell";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
-import {
-  checkAnswerStatus,
-  unsetActiveAnswer,
-} from "../../../store/actions/crossword";
+import Cell from "./Cell";
 import { drawCrossword } from "../../../utils/crosswordGenerator";
 import { people1 as crosswordConfig } from "../../../data/crosswords";
 
 const cellDimension = 35;
 
-const Grid = (props) => {
-  const dispatch = useDispatch();
-  const [answers, activeAnswerText] = useSelector(({ crossword }) => [
-    crossword.answers,
-    crossword.activeAnswer,
-  ]);
-
+const Grid = () => {
+  const activeCell = useSelector(({ crossword }) => crossword.activeCell);
   const grid = drawCrossword(crosswordConfig);
   const gridWidth = grid[0].length * cellDimension;
 
-  let activeCell = null;
-  if (activeAnswerText) {
-    const answer = answers[activeAnswerText];
-    const pos = answer.progress.findIndex((char) => !char);
-
-    if (pos > -1) {
-      activeCell = answer.cells[pos];
-    } else {
-      dispatch(unsetActiveAnswer());
-      dispatch(checkAnswerStatus(activeAnswerText));
-    }
-  }
-
   const isActiveCell = (row, col) => {
-    return activeCell && activeCell.y == row && activeCell.x == col;
+    return activeCell && activeCell.y === row && activeCell.x === col;
   };
 
   return (
