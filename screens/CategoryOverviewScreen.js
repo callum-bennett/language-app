@@ -12,10 +12,10 @@ const CategoryOverviewScreen = (props) => {
   const categoryId = props.navigation.getParam("categoryId");
 
   const category = useSelector((state) =>
-    selectCategoryById(state, categoryId)
+    selectCategoryById(state.categories, categoryId)
   );
   const words = useSelector((state) =>
-    selectWordsByCategoryId(state, categoryId)
+    selectWordsByCategoryId(state.words, categoryId)
   );
 
   useEffect(() => {
@@ -27,13 +27,14 @@ const CategoryOverviewScreen = (props) => {
       routeName: "CategoryLesson",
       params: {
         categoryId: categoryId,
+        title: `${category.name} / Learn`,
       },
     });
   };
 
   return (
     <View style={styles.screen}>
-      <Image source={category.imageUrl} style={styles.headerBg} />
+      <Image source={{ uri: category.imageUrl }} style={styles.headerBg} />
       <Text>{category.name}</Text>
       <Text>Total words: {words.length}</Text>
       {/*<Text>Completion</Text>*/}
