@@ -12,10 +12,10 @@ const CategoryOverviewScreen = (props) => {
   const categoryId = props.navigation.getParam("categoryId");
 
   const category = useSelector((state) =>
-    selectCategoryById(state.categories, categoryId)
+    selectCategoryById(state, categoryId)
   );
   const words = useSelector((state) =>
-    selectWordsByCategoryId(state.words, categoryId)
+    selectWordsByCategoryId(state, categoryId)
   );
 
   useEffect(() => {
