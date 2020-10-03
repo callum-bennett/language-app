@@ -16,7 +16,7 @@ const CategoryTile = (props) => {
       >
         <View style={{ height: "100%" }}>
           <ImageBackground
-            source={props.category.imageUrl}
+            source={{ uri: props.category.imageUrl }}
             style={styles.image}
           >
             <View style={styles.titleContainer}>
