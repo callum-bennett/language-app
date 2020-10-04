@@ -5,8 +5,10 @@ import {
   START_CROSSWORD,
   CLEAR_ACTIVE_ANSWER,
   SHOW_ANSWERS,
+  CHECK_ANSWERS,
 } from "../actions/crossword";
 import { arrayToObjectByKey } from "../../util";
+import { drawCrossword } from "../../utils/crosswordGenerator";
 
 const initialState = {
   initialized: false,
@@ -24,9 +26,10 @@ const ANSWER_CORRECT = "correct";
 export default (state = initialState, action) => {
   switch (action.type) {
     case START_CROSSWORD: {
-      const crosswordWords = action.payload;
+      const config = action.payload;
+      const grid = drawCrossword(config);
+      const answersByKey = arrayToObjectByKey(config.answers, "text");
 
-      const answersByKey = arrayToObjectByKey(crosswordWords, "text");
       Object.keys(answersByKey).forEach((key) => {
         answersByKey[key].progress = Array.from(Array(key.length));
         answersByKey[key].status = ANSWER_INCOMPLETE;
@@ -34,6 +37,7 @@ export default (state = initialState, action) => {
 
       return {
         ...state,
+        grid,
         initialized: true,
         answers: answersByKey,
       };
@@ -91,6 +95,8 @@ export default (state = initialState, action) => {
         }
       });
 
+      newState.grid[row][col].value = character;
+
       const posInActiveAnswer = activeAnswer.cells.findIndex(
         ({ x, y }) => x === activeCell.x && y === activeCell.y
       );
@@ -111,6 +117,29 @@ export default (state = initialState, action) => {
 
       Object.values(newState.answers).forEach((answer) => {
         answer.progress = answer.text.split("");
+      });
+
+      newState.grid.forEach((row) => {
+        row.forEach((cell) => {
+          if (cell) {
+            cell.value = cell.correctValue;
+          }
+        });
+      });
+
+      return newState;
+    }
+
+    case CHECK_ANSWERS: {
+      let newState = { ...state };
+
+      Object.values(newState.answers).forEach((answer) => {
+        const match = answer.text === answer.progress.join("");
+        if (match) {
+          answer.status = ANSWER_CORRECT;
+        } else {
+          answer.status = ANSWER_INCORRECT;
+        }
       });
 
       return newState;
