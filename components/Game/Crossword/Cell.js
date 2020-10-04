@@ -15,9 +15,12 @@ import {
 } from "../../../store/actions/crossword";
 
 const Cell = ({ active, cellData, cellDimension, row, col }) => {
-  const [value, setValue] = useState(null);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
+  let value;
+  if (cellData && cellData.value) {
+    value = cellData.value;
+  }
 
   useEffect(() => {
     if (active) {
@@ -40,7 +43,6 @@ const Cell = ({ active, cellData, cellDimension, row, col }) => {
 
   const handleChange = (e) => {
     dispatch(enterCharacter(e.nativeEvent.text, col, row));
-    setValue(e.nativeEvent.text);
   };
 
   let style = styles.cell;

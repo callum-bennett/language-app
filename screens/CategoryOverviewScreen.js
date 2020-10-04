@@ -6,6 +6,7 @@ import { selectCategoryById } from "../store/selectors/category";
 import { fetchWords } from "../store/actions/words";
 import { selectWordsByCategoryId } from "../store/selectors/word";
 import AppButton from "../components/AppButton";
+import { AppLoading } from "expo";
 
 const CategoryOverviewScreen = (props) => {
   const dispatch = useDispatch();
@@ -32,8 +33,8 @@ const CategoryOverviewScreen = (props) => {
     });
   };
 
-  return (
-    <View style={styles.screen}>
+  return category ? (
+    <View>
       <Image source={{ uri: category.imageUrl }} style={styles.headerBg} />
       <Text>{category.name}</Text>
       <Text>Total words: {words.length}</Text>
@@ -48,6 +49,8 @@ const CategoryOverviewScreen = (props) => {
         </View>
       )}
     </View>
+  ) : (
+    <AppLoading />
   );
 };
 

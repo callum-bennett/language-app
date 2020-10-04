@@ -37,7 +37,7 @@ const addAnswer = (grid, answer) => {
       grid[y][x] = {
         number: i === 0 ? number : null,
         answers: [text],
-        value: char,
+        correctValue: char,
       };
     } else {
       grid[y][x].answers.push(text);
