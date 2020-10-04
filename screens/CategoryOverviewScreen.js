@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectCategoryById } from "../store/selectors/category";
@@ -7,6 +7,10 @@ import { fetchWords } from "../store/actions/words";
 import { selectWordsByCategoryId } from "../store/selectors/word";
 import AppButton from "../components/AppButton";
 import { AppLoading } from "expo";
+
+import AppProgressDonut from "../components/AppProgressDonut";
+import CategoryImageWithTitle from "../components/CategoryImageWithTItle";
+import AppText from "../components/AppText";
 
 const CategoryOverviewScreen = (props) => {
   const dispatch = useDispatch();
@@ -23,6 +27,23 @@ const CategoryOverviewScreen = (props) => {
     dispatch(fetchWords());
   }, []);
 
+  let lessonParts;
+  if (words.length) {
+    const wordCount = words.length;
+    const wordsPerLesson = 10;
+    lessonParts = Array.from(
+      {
+        length: Math.ceil(wordCount / wordsPerLesson),
+      },
+      (val, i) => {
+        return words.slice(
+          i * wordsPerLesson,
+          i * wordsPerLesson + wordsPerLesson
+        );
+      }
+    );
+  }
+
   const handlePressLearn = () => {
     props.navigation.navigate({
       routeName: "CategoryLesson",
@@ -34,13 +55,14 @@ const CategoryOverviewScreen = (props) => {
   };
 
   return category ? (
-    <View>
-      <Image source={{ uri: category.imageUrl }} style={styles.headerBg} />
-      <Text>{category.name}</Text>
-      <Text>Total words: {words.length}</Text>
-      {/*<Text>Completion</Text>*/}
-      {/*<Text>Practice</Text>*/}
-      {/*<Text>Last par</Text>*/}
+    <View style={styles.screen}>
+      <View style={styles.progressContainer}>
+        <AppProgressDonut progress={20} />
+      </View>
+      <View style={styles.imageContainer}>
+        <CategoryImageWithTitle category={category} />
+      </View>
+      <AppText>Total words: {words.length}</AppText>
       {/*<Text>View word list</Text>*/}
 
       {words.length > 0 && (
@@ -63,7 +85,10 @@ CategoryOverviewScreen.navigationOptions = (navData) => {
 };
 
 const styles = StyleSheet.create({
-  headerBg: {
+  screen: {
+    position: "relative",
+  },
+  imageContainer: {
     height: 200,
     width: "100%",
   },
@@ -72,6 +97,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     margin: 20,
+  },
+  progressContainer: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    zIndex: 20,
   },
 });
 
