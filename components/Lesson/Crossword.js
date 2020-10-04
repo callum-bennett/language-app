@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-
 import {
   StyleSheet,
   View,
@@ -9,43 +8,48 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from "react-native";
-import { people1 as crosswordConfig } from "../../data/crosswords";
 
+import { people1 as crosswordConfig } from "../../data/crosswords";
 import Grid from "../Game/Crossword/Grid";
 import Clues from "../Game/Crossword/Clues";
 import {
   clearActiveAnswer,
   startCrossword,
   showAnswers,
+  checkAnswers,
 } from "../../store/actions/crossword";
 import AppButton from "../AppButton";
-import { AppLoading } from "expo";
 import { selectAllAnswersAttempted } from "../../store/selectors/crossword";
 import { submitAttempt } from "../../store/actions/words";
 import { arrayToObjectByKey } from "../../util";
+import AppText from "../AppText";
 
 const Crossword = (props) => {
   const [submitted, setSubmitted] = useState(false);
+  const [solutionShown, setSolutionShown] = useState(false);
   const dispatch = useDispatch();
 
   const [
     answers,
     dirty,
+    grid,
     initialized,
     allAnswersAttempted,
   ] = useSelector(({ crossword }) => [
     crossword.answers,
     crossword.dirty,
+    crossword.grid,
     crossword.initialized,
     selectAllAnswersAttempted(crossword),
   ]);
 
   useEffect(() => {
-    dispatch(startCrossword(crosswordConfig.answers));
+    dispatch(startCrossword(crosswordConfig));
   }, [0]);
 
   const handleSubmit = () => {
     // @todo check answers
+    dispatch(checkAnswers());
 
     if (!submitted) {
       const wordsByText = arrayToObjectByKey(props.words, "name");
@@ -57,10 +61,17 @@ const Crossword = (props) => {
       });
       setSubmitted(true);
     }
+
+    //@todo if all correct then show solution
   };
 
   const handleShowAnswers = () => {
     dispatch(showAnswers());
+    setSolutionShown(true);
+  };
+
+  const handleContinue = () => {
+    props.onComplete();
   };
 
   const handleTouchAway = () => {
@@ -71,17 +82,20 @@ const Crossword = (props) => {
   return initialized ? (
     <ScrollView keyboardShouldPersistTaps="always">
       <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={30}>
-        <TouchableWithoutFeedback
-          onPress={handleTouchAway}
-          style={{ backgroundColor: "red", width: "100%", height: "100%" }}
-        >
+        <TouchableWithoutFeedback onPress={handleTouchAway}>
           <View style={styles.container}>
             <Clues words={props.words} />
-            <Grid />
+            <Grid grid={grid} />
 
             <View style={styles.buttonContainer}>
-              {allAnswersAttempted && !submitted && (
-                <AppButton onPress={handleSubmit}>Submit answers</AppButton>
+              {!submitted && (
+                <AppButton onPress={handleSubmit}>Check answers</AppButton>
+              )}
+              {submitted && !solutionShown && (
+                <AppButton onPress={handleShowAnswers}>Show solution</AppButton>
+              )}
+              {submitted && solutionShown && (
+                <AppButton onPress={handleContinue}>Continue</AppButton>
               )}
             </View>
 
@@ -96,7 +110,7 @@ const Crossword = (props) => {
       </KeyboardAvoidingView>
     </ScrollView>
   ) : (
-    <AppLoading />
+    <AppText>Loading</AppText>
   );
 };
 

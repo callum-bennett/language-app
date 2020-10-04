@@ -4,11 +4,12 @@ export const SET_ACTIVE_CELL = "set_active_cell";
 export const SET_ACTIVE_ANSWER = "set_active_answer";
 export const CLEAR_ACTIVE_ANSWER = "clear_active_answer";
 export const SHOW_ANSWERS = "show_answers";
+export const CHECK_ANSWERS = "check_answers";
 
-export const startCrossword = (answers) => {
+export const startCrossword = (config) => {
   return {
     type: START_CROSSWORD,
-    payload: answers,
+    payload: config,
   };
 };
 
@@ -51,5 +52,11 @@ export const enterCharacter = (character, col, row) => {
 export const showAnswers = () => {
   return {
     type: SHOW_ANSWERS,
+  };
+};
+
+export const checkAnswers = () => {
+  return {
+    type: CHECK_ANSWERS,
   };
 };
