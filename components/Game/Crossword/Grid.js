@@ -4,11 +4,9 @@ import { useSelector } from "react-redux";
 
 import Cell from "./Cell";
 
-const cellDimension = 35;
-
 const Grid = (props) => {
   const activeCell = useSelector(({ crossword }) => crossword.activeCell);
-  const gridWidth = props.grid[0].length * cellDimension;
+  const gridWidth = props.grid[0].length * props.cellDimension;
 
   const isActiveCell = (row, col) => {
     return activeCell && activeCell.y === row && activeCell.x === col;
@@ -21,11 +19,12 @@ const Grid = (props) => {
           return (
             <Cell
               active={isActiveCell(i + 1, j + 1)}
-              cellData={cellData}
-              cellDimension={cellDimension}
+              empty={!cellData}
+              answers={cellData ? cellData.answers : null}
+              value={cellData ? cellData.value : null}
+              number={cellData ? cellData.number : null}
+              cellDimension={props.cellDimension}
               key={`${i}-${j}`}
-              row={i}
-              col={j}
             />
           );
         });

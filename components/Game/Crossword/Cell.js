@@ -1,52 +1,33 @@
-import React, { useEffect, useState, useRef } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
   TouchableNativeFeedback,
   Platform,
   TouchableOpacity,
-  TextInput,
 } from "react-native";
 import AppText from "../../AppText";
 import { useDispatch } from "react-redux";
-import {
-  enterCharacter,
-  setActiveAnswer,
-} from "../../../store/actions/crossword";
+import { setActiveAnswer } from "../../../store/actions/crossword";
 
-const Cell = ({ active, cellData, cellDimension, row, col }) => {
+const Cell = ({ active, cellDimension, empty, number, value, answers }) => {
   const dispatch = useDispatch();
-  const inputRef = useRef(null);
-  let value;
-  if (cellData && cellData.value) {
-    value = cellData.value;
-  }
-
-  useEffect(() => {
-    if (active) {
-      inputRef.current.focus();
-    }
-  }, [active]);
 
   const Touchable =
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
       : TouchableOpacity;
 
-  const handleTouch = (row, col) => {
-    if (cellData !== null) {
+  const handleTouch = () => {
+    if (!empty) {
       // @ todo check if multiple answers
-      const answerText = cellData.answers[0];
-      dispatch(setActiveAnswer(answerText, col, row));
+      const answerText = answers[0];
+      dispatch(setActiveAnswer(answerText));
     }
   };
 
-  const handleChange = (e) => {
-    dispatch(enterCharacter(e.nativeEvent.text, col, row));
-  };
-
   let style = styles.cell;
-  if (cellData === null) {
+  if (empty) {
     style = { ...style, ...styles.empty };
   } else {
     style = { ...style, ...styles.letterCell };
@@ -56,24 +37,12 @@ const Cell = ({ active, cellData, cellDimension, row, col }) => {
   }
 
   return (
-    <Touchable onPress={() => handleTouch(row, col)}>
+    <Touchable onPress={() => handleTouch()}>
       <View style={{ ...style, width: cellDimension, height: cellDimension }}>
-        {active ? (
-          <TextInput
-            style={styles.input}
-            ref={inputRef}
-            maxLength={1}
-            onChange={handleChange}
-            autoCapitalize="none"
-            placeholder={value}
-            placeholderTextColor="#888"
-          />
-        ) : (
-          <AppText style={styles.letter}>{value}</AppText>
-        )}
-        {cellData && cellData.number && (
+        <AppText style={styles.letter}>{value}</AppText>
+        {number && (
           <View style={styles.origin}>
-            <AppText style={styles.number}>{cellData.number}</AppText>
+            <AppText style={styles.number}>{number}</AppText>
           </View>
         )}
       </View>
@@ -100,12 +69,6 @@ const styles = StyleSheet.create({
   activeCell: {
     backgroundColor: "#fff784",
   },
-  input: {
-    fontFamily: "roboto",
-    fontSize: 20,
-    textTransform: "lowercase",
-    textAlign: "center",
-  },
   letter: {
     fontSize: 20,
   },
@@ -120,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Cell;
+export default React.memo((props) => <Cell {...props} />);

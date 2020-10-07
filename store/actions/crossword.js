@@ -5,6 +5,7 @@ export const SET_ACTIVE_ANSWER = "set_active_answer";
 export const CLEAR_ACTIVE_ANSWER = "clear_active_answer";
 export const SHOW_ANSWERS = "show_answers";
 export const CHECK_ANSWERS = "check_answers";
+export const MARK_ANSWER_CORRECT = "mark_answer_correct";
 
 export const startCrossword = (config) => {
   return {
@@ -38,13 +39,12 @@ export const clearActiveAnswer = () => {
   };
 };
 
-export const enterCharacter = (character, col, row) => {
+export const enterCharacter = (character, pos) => {
   return {
     type: ENTER_CHARACTER,
     payload: {
       character,
-      col,
-      row,
+      pos,
     },
   };
 };
@@ -58,5 +58,12 @@ export const showAnswers = () => {
 export const checkAnswers = () => {
   return {
     type: CHECK_ANSWERS,
+  };
+};
+
+export const markAnswerCorrect = (answer) => {
+  return {
+    type: MARK_ANSWER_CORRECT,
+    payload: answer,
   };
 };

@@ -6,6 +6,7 @@ import {
   CLEAR_ACTIVE_ANSWER,
   SHOW_ANSWERS,
   CHECK_ANSWERS,
+  MARK_ANSWER_CORRECT,
 } from "../actions/crossword";
 import { arrayToObjectByKey } from "../../util";
 import { drawCrossword } from "../../utils/crosswordGenerator";
@@ -46,20 +47,12 @@ export default (state = initialState, action) => {
     }
 
     case SET_ACTIVE_ANSWER: {
-      const { answerText, col, row } = action.payload;
+      const { answerText } = action.payload;
       let newState = { ...state, activeAnswerText: answerText };
 
       const answer = state.answers[answerText];
-      const inProgress = answer.progress.some((char) => char);
 
-      if (inProgress) {
-        newState.activeCell = answer.cells.find(
-          ({ x, y }) => x - 1 === col && y - 1 === row
-        );
-      } else if (
-        !state.activeCell ||
-        !answer.cells.includes(state.activeCell)
-      ) {
+      if (!state.activeCell || !answer.cells.includes(state.activeCell)) {
         newState.activeCell = state.answers[answerText].cells[0];
       }
 
@@ -77,36 +70,24 @@ export default (state = initialState, action) => {
       break;
     }
 
+    case MARK_ANSWER_CORRECT: {
+      const activeAnswerText = action.payload;
+
+      let newState = { ...state };
+      newState.answers[activeAnswerText].status = ANSWER_CORRECT;
+      newState.activeAnswerText = null;
+
+      return newState;
+    }
+
     case ENTER_CHARACTER: {
-      const { character, col, row } = action.payload;
+      const { character, pos } = action.payload;
+      const { answers, activeAnswerText } = state;
+      const activeAnswer = answers[activeAnswerText];
+      const { x, y } = activeAnswer.cells[pos];
 
       let newState = { ...state, dirty: true };
-
-      const { answers, activeCell, activeAnswerText } = state;
-      const activeAnswer = answers[activeAnswerText];
-
-      Object.keys(newState.answers).forEach((key) => {
-        const answer = newState.answers[key];
-        const pos = answer.cells.findIndex(
-          ({ x, y }) => x - 1 === col && y - 1 === row
-        );
-        if (pos > -1) {
-          answer.progress[pos] = character;
-        }
-      });
-
-      newState.grid[row][col].value = character;
-
-      const posInActiveAnswer = activeAnswer.cells.findIndex(
-        ({ x, y }) => x === activeCell.x && y === activeCell.y
-      );
-
-      if (posInActiveAnswer < activeAnswer.cells.length - 1) {
-        newState.activeCell = activeAnswer.cells[posInActiveAnswer + 1];
-      } else {
-        newState.activeCell = null;
-        newState.activeAnswerText = null;
-      }
+      newState.grid[y - 1][x - 1].value = character;
 
       return newState;
       break;
@@ -146,11 +127,11 @@ export default (state = initialState, action) => {
     }
 
     case SET_ACTIVE_CELL: {
-      const cell = action.payload;
+      let activeCell = action.payload;
 
       return {
         ...state,
-        activeCell: cell,
+        activeCell,
       };
       break;
     }
