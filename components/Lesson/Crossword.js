@@ -27,11 +27,14 @@ import { selectAllAnswersAttempted } from "../../store/selectors/crossword";
 import { submitAttempt } from "../../store/actions/words";
 import { arrayToObjectByKey } from "../../util";
 import AppText from "../AppText";
-
+import * as Animatable from "react-native-animatable";
 import * as Colors from "../../constants/Colors";
+import { playSound } from "../../utils/sounds";
+import { FEEDBACK_NEGATIVE, FEEDBACK_POSITIVE } from "../../utils/sounds";
 
 const Crossword = (props) => {
   const dispatch = useDispatch();
+  const AnimationRef = useRef(null);
 
   const [submitted, setSubmitted] = useState(false);
   const [allowChange, setAllowChange] = useState(true);
@@ -172,8 +175,11 @@ const Crossword = (props) => {
   const handleConfirm = () => {
     const currentGuess = inputValue.join("");
     if (currentGuess === activeAnswerText) {
+      playSound(FEEDBACK_POSITIVE);
       dispatch(markAnswerCorrect(activeAnswerText));
     } else {
+      AnimationRef.current.shake();
+      playSound(FEEDBACK_NEGATIVE);
     }
   };
 
@@ -215,7 +221,7 @@ const Crossword = (props) => {
       {activeAnswer && (
         <View style={styles.answerContainer}>
           <AppText>{wordsByText[activeAnswerText].translation}: </AppText>
-          <View style={styles.inputs}>
+          <Animatable.View ref={AnimationRef} style={styles.inputs}>
             {activeAnswer.progress.map((char, i) => {
               let style = styles.cell;
               if (focusedCell === i) {
@@ -250,7 +256,7 @@ const Crossword = (props) => {
                 </View>
               );
             })}
-          </View>
+          </Animatable.View>
 
           <AppButton onPress={handleConfirm}>Confirm</AppButton>
         </View>
