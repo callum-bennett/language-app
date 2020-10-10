@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
 import { selectCategoryById } from "../store/selectors/category";
-import { fetchWords } from "../store/actions/words";
+import { fetchUserVocabulary, fetchWords } from "../store/actions/words";
 import { selectWordsByCategoryId } from "../store/selectors/word";
 import AppButton from "../components/AppButton";
 import { AppLoading } from "expo";
@@ -12,20 +12,27 @@ import AppProgressDonut from "../components/AppProgressDonut";
 import CategoryImageWithTitle from "../components/CategoryImageWithTItle";
 import AppText from "../components/AppText";
 import { fetchLessons } from "../store/actions/lessons";
+import { selectUserVocabularyByCategoryId } from "../store/selectors/userVocabulary";
 
 const CategoryOverviewScreen = (props) => {
   const dispatch = useDispatch();
   const categoryId = props.navigation.getParam("categoryId");
 
-  const [category, words, lessons] = useSelector((state) => [
+  const [category, words, lessons, vocabulary] = useSelector((state) => [
     selectCategoryById(state, categoryId),
     selectWordsByCategoryId(state, categoryId),
     state.lessons.byId,
+    selectUserVocabularyByCategoryId(state, categoryId),
   ]);
+
+  const vocabArray = Object.values(vocabulary);
+  const wordsLearnedCount = vocabArray.filter((v) => v).length;
+  const wordCount = vocabArray.length;
 
   useEffect(() => {
     dispatch(fetchWords());
     dispatch(fetchLessons());
+    dispatch(fetchUserVocabulary());
   }, []);
 
   const handlePressLearn = (lesson) => {
@@ -47,9 +54,11 @@ const CategoryOverviewScreen = (props) => {
         <CategoryImageWithTitle category={category} />
       </View>
       <View style={styles.mainContainer}>
-        <AppText style={styles.wordsLearned}>
-          Words learned: 0 / {words.length}
-        </AppText>
+        {vocabArray.length > 0 && (
+          <AppText style={styles.wordsLearned}>
+            Words learned: {wordsLearnedCount} / {wordCount}
+          </AppText>
+        )}
 
         {lessons && (
           <View style={styles.lessonContainer}>

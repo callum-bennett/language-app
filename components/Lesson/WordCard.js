@@ -10,8 +10,9 @@ import GestureRecognizer, {
 
 const WordCard = (props) => {
   const AnimationRef = useRef(null);
-
   const [listened, setListened] = useState(false);
+
+  const { word } = props;
 
   const handleAudioPress = () => {
     //@ todo textToSpeech
@@ -19,7 +20,7 @@ const WordCard = (props) => {
     if (AnimationRef) {
       AnimationRef.current.pulse();
     }
-    props.onComplete();
+    props.onComplete(word.id);
     setListened(true);
   };
 
@@ -43,8 +44,8 @@ const WordCard = (props) => {
         />
       </View>
 
-      <AppText style={styles.word}>{props.word.name}</AppText>
-      <AppText style={styles.translation}>({props.word.translation})</AppText>
+      <AppText style={styles.word}>{word.name}</AppText>
+      <AppText style={styles.translation}>({word.translation})</AppText>
       <Animatable.View ref={AnimationRef} direction="alternate">
         <Icon
           style={styles.audio}

@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel/src/carousel/Carousel";
 import WordCard from "./Lesson/WordCard";
+import { markWordAsSeen } from "../store/actions/words";
+import { useDispatch } from "react-redux";
 
 const carouselWidth = Dimensions.get("window").width;
 const carouselHeight = Dimensions.get("window").height;
 const itemWidth = Math.round(carouselWidth * 0.9);
 
 const Lesson = (props) => {
+  const dispatch = useDispatch();
   const [allowScroll, setAllowScroll] = useState(false);
 
   const renderItem = ({ item }) => {
@@ -18,8 +21,9 @@ const Lesson = (props) => {
     );
   };
 
-  const handleCompleteItem = () => {
+  const handleCompleteItem = (wordId) => {
     setAllowScroll(true);
+    dispatch(markWordAsSeen(wordId));
   };
 
   const afterSlide = () => {
