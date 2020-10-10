@@ -1,20 +1,20 @@
-import { FETCH_WORDS } from "../actions/words";
+import { FETCH_USER_VOCABULARY } from "../actions/words";
 import { arrayToObjectByKey } from "../../util";
 
 const initialState = {
-  byId: {},
+  byWordId: {},
   allIds: {},
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case FETCH_WORDS:
-      const words = action.payload;
+    case FETCH_USER_VOCABULARY:
+      const vocabulary = action.payload;
 
       return {
         ...state,
-        byId: arrayToObjectByKey(words),
-        allIds: words.map((word) => word.id),
+        byWordId: arrayToObjectByKey(vocabulary, "word"),
+        allWordIds: vocabulary.map((item) => item.word),
       };
       break;
 
