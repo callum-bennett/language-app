@@ -31,8 +31,8 @@ const AppButton = (props) => {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.primary,
-    paddingVertical: 18,
-    paddingHorizontal: 32,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
     borderRadius: 4,
     display: "flex",
     justifyContent: "center",
