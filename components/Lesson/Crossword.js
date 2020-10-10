@@ -95,24 +95,6 @@ const Crossword = (props) => {
     }
   }, [activeCell]);
 
-  const handleSubmit = () => {
-    // @todo check answers
-    dispatch(checkAnswers());
-
-    if (!submitted) {
-      const wordsByText = arrayToObjectByKey(props.words, "name");
-      Object.values(answers).forEach((answer) => {
-        const status = answer.text === answer.progress.join("");
-        // @todo this should be referenced by Id
-        const word = wordsByText[answer.text];
-        submitAttempt(word.id, status);
-      });
-      setSubmitted(true);
-    }
-
-    //@todo if all correct then show solution
-  };
-
   const handleShowAnswers = () => {
     dispatch(showAnswers());
     setSolutionShown(true);
@@ -157,6 +139,10 @@ const Crossword = (props) => {
     }
   };
 
+  const handleReset = () => {
+    dispatch(startCrossword(crosswordConfig));
+  };
+
   const handleChange = (char, pos) => {
     dispatch(enterCharacter(char, pos));
 
@@ -196,28 +182,18 @@ const Crossword = (props) => {
             >
               <Grid grid={grid} cellDimension={cellDimension} />
             </View>
-
-            {/*<View style={styles.buttonContainer}>*/}
-            {/*  {!submitted && (*/}
-            {/*    <AppButton onPress={handleSubmit}>Check answers</AppButton>*/}
-            {/*  )}*/}
-            {/*  {submitted && !solutionShown && (*/}
-            {/*    <AppButton onPress={handleShowAnswers}>Show solution</AppButton>*/}
-            {/*  )}*/}
-            {/*  {submitted && solutionShown && (*/}
-            {/*    <AppButton onPress={handleContinue}>Continue</AppButton>*/}
-            {/*  )}*/}
-            {/*</View>*/}
-
-            {/*//@ todo add this to header*/}
-            {/*{dirty && (*/}
-            {/*  <View style={styles.buttonContainer}>*/}
-            {/*    <AppButton onPress={handleReset}>Reset</AppButton>*/}
-            {/*  </View>*/}
-            {/*)}*/}
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>
+      <View style={styles.buttonContainer}>
+        {dirty && <AppButton onPress={handleReset}>Reset</AppButton>}
+        {submitted && !solutionShown && (
+          <AppButton onPress={handleShowAnswers}>Show solution</AppButton>
+        )}
+        {submitted && solutionShown && (
+          <AppButton onPress={handleContinue}>Continue</AppButton>
+        )}
+      </View>
       {activeAnswer && (
         <View style={styles.answerContainer}>
           <AppText>{wordsByText[activeAnswerText].translation}: </AppText>
@@ -303,7 +279,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   buttonContainer: {
-    margin: 20,
+    margin: 0,
+    position: "absolute",
+    height: 40,
+    bottom: 0,
+    display: "flex",
+    alignItems: "center",
+    width: "100%",
   },
   inputs: {
     display: "flex",
