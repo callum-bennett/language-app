@@ -1,5 +1,6 @@
 import React from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import AppText from "./AppText";
 
 const CategoryImageWithTitle = (props) => {
   return (
@@ -9,9 +10,9 @@ const CategoryImageWithTitle = (props) => {
         style={styles.image}
       >
         <View style={styles.titleContainer}>
-          <Text style={styles.title} numberOfLines={1}>
+          <AppText style={styles.title} numberOfLines={1}>
             {props.category.name}
-          </Text>
+          </AppText>
         </View>
       </ImageBackground>
     </View>

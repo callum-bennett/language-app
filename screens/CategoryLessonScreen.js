@@ -1,16 +1,14 @@
 import React, { useState } from "react";
-import { Button, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Lesson from "../components/Lesson";
 import { useSelector } from "react-redux";
-import { selectWordsByCategoryId } from "../store/selectors/word";
+import { selectWordsByLessonId } from "../store/selectors/word";
 import Crossword from "../components/Lesson/Crossword";
 import AppText from "../components/AppText";
 
 const CategoryLessonScreen = (props) => {
-  const categoryId = props.navigation.getParam("categoryId");
-  const words = useSelector((state) =>
-    selectWordsByCategoryId(state, categoryId)
-  );
+  const lessonId = props.navigation.getParam("lessonId");
+  const words = useSelector((state) => selectWordsByLessonId(state, lessonId));
 
   const [lessonStarted, setLessonStarted] = useState(false);
   const [lessonComplete, setLessonComplete] = useState(false);
@@ -35,9 +33,9 @@ const CategoryLessonScreen = (props) => {
   return (
     <View style={styles.screen}>
       {!lessonComplete ? (
-        <Lesson words={words.slice(0, 10)} onComplete={handleCompleteLesson} />
-      ) : gameComplete ? (
-        <Crossword words={words.slice(0, 10)} onComplete={handleCompleteGame} />
+        <Lesson words={words} onComplete={handleCompleteLesson} />
+      ) : !gameComplete ? (
+        <Crossword words={words} onComplete={handleCompleteGame} />
       ) : (
         <AppText onPress={handleSectionComplete}>Section Complete!</AppText>
       )}

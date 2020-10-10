@@ -11,45 +11,29 @@ import { AppLoading } from "expo";
 import AppProgressDonut from "../components/AppProgressDonut";
 import CategoryImageWithTitle from "../components/CategoryImageWithTItle";
 import AppText from "../components/AppText";
+import { fetchLessons } from "../store/actions/lessons";
 
 const CategoryOverviewScreen = (props) => {
   const dispatch = useDispatch();
   const categoryId = props.navigation.getParam("categoryId");
 
-  const category = useSelector((state) =>
-    selectCategoryById(state, categoryId)
-  );
-  const words = useSelector((state) =>
-    selectWordsByCategoryId(state, categoryId)
-  );
+  const [category, words, lessons] = useSelector((state) => [
+    selectCategoryById(state, categoryId),
+    selectWordsByCategoryId(state, categoryId),
+    state.lessons.byId,
+  ]);
 
   useEffect(() => {
     dispatch(fetchWords());
+    dispatch(fetchLessons());
   }, []);
 
-  let lessonParts;
-  if (words.length) {
-    const wordCount = words.length;
-    const wordsPerLesson = 10;
-    lessonParts = Array.from(
-      {
-        length: Math.ceil(wordCount / wordsPerLesson),
-      },
-      (val, i) => {
-        return words.slice(
-          i * wordsPerLesson,
-          i * wordsPerLesson + wordsPerLesson
-        );
-      }
-    );
-  }
-
-  const handlePressLearn = () => {
+  const handlePressLearn = (lesson) => {
     props.navigation.navigate({
       routeName: "CategoryLesson",
       params: {
-        categoryId: categoryId,
-        title: `${category.name} / Learn`,
+        lessonId: lesson.id,
+        title: `${category.name} / Lesson ${lesson.sequence + 1}`,
       },
     });
   };
@@ -62,14 +46,30 @@ const CategoryOverviewScreen = (props) => {
       <View style={styles.imageContainer}>
         <CategoryImageWithTitle category={category} />
       </View>
-      <AppText>Total words: {words.length}</AppText>
-      {/*<Text>View word list</Text>*/}
+      <View style={styles.mainContainer}>
+        <AppText style={styles.wordsLearned}>
+          Words learned: 0 / {words.length}
+        </AppText>
 
-      {words.length > 0 && (
-        <View style={styles.buttonContainer}>
-          <AppButton onPress={handlePressLearn}>Learn</AppButton>
-        </View>
-      )}
+        {lessons && (
+          <View style={styles.lessonContainer}>
+            {Object.values(lessons).map((lesson, i) => {
+              return (
+                <View key={i}>
+                  <AppText style={styles.sectionHeading}>
+                    Lesson {i + 1}
+                  </AppText>
+                  <View style={styles.buttonContainer}>
+                    <AppButton onPress={() => handlePressLearn(lesson)}>
+                      Learn
+                    </AppButton>
+                  </View>
+                </View>
+              );
+            })}
+          </View>
+        )}
+      </View>
     </View>
   ) : (
     <AppLoading />
@@ -92,10 +92,26 @@ const styles = StyleSheet.create({
     height: 200,
     width: "100%",
   },
+  mainContainer: {
+    padding: 10,
+  },
+  lessonContainer: {
+    marginTop: 20,
+  },
+  wordsLearned: {
+    fontSize: 16,
+    textAlign: "right",
+  },
+  sectionHeading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#666",
+  },
   buttonContainer: {
-    flex: 1,
+    display: "flex",
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "center",
+    width: "auto",
     margin: 20,
   },
   progressContainer: {
