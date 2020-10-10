@@ -15,6 +15,9 @@ export default (state = initialState, action) => {
         if (word.category.length) {
           word.category = word.category.map(({ id }) => id);
         }
+        if (word.lesson) {
+          word.lesson = word.lesson.id;
+        }
         return word;
       });
 
