@@ -2,17 +2,17 @@ import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import { selectCategoryById } from "../store/selectors/category";
-import { fetchUserVocabulary, fetchWords } from "../store/actions/words";
-import { selectWordsByCategoryId } from "../store/selectors/word";
 import AppButton from "../components/AppButton";
-import { AppLoading } from "expo";
 
 import AppProgressDonut from "../components/AppProgressDonut";
 import CategoryImageWithTitle from "../components/CategoryImageWithTItle";
 import AppText from "../components/AppText";
 import { fetchLessons } from "../store/actions/lessons";
 import { selectUserVocabularyByCategoryId } from "../store/selectors/userVocabulary";
+import { selectLessonsByCategoryId } from "../store/selectors/lesson";
+import { selectCategoryById } from "../store/selectors/category";
+import { fetchUserVocabulary, fetchWords } from "../store/actions/words";
+import { selectWordsByCategoryId } from "../store/selectors/word";
 
 const CategoryOverviewScreen = (props) => {
   const dispatch = useDispatch();
@@ -21,13 +21,17 @@ const CategoryOverviewScreen = (props) => {
   const [category, words, lessons, vocabulary] = useSelector((state) => [
     selectCategoryById(state, categoryId),
     selectWordsByCategoryId(state, categoryId),
-    state.lessons.byId,
+    selectLessonsByCategoryId(state, categoryId),
     selectUserVocabularyByCategoryId(state, categoryId),
   ]);
 
   const vocabArray = Object.values(vocabulary);
   const wordsLearnedCount = vocabArray.filter((v) => v).length;
   const wordCount = vocabArray.length;
+  const progress =
+    vocabArray.length > 0
+      ? Math.ceil((wordsLearnedCount / wordCount) * 100)
+      : 0;
 
   useEffect(() => {
     dispatch(fetchWords());
@@ -48,7 +52,7 @@ const CategoryOverviewScreen = (props) => {
   return category ? (
     <View style={styles.screen}>
       <View style={styles.progressContainer}>
-        <AppProgressDonut progress={20} />
+        <AppProgressDonut progress={progress} />
       </View>
       <View style={styles.imageContainer}>
         <CategoryImageWithTitle category={category} />
@@ -59,10 +63,9 @@ const CategoryOverviewScreen = (props) => {
             Words learned: {wordsLearnedCount} / {wordCount}
           </AppText>
         )}
-
-        {lessons && (
-          <View style={styles.lessonContainer}>
-            {Object.values(lessons).map((lesson, i) => {
+        <View style={styles.lessonContainer}>
+          {lessons.length ? (
+            Object.values(lessons).map((lesson, i) => {
               return (
                 <View key={i}>
                   <AppText style={styles.sectionHeading}>
@@ -75,13 +78,17 @@ const CategoryOverviewScreen = (props) => {
                   </View>
                 </View>
               );
-            })}
-          </View>
-        )}
+            })
+          ) : (
+            <AppText style={styles.noLessons}>
+              There are no lessons available.
+            </AppText>
+          )}
+        </View>
       </View>
     </View>
   ) : (
-    <AppLoading />
+    <AppText>Loading</AppText>
   );
 };
 
@@ -106,6 +113,9 @@ const styles = StyleSheet.create({
   },
   lessonContainer: {
     marginTop: 20,
+  },
+  noLessons: {
+    textAlign: "center",
   },
   wordsLearned: {
     fontSize: 16,
