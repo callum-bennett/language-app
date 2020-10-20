@@ -3,7 +3,7 @@ export const FETCH_LESSONS = "fetch_lessons";
 
 export const fetchLessons = () => async (dispatch) => {
   try {
-    const res = await apiClient.get("/lesson/");
+    const res = await apiClient.get("/api/lesson");
 
     if (res.data) {
       dispatch({

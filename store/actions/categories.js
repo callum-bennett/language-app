@@ -3,7 +3,7 @@ export const FETCH_CATEGORIES = "fetch_categories";
 
 export const fetchCategories = () => async (dispatch) => {
   try {
-    const res = await apiClient.get("/category/");
+    const res = await apiClient.get("/api/category");
 
     if (res.data) {
       dispatch({

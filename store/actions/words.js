@@ -3,7 +3,7 @@ export const FETCH_WORDS = "fetch_words";
 export const FETCH_USER_VOCABULARY = "fetch_user_vocabulary";
 
 export const fetchWords = () => async (dispatch) => {
-  const res = await apiClient.get("/word/");
+  const res = await apiClient.get("/api/word");
 
   if (res.data.length) {
     dispatch({
@@ -14,7 +14,7 @@ export const fetchWords = () => async (dispatch) => {
 };
 
 export const fetchUserVocabulary = () => async (dispatch) => {
-  const res = await apiClient.get("/user_vocabulary/");
+  const res = await apiClient.get("/api/user_vocabulary");
 
   if (res.data.length) {
     dispatch({
@@ -26,12 +26,12 @@ export const fetchUserVocabulary = () => async (dispatch) => {
 
 export const markWordAsSeen = (id) => async (dispatch) => {
   //@todo tidy up
-  const res = await apiClient.post(`/word/${id}/mark_seen`);
+  const res = await apiClient.post(`/api/word/${id}/mark_seen`);
 };
 
 export const submitAttempt = (id, status) => async (dispatch) => {
   //@todo tidy up
-  const res = await apiClient.put(`/word/${id}/attempt`, {
+  const res = await apiClient.put(`/api/word/${id}/attempt`, {
     status,
   });
 };
