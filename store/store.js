@@ -6,8 +6,10 @@ import categoryReducer from "./reducers/categoryReducer";
 import crosswordReducer from "./reducers/crosswordReducer";
 import lessonReducer from "./reducers/lessonReducer";
 import userVocabularyReducer from "./reducers/userVocabularyReducer";
+import authenticationReducer from "./reducers/authenticationReducer";
 
 const rootReducer = combineReducers({
+  authentication: authenticationReducer,
   categories: categoryReducer,
   words: wordReducer,
   lessons: lessonReducer,
