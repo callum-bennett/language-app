@@ -1,4 +1,4 @@
-import { AUTHENTICATE_USER } from "../actions/authentication";
+import { AUTHENTICATE_USER, SIGN_USER_OUT } from "../actions/authentication";
 
 const initialState = {
   authenticated: false,
@@ -15,6 +15,12 @@ export default (state = initialState, action) => {
       };
       break;
 
+    case SIGN_USER_OUT:
+      return {
+        authenticated: false,
+        token: null,
+      };
+      break;
     default:
       return state;
   }

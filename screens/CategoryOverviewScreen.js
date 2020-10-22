@@ -16,7 +16,7 @@ import { selectWordsByCategoryId } from "../store/selectors/word";
 
 const CategoryOverviewScreen = (props) => {
   const dispatch = useDispatch();
-  const categoryId = props.navigation.getParam("categoryId");
+  const categoryId = props.route.params.categoryId;
 
   const [category, words, lessons, vocabulary] = useSelector((state) => [
     selectCategoryById(state, categoryId),
@@ -41,7 +41,7 @@ const CategoryOverviewScreen = (props) => {
 
   const handlePressLearn = (lesson) => {
     props.navigation.navigate({
-      routeName: "CategoryLesson",
+      name: "CategoryLesson",
       params: {
         lessonId: lesson.id,
         title: `${category.name} / Lesson ${lesson.sequence + 1}`,
@@ -90,14 +90,6 @@ const CategoryOverviewScreen = (props) => {
   ) : (
     <AppText>Loading</AppText>
   );
-};
-
-CategoryOverviewScreen.navigationOptions = (navData) => {
-  const title = navData.navigation.getParam("title");
-
-  return {
-    headerTitle: title,
-  };
 };
 
 const styles = StyleSheet.create({

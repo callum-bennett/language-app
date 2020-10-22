@@ -1,27 +1,33 @@
 import React from "react";
-import { createAppContainer, createSwitchNavigator } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
+import { useSelector } from "react-redux";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import CategoryScreen from "../screens/CategoriesScreen";
-import CategoryOverviewScreen from "../screens/CategoryOverviewScreen";
-import CategoryLessonScreen from "../screens/CategoryLessonScreen";
-import CategoryGameScreen from "../screens/CategoryGameScreen";
+import DrawerNavigator from "./DrawerNavigator";
 import AuthenticationScreen from "../screens/AuthenticationScreen";
 
-const CategoryNavigator = createStackNavigator({
-  Categories: CategoryScreen,
-  Category: CategoryOverviewScreen,
-  CategoryLesson: CategoryLessonScreen,
-  CategoryGame: CategoryGameScreen,
-});
+const Stack = createStackNavigator();
 
-const AuthenticationNavigator = createStackNavigator({
-  Authentication: AuthenticationScreen,
-});
+export default () => {
+  const authenticated = useSelector(
+    (state) => state.authentication.authenticated
+  );
 
-const AppNavigator = createSwitchNavigator({
-  Authentication: AuthenticationNavigator,
-  Category: CategoryNavigator,
-});
-
-export default createAppContainer(AppNavigator);
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        {authenticated ? (
+          <Stack.Screen name="Home" component={DrawerNavigator} />
+        ) : (
+          <Stack.Screen
+            name="Authentication"
+            component={AuthenticationScreen}
+            options={{
+              animationTypeForReplace: "pop",
+            }}
+          />
+        )}
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
