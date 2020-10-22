@@ -2,7 +2,7 @@ import axios from "axios";
 import AsyncStorage from "@react-native-community/async-storage";
 
 const apiClient = axios.create({
-  baseURL: "http://192.168.0.7:8001",
+  baseURL: "http://192.168.0.7:8000",
   timeout: 2000,
 });
 
@@ -18,7 +18,10 @@ apiClient.interceptors.request.use(async (req) => {
 apiClient.interceptors.response.use(
   (res) => res,
   (error) => {
-    if (error.response.status === 401) {
+    const { response } = error;
+
+    if (!response) {
+    } else if (response.status === 401) {
       AsyncStorage.removeItem("authToken");
     }
 

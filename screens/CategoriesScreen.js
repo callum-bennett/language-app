@@ -25,7 +25,7 @@ const CategoryScreen = (props) => {
 
   const handleSelectCategory = (item) => {
     props.navigation.navigate({
-      routeName: "Category",
+      name: "Category",
       params: {
         categoryId: item.id,
         title: item.name,

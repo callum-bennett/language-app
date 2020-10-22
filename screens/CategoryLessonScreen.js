@@ -7,7 +7,7 @@ import Crossword from "../components/Lesson/Crossword";
 import AppText from "../components/AppText";
 
 const CategoryLessonScreen = (props) => {
-  const lessonId = props.navigation.getParam("lessonId");
+  const lessonId = props.route.params.lessonId;
   const words = useSelector((state) => selectWordsByLessonId(state, lessonId));
 
   const [lessonStarted, setLessonStarted] = useState(false);
@@ -41,14 +41,6 @@ const CategoryLessonScreen = (props) => {
       )}
     </View>
   );
-};
-
-CategoryLessonScreen.navigationOptions = (navData) => {
-  const title = navData.navigation.getParam("title");
-
-  return {
-    headerTitle: title,
-  };
 };
 
 const styles = StyleSheet.create({

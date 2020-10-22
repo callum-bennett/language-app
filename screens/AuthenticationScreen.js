@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
-  ScrollView,
   KeyboardAvoidingView,
   View,
   ActivityIndicator,
@@ -34,7 +33,7 @@ const AuthenticationScreen = (props) => {
 
   useEffect(() => {
     if (authenticated) {
-      props.navigation.navigate("Category");
+      props.navigation.navigate("Home");
     }
   }, [authenticated]);
 
