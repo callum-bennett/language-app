@@ -5,9 +5,9 @@ import {
   View,
   ActivityIndicator,
   TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 
-import * as Colors from "../constants/Colors";
 import AppButton from "../components/AppButton";
 import AppTextInput from "../components/AppTextInput";
 import AppText from "../components/AppText";
@@ -17,6 +17,8 @@ import { setAuthenticated } from "../store/actions/authentication";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-community/async-storage";
+import FormControl from "../components/FormControl";
+import * as Colors from "../constants/Colors";
 
 const AuthenticationScreen = (props) => {
   const dispatch = useDispatch();
@@ -82,78 +84,64 @@ const AuthenticationScreen = (props) => {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.screen}
-      behaviour="padding"
-      keyboardVerticalOffset={30}
-    >
-      <View style={styles.form}>
-        <AppTextInput
-          key="email"
-          id="email"
-          label="Email"
-          autoCapitalize="none"
-          value={email}
-          keyboardType="email-address"
-          onChange={(e) => setEmail(e.nativeEvent.text)}
-        />
-        <View style={styles.passwordContainer}>
-          <AppTextInput
-            key="password"
-            id="password"
-            label="Password"
-            autoCapitalize="none"
-            secureTextEntry={!showPassword}
-            value={password}
-            onChange={(e) => setPassword(e.nativeEvent.text)}
-          />
-
-          <TouchableWithoutFeedback
-            onPress={() => setShowPassword(!showPassword)}
-          >
-            <MaterialCommunityIcons
-              name={showPassword ? "eye" : "eye-off"}
-              size={24}
-              color="#666"
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : null}
+        style={styles.screen}
+      >
+        <View style={styles.form} keyboardShouldPersistTaps="always">
+          <FormControl>
+            <AppTextInput
+              key="email"
+              id="email"
+              label="Email"
+              autoCapitalize="none"
+              value={email}
+              keyboardType="email-address"
+              onChange={(e) => setEmail(e.nativeEvent.text)}
             />
-          </TouchableWithoutFeedback>
+          </FormControl>
+          <FormControl>
+            <AppTextInput
+              key="password"
+              id="password"
+              label="Password"
+              autoCapitalize="none"
+              secureTextEntry={!showPassword}
+              value={password}
+              onChange={(e) => setPassword(e.nativeEvent.text)}
+              icon={
+                <MaterialCommunityIcons
+                  onPress={() => setShowPassword(!showPassword)}
+                  name={showPassword ? "eye" : "eye-off"}
+                  size={24}
+                  color="#666"
+                />
+              }
+            />
+          </FormControl>
+          <FormControl>
+            {!loading ? (
+              <AppButton onPress={handleSignIn}>Log in</AppButton>
+            ) : (
+              <ActivityIndicator style={{ height: 36 }} />
+            )}
+          </FormControl>
+          <FormControl noMargin>
+            {errorMessage && (
+              <AppText style={styles.authError}>{errorMessage}</AppText>
+            )}
+          </FormControl>
+          <AppText style={styles.signUpText}>
+            Don't have an account already?{" "}
+            <TouchableWithoutFeedback>
+              <AppText style={{ color: Colors.primary }}>Sign up!</AppText>
+            </TouchableWithoutFeedback>
+          </AppText>
         </View>
-
-        <View style={styles.buttonContainer}>
-          {!loading ? (
-            <AppButton onPress={handleSignIn}>Sign in</AppButton>
-          ) : (
-            <ActivityIndicator />
-          )}
-        </View>
-        <View style={styles.divider}>
-          <View style={styles.line}></View>
-          <AppText style={styles.or}>or</AppText>
-        </View>
-        <View style={styles.buttonContainer}>
-          <AppButton
-            style={{
-              button: {
-                backgroundColor: Colors.accent,
-              },
-            }}
-            onPress={() => {}}
-          >
-            Create account
-          </AppButton>
-        </View>
-        {errorMessage && (
-          <View>
-            <AppText style={styles.authError}>{errorMessage}</AppText>
-          </View>
-        )}
-      </View>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </TouchableWithoutFeedback>
   );
-};
-
-AuthenticationScreen.navigationOptions = {
-  headerTitle: "Sign in or create an account",
 };
 
 const styles = StyleSheet.create({
@@ -172,44 +160,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     width: "90%",
     maxWidth: 400,
-    height: 320,
     padding: 20,
   },
-  passwordContainer: {
-    display: "flex",
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  divider: {
-    position: "relative",
-    height: 20,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  line: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    position: "absolute",
-    top: 5,
-    width: "100%",
-  },
-  or: {
-    backgroundColor: "#FFF",
-    color: "#333",
-    fontSize: 16,
-    paddingHorizontal: 10,
+  signUpText: {
     textAlign: "center",
-    marginTop: -12,
-  },
-  buttonContainer: {
-    marginBottom: 10,
-    height: 30,
   },
   authError: {
     color: "#FF0000",
     fontSize: 16,
-    marginTop: 10,
     textAlign: "center",
   },
 });
