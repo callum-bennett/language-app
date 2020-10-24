@@ -37,9 +37,9 @@ AppButton.defaultProps = {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: Colors.primary,
-    paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 4,
+    minHeight: 36,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
