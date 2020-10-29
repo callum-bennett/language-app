@@ -4,3 +4,5 @@ export const alt = "#4062bb";
 
 export const light = "#ebebeb";
 export const dark = "#160c28";
+
+export const error = "#aa0000";
