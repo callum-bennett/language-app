@@ -9,6 +9,7 @@ export default (state = initialState, action) => {
   switch (action.type) {
     case AUTHENTICATE_USER:
       const { token } = action.payload;
+      console.log("");
       return {
         authenticated: true,
         token,

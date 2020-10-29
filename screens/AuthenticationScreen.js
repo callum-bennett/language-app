@@ -1,68 +1,80 @@
-import React, { useEffect, useState } from "react";
+import React, { useReducer } from "react";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useDispatch } from "react-redux";
 import {
   StyleSheet,
-  KeyboardAvoidingView,
-  View,
-  ActivityIndicator,
+  ScrollView,
   TouchableWithoutFeedback,
-  Keyboard,
+  View,
+  Image,
 } from "react-native";
 
-import AppButton from "../components/AppButton";
-import AppTextInput from "../components/AppTextInput";
-import AppText from "../components/AppText";
-import { useDispatch, useSelector } from "react-redux";
 import apiClient from "../api/client";
 import { setAuthenticated } from "../store/actions/authentication";
-
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-community/async-storage";
-import FormControl from "../components/FormControl";
+import AuthForm from "../components/AuthForm";
+import AppText from "../components/AppText";
 import * as Colors from "../constants/Colors";
 
-const AuthenticationScreen = (props) => {
-  const dispatch = useDispatch();
-  const [loading, setIsLoading] = useState(false);
+const SIGN_IN = "sign_in";
+const SIGN_UP = "sign_up";
+const SWITCH_MODE = "switch_mode";
+const SET_ERROR = "set_error";
+const SET_LOADING = "set_loading";
+const STOP_LOADING = "stop_loading";
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
+const initialState = {
+  error: null,
+  mode: SIGN_IN,
+  loading: false,
+};
 
-  const authenticated = useSelector(
-    (state) => state.authentication.authenticated
+const reducer = (state, action) => {
+  switch (action.type) {
+    case SWITCH_MODE:
+      return {
+        error: initialState.error,
+        loading: false,
+        mode: state.mode === SIGN_UP ? SIGN_IN : SIGN_UP,
+      };
+    case SET_ERROR:
+      return {
+        ...state,
+        error: action.error,
+      };
+    case SET_LOADING:
+      return {
+        ...state,
+        error: initialState.error,
+        loading: true,
+      };
+    case STOP_LOADING:
+      return {
+        ...state,
+        loading: false,
+      };
+    default:
+      return state;
+  }
+};
+
+const AuthenticationScreen = () => {
+  const storeDispatch = useDispatch();
+
+  const [{ error, loading, mode }, dispatch] = useReducer(
+    reducer,
+    initialState
   );
 
-  useEffect(() => {
-    if (authenticated) {
-      props.navigation.navigate("Home");
-    }
-  }, [authenticated]);
+  const handleAuthenticate = async (email, password) => {
+    dispatch({ type: SET_LOADING });
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const existingToken = await AsyncStorage.getItem("authToken");
-        if (existingToken) {
-          dispatch(setAuthenticated(existingToken));
-        } else {
-          const res = await apiClient.get("/login");
-          setEmail(res.data.last_username);
-        }
-      } catch (e) {}
-    })();
-  }, []);
-
-  const handleSignIn = async () => {
-    setIsLoading(true);
-    setErrorMessage(null);
-
+    const route = mode === SIGN_UP ? "/register" : "/login";
     const formData = new FormData();
     formData.append("email", email);
     formData.append("password", password);
 
     try {
-      const res = await apiClient.post("/login", formData, {
+      const res = await apiClient.post(route, formData, {
         headers: {
           "Content-Type": "multipart/form-data;",
         },
@@ -71,104 +83,86 @@ const AuthenticationScreen = (props) => {
       const authToken = res.headers["x-auth-token"];
       if (authToken) {
         await AsyncStorage.setItem("authToken", authToken);
-        dispatch(setAuthenticated(authToken));
+        storeDispatch(setAuthenticated(authToken));
       }
-    } catch (error) {
-      let message = "Something went wrong. Please contact the administrator.";
-      if (error.response.status === 401) {
-        message = error.response.data.message;
+    } catch (err) {
+      let errMessage =
+        "Something went wrong. Please contact the administrator.";
+      if (err.response) {
+        const { status, data } = err.response;
+
+        if (status === 401) {
+          errMessage = data.message;
+        } else if (status === 400) {
+          errMessage = data;
+        }
       }
-      setErrorMessage(message);
+
+      dispatch({ type: SET_ERROR, errMessage });
     }
-    setIsLoading(false);
+
+    dispatch({ type: STOP_LOADING });
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : null}
-        style={styles.screen}
-      >
-        <View style={styles.form} keyboardShouldPersistTaps="always">
-          <FormControl>
-            <AppTextInput
-              key="email"
-              id="email"
-              label="Email"
-              autoCapitalize="none"
-              value={email}
-              keyboardType="email-address"
-              onChange={(e) => setEmail(e.nativeEvent.text)}
-            />
-          </FormControl>
-          <FormControl>
-            <AppTextInput
-              key="password"
-              id="password"
-              label="Password"
-              autoCapitalize="none"
-              secureTextEntry={!showPassword}
-              value={password}
-              onChange={(e) => setPassword(e.nativeEvent.text)}
-              icon={
-                <MaterialCommunityIcons
-                  onPress={() => setShowPassword(!showPassword)}
-                  name={showPassword ? "eye" : "eye-off"}
-                  size={24}
-                  color="#666"
-                />
-              }
-            />
-          </FormControl>
-          <FormControl>
-            {!loading ? (
-              <AppButton onPress={handleSignIn}>Log in</AppButton>
-            ) : (
-              <ActivityIndicator style={{ height: 36 }} />
-            )}
-          </FormControl>
-          <FormControl noMargin>
-            {errorMessage && (
-              <AppText style={styles.authError}>{errorMessage}</AppText>
-            )}
-          </FormControl>
-          <AppText style={styles.signUpText}>
-            Don't have an account already?{" "}
-            <TouchableWithoutFeedback>
-              <AppText style={{ color: Colors.primary }}>Sign up!</AppText>
-            </TouchableWithoutFeedback>
+    <TouchableWithoutFeedback>
+      <ScrollView contentContainerStyle={styles.screen}>
+        <Image style={styles.logo} source={require("../assets/icon.png")} />
+        <AuthForm
+          loading={loading}
+          onSubmit={handleAuthenticate}
+          isSignIn={mode === SIGN_IN}
+        />
+        <View style={styles.switchModeText}>
+          <AppText>
+            {mode === SIGN_UP
+              ? "Already have an account? "
+              : "Don't have an account already? "}
           </AppText>
+          <TouchableWithoutFeedback
+            hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
+            onPress={() => dispatch({ type: SWITCH_MODE })}
+          >
+            <View>
+              <AppText style={styles.switchModeCTA}>
+                {mode === SIGN_UP ? "Log in" : "Sign up!"}
+              </AppText>
+            </View>
+          </TouchableWithoutFeedback>
         </View>
-      </KeyboardAvoidingView>
+        {error && <AppText style={styles.error}>{error}</AppText>}
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingVertical: 20,
   },
-  form: {
-    shadowColor: "#333",
-    shadowOpacity: 0.3,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 5,
-    elevation: 5,
-    borderRadius: 8,
-    backgroundColor: "white",
-    width: "90%",
-    maxWidth: 400,
-    padding: 20,
+  logo: {
+    width: 75,
+    height: 75,
+    marginBottom: 20,
+    marginTop: 20,
   },
-  signUpText: {
-    textAlign: "center",
+  switchModeText: {
+    display: "flex",
+    justifyContent: "center",
+    flexDirection: "row",
   },
-  authError: {
-    color: "#FF0000",
+  switchModeCTA: {
+    color: Colors.primary,
+    fontWeight: "bold",
+  },
+
+  error: {
+    color: Colors.error,
     fontSize: 16,
     textAlign: "center",
+    marginTop: 10,
   },
 });
 
