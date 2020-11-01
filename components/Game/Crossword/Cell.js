@@ -18,6 +18,7 @@ const Cell = ({
   value,
   answers,
   inActiveAnswer,
+  locked,
 }) => {
   const dispatch = useDispatch();
   const activeAnswerText = useSelector(
@@ -30,7 +31,7 @@ const Cell = ({
       : TouchableOpacity;
 
   const handleTouch = () => {
-    if (empty) {
+    if (empty || locked) {
       return;
     }
 
@@ -52,6 +53,9 @@ const Cell = ({
   }
   if (active) {
     style = { ...style, ...styles.activeCell };
+  }
+  if (locked) {
+    style = { ...style, ...styles.locked };
   }
 
   return (
@@ -89,6 +93,9 @@ const styles = StyleSheet.create({
   },
   inActiveAnswer: {
     backgroundColor: "#fffbca",
+  },
+  locked: {
+    backgroundColor: "#f6fff1",
   },
   letter: {
     fontSize: 20,

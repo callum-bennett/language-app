@@ -75,6 +75,9 @@ export default (state = initialState, action) => {
 
       let newState = { ...state };
       newState.answers[activeAnswerText].status = ANSWER_CORRECT;
+      newState.answers[activeAnswerText].cells.forEach(({ x, y }) => {
+        newState.grid[y - 1][x - 1].locked = true;
+      });
       newState.activeAnswerText = null;
 
       return newState;
@@ -90,7 +93,9 @@ export default (state = initialState, action) => {
 
       for (let index in activeAnswer.cells) {
         const { x, y } = activeAnswer.cells[index];
-        newState.grid[y - 1][x - 1].value = text[index] ?? "";
+        if (!newState.grid[y - 1][x - 1].locked) {
+          newState.grid[y - 1][x - 1].value = text[index] ?? "";
+        }
       }
       activeAnswer.currentGuess = text;
 

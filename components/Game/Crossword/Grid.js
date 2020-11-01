@@ -25,6 +25,7 @@ const Grid = (props) => {
               inActiveAnswer={cellData?.answers.includes(activeAnswerText)}
               empty={!cellData}
               answers={cellData?.answers ?? null}
+              locked={cellData?.locked ?? false}
               value={cellData?.value ?? null}
               number={cellData?.number ?? null}
               cellDimension={props.cellDimension}
