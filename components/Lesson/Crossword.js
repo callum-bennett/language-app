@@ -91,8 +91,25 @@ const Crossword = (props) => {
   };
 
   useEffect(() => {
-    setInputValue("");
+    if (activeAnswer) {
+      scrollToAnswer();
+      initializeInputValue();
+    } else {
+      setInputValue("");
+    }
   }, [activeAnswer]);
+
+  const initializeInputValue = () => {
+    let i = 0,
+      value = "";
+    let { x, y } = activeAnswer.cells[0];
+    while (grid[y - 1][x - 1].locked) {
+      console.log(grid[y - 1][x - 1].value);
+      value += grid[y - 1][x - 1].value;
+      ({ x, y } = activeAnswer.cells[++i]);
+    }
+    setInputValue(value);
+  };
 
   const handleShowAnswers = () => {
     dispatch(showAnswers());
@@ -114,15 +131,38 @@ const Crossword = (props) => {
     dispatch(setActiveCell(activeAnswer.cells[i]));
   };
 
-  const handleBlur = () => {
-    setInputValue("");
-  };
-
   const handleChange = (e) => {
-    const value = e.nativeEvent.text.toLowerCase();
-    if (/^[a-zA-ZÁÉÍÑÓÚÜáéíñóúü\.]*$/.test(value)) {
-      setInputValue(value);
-      dispatch(updateAnswer(value));
+    let inserted = false;
+    let value = e.nativeEvent.text.toLowerCase();
+    const prevValue = inputValue;
+
+    // inserting character
+    if (value.length > prevValue.length) {
+      if (activeAnswer.cells.length > value.length) {
+        const { x, y } = activeAnswer.cells[value.length];
+        if (grid[y - 1][x - 1].locked) {
+          value += grid[y - 1][x - 1].value;
+          inserted = true;
+        }
+      }
+      // deleting character
+    } else {
+      const { x, y } = activeAnswer.cells[value.length];
+      if (grid[y - 1][x - 1].locked) {
+        value = value.substr(0, value.length - 1);
+      }
+    }
+
+    if (!/^[a-zA-ZÁÉÍÑÓÚÜáéíñóúü]*$/.test(value)) {
+      return;
+    }
+
+    setInputValue(value);
+    dispatch(updateAnswer(value));
+
+    if (Platform.OS === "android" && inserted) {
+      answerInputRef.current.blur();
+      answerInputRef.current.focus();
     }
   };
 
@@ -171,7 +211,6 @@ const Crossword = (props) => {
               autoCapitalize="none"
               autoCorrect={false}
               autoFocus={true}
-              onBlur={handleBlur}
               onChange={handleChange}
               ref={answerInputRef}
               style={styles.answerInput}
