@@ -5,7 +5,10 @@ import { useSelector } from "react-redux";
 import Cell from "./Cell";
 
 const Grid = (props) => {
-  const activeCell = useSelector(({ crossword }) => crossword.activeCell);
+  const [activeCell, activeAnswerText] = useSelector(({ crossword }) => [
+    crossword.activeCell,
+    crossword.activeAnswerText,
+  ]);
   const gridWidth = props.grid[0].length * props.cellDimension;
 
   const isActiveCell = (row, col) => {
@@ -19,10 +22,11 @@ const Grid = (props) => {
           return (
             <Cell
               active={isActiveCell(i + 1, j + 1)}
+              inActiveAnswer={cellData?.answers.includes(activeAnswerText)}
               empty={!cellData}
-              answers={cellData ? cellData.answers : null}
-              value={cellData ? cellData.value : null}
-              number={cellData ? cellData.number : null}
+              answers={cellData?.answers ?? null}
+              value={cellData?.value ?? null}
+              number={cellData?.number ?? null}
               cellDimension={props.cellDimension}
               key={`${i}-${j}`}
             />
