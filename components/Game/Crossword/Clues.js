@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AppText from "../../AppText";
 import { setActiveAnswer } from "../../../store/actions/crossword";
 import { arrayToObjectByKey } from "../../../util";
+import { ANSWER_CORRECT } from "../../../store/reducers/crosswordReducer";
 
 const Clues = (props) => {
   const dispatch = useDispatch();
@@ -37,7 +38,7 @@ const Clues = (props) => {
   let i = 1;
   for (let answer of sortedAnswers) {
     let textStyle = styles.clue;
-    if (answer.progress.every((char) => char)) {
+    if (answer.status === ANSWER_CORRECT) {
       textStyle = { ...textStyle, ...styles.guessed };
     } else if (answer.text === activeAnswerText) {
       textStyle = { ...textStyle, ...styles.active };

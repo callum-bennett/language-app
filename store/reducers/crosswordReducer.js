@@ -1,5 +1,5 @@
 import {
-  ENTER_CHARACTER,
+  UPDATE_ANSWER,
   SET_ACTIVE_ANSWER,
   SET_ACTIVE_CELL,
   START_CROSSWORD,
@@ -20,9 +20,9 @@ const initialState = {
   answers: {},
 };
 
-const ANSWER_INCOMPLETE = "incomplete";
-const ANSWER_INCORRECT = "incorrect";
-const ANSWER_CORRECT = "correct";
+export const ANSWER_INCOMPLETE = "incomplete";
+export const ANSWER_INCORRECT = "incorrect";
+export const ANSWER_CORRECT = "correct";
 
 export default (state = initialState, action) => {
   switch (action.type) {
@@ -32,7 +32,7 @@ export default (state = initialState, action) => {
       const answersByKey = arrayToObjectByKey(config.answers, "text");
 
       Object.keys(answersByKey).forEach((key) => {
-        answersByKey[key].progress = Array.from(Array(key.length));
+        answersByKey[key].currentGuess = "";
         answersByKey[key].status = ANSWER_INCOMPLETE;
       });
 
@@ -80,24 +80,29 @@ export default (state = initialState, action) => {
       return newState;
     }
 
-    case ENTER_CHARACTER: {
-      const { character, pos } = action.payload;
+    case UPDATE_ANSWER: {
+      const text = action.payload;
       const { answers, activeAnswerText } = state;
       const activeAnswer = answers[activeAnswerText];
-      const { x, y } = activeAnswer.cells[pos];
+      const activeCell = activeAnswer.cells[text.length];
 
-      let newState = { ...state, dirty: true };
-      newState.grid[y - 1][x - 1].value = character;
+      let newState = { ...state, dirty: true, activeCell };
+
+      for (let index in activeAnswer.cells) {
+        const { x, y } = activeAnswer.cells[index];
+        newState.grid[y - 1][x - 1].value = text[index] ?? "";
+      }
+      activeAnswer.currentGuess = text;
 
       return newState;
-      break;
     }
 
     case SHOW_ANSWERS: {
       let newState = { ...state };
 
       Object.values(newState.answers).forEach((answer) => {
-        answer.progress = answer.text.split("");
+        answer.currentGuess = answer.text;
+        answer.status = ANSWER_CORRECT;
       });
 
       newState.grid.forEach((row) => {
@@ -115,7 +120,7 @@ export default (state = initialState, action) => {
       let newState = { ...state };
 
       Object.values(newState.answers).forEach((answer) => {
-        const match = answer.text === answer.progress.join("");
+        const match = answer.text === answer.currentGuess;
         if (match) {
           answer.status = ANSWER_CORRECT;
         } else {
