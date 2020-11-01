@@ -1,4 +1,4 @@
-export const ENTER_CHARACTER = "enter_character";
+export const UPDATE_ANSWER = "update_answer";
 export const START_CROSSWORD = "start_crossword";
 export const SET_ACTIVE_CELL = "set_active_cell";
 export const SET_ACTIVE_ANSWER = "set_active_answer";
@@ -39,13 +39,10 @@ export const clearActiveAnswer = () => {
   };
 };
 
-export const enterCharacter = (character, pos) => {
+export const updateAnswer = (text) => {
   return {
-    type: ENTER_CHARACTER,
-    payload: {
-      character,
-      pos,
-    },
+    type: UPDATE_ANSWER,
+    payload: text,
   };
 };
 
