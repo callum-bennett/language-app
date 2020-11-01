@@ -7,11 +7,22 @@ import {
   TouchableOpacity,
 } from "react-native";
 import AppText from "../../AppText";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setActiveAnswer } from "../../../store/actions/crossword";
 
-const Cell = ({ active, cellDimension, empty, number, value, answers }) => {
+const Cell = ({
+  active,
+  cellDimension,
+  empty,
+  number,
+  value,
+  answers,
+  inActiveAnswer,
+}) => {
   const dispatch = useDispatch();
+  const activeAnswerText = useSelector(
+    (state) => state.crossword.activeAnswerText
+  );
 
   const Touchable =
     Platform.OS === "android" && Platform.Version >= 21
@@ -19,11 +30,15 @@ const Cell = ({ active, cellDimension, empty, number, value, answers }) => {
       : TouchableOpacity;
 
   const handleTouch = () => {
-    if (!empty) {
-      // @ todo check if multiple answers
-      const answerText = answers[0];
-      dispatch(setActiveAnswer(answerText));
+    if (empty) {
+      return;
     }
+
+    let answerText = answers[0];
+    if (answers.length > 1 && activeAnswerText === answerText) {
+      answerText = answers[1];
+    }
+    dispatch(setActiveAnswer(answerText));
   };
 
   let style = styles.cell;
@@ -31,6 +46,9 @@ const Cell = ({ active, cellDimension, empty, number, value, answers }) => {
     style = { ...style, ...styles.empty };
   } else {
     style = { ...style, ...styles.letterCell };
+  }
+  if (inActiveAnswer) {
+    style = { ...style, ...styles.inActiveAnswer };
   }
   if (active) {
     style = { ...style, ...styles.activeCell };
@@ -63,11 +81,14 @@ const styles = StyleSheet.create({
     borderColor: "#999",
   },
   letterCell: {
-    backgroundColor: "#FFF",
+    backgroundColor: "#fff",
     borderColor: "#333",
   },
   activeCell: {
     backgroundColor: "#fff784",
+  },
+  inActiveAnswer: {
+    backgroundColor: "#fffbca",
   },
   letter: {
     fontSize: 20,
