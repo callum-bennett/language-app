@@ -16,19 +16,30 @@ const AppButton = (props) => {
       ? TouchableNativeFeedback
       : TouchableOpacity;
 
+  let buttonStyle = [styles.button];
+  let textStyle = [styles.text];
+
+  if (props.variant === "small") {
+    buttonStyle.push(styles.buttonSmall);
+    textStyle.push(styles.textSmall);
+  }
+
+  buttonStyle.push(props.style.button);
+
   return (
     <Touchable
       hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
       onPress={props.onPress}
     >
-      <View style={[styles.button, props.style.button]}>
-        <Text style={styles.text}>{props.children}</Text>
+      <View style={buttonStyle}>
+        <Text style={textStyle}>{props.children}</Text>
       </View>
     </Touchable>
   );
 };
 
 AppButton.defaultProps = {
+  variant: "medium",
   style: {
     button: {},
   },
@@ -44,10 +55,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  buttonSmall: {
+    paddingHorizontal: 12,
+    minHeight: 26,
+  },
   text: {
     color: "#FFF",
     fontFamily: "roboto",
     fontSize: 18,
+  },
+  textSmall: {
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });
 
