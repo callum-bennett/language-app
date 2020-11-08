@@ -1,22 +1,35 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import {
+  StyleSheet,
+  View,
+  SafeAreaView,
+  ScrollView,
+  RefreshControl,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import AppButton from "../components/AppButton";
-
-import AppProgressDonut from "../components/AppProgressDonut";
-import CategoryImageWithTitle from "../components/CategoryImageWithTItle";
 import AppText from "../components/AppText";
-import { fetchLessons } from "../store/actions/lessons";
+import { fetchCategoryProgress } from "../store/actions/categories";
 import { selectUserVocabularyByCategoryId } from "../store/selectors/userVocabulary";
 import { selectLessonsByCategoryId } from "../store/selectors/lesson";
 import { selectCategoryById } from "../store/selectors/category";
 import { fetchUserVocabulary, fetchWords } from "../store/actions/words";
 import { selectWordsByCategoryId } from "../store/selectors/word";
+import apiClient from "../api/client";
+import CategoryHeader from "../components/CategoryHeader";
+import CategoryLessonList from "../components/CategoryLessonList";
+
+const wait = (timeout) => {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
+  });
+};
 
 const CategoryOverviewScreen = (props) => {
   const dispatch = useDispatch();
   const categoryId = props.route.params.categoryId;
+  const [loaded, setLoaded] = React.useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   const [category, words, lessons, vocabulary] = useSelector((state) => [
     selectCategoryById(state, categoryId),
@@ -33,60 +46,71 @@ const CategoryOverviewScreen = (props) => {
       ? Math.ceil((wordsLearnedCount / wordCount) * 100)
       : 0;
 
-  useEffect(() => {
+  const loadData = () => {
     dispatch(fetchWords());
-    dispatch(fetchLessons());
+    dispatch(fetchCategoryProgress(categoryId));
     dispatch(fetchUserVocabulary());
+    setLoaded(true);
+  };
+
+  useEffect(() => {
+    loadData();
+    return () => {
+      setLoaded(false);
+    };
   }, []);
 
-  const handlePressLearn = (lesson) => {
-    props.navigation.navigate({
-      name: "CategoryLesson",
-      params: {
-        lessonId: lesson.id,
-        title: `${category.name} / Lesson ${lesson.sequence + 1}`,
-      },
-    });
+  useEffect(() => {
+    if (refreshing || !loaded) {
+      loadData();
+    }
+  }, [refreshing]);
+
+  const handleRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    await wait(1000);
+    setRefreshing(false);
+  }, []);
+
+  const handlePressLearn = async (lesson) => {
+    try {
+      const res = await apiClient.patch(`/api/lesson/${lesson.id}/start`);
+      if (res) {
+        props.navigation.navigate({
+          name: "CategoryLesson",
+          params: {
+            lessonId: lesson.id,
+            title: `${category.name} / Lesson ${lesson.sequence + 1}`,
+          },
+        });
+      }
+    } catch (e) {}
   };
 
   return category ? (
-    <View style={styles.screen}>
-      <View style={styles.progressContainer}>
-        <AppProgressDonut progress={progress} />
-      </View>
-      <View style={styles.imageContainer}>
-        <CategoryImageWithTitle category={category} />
-      </View>
-      <View style={styles.mainContainer}>
-        {vocabArray.length > 0 && (
-          <AppText style={styles.wordsLearned}>
-            Words learned: {wordsLearnedCount} / {wordCount}
-          </AppText>
-        )}
-        <View style={styles.lessonContainer}>
-          {lessons.length ? (
-            Object.values(lessons).map((lesson, i) => {
-              return (
-                <View key={i}>
-                  <AppText style={styles.sectionHeading}>
-                    Lesson {i + 1}
-                  </AppText>
-                  <View style={styles.buttonContainer}>
-                    <AppButton onPress={() => handlePressLearn(lesson)}>
-                      Learn
-                    </AppButton>
-                  </View>
-                </View>
-              );
-            })
-          ) : (
-            <AppText style={styles.noLessons}>
-              There are no lessons available.
-            </AppText>
-          )}
+    <SafeAreaView style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollView}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+        }
+      >
+        <View style={styles.screen}>
+          <CategoryHeader category={category} progress={progress} />
+          <View style={styles.mainContainer}>
+            {vocabArray.length > 0 && (
+              <AppText style={styles.wordsLearned}>
+                Words learned: {wordsLearnedCount} / {wordCount}
+              </AppText>
+            )}
+            <CategoryLessonList
+              lessons={lessons}
+              onPressLearn={handlePressLearn}
+            />
+          </View>
         </View>
-      </View>
-    </View>
+      </ScrollView>
+    </SafeAreaView>
   ) : (
     <AppText>Loading</AppText>
   );
@@ -96,40 +120,17 @@ const styles = StyleSheet.create({
   screen: {
     position: "relative",
   },
-  imageContainer: {
-    height: 200,
-    width: "100%",
-  },
+
   mainContainer: {
     padding: 10,
   },
-  lessonContainer: {
-    marginTop: 20,
-  },
+
   noLessons: {
     textAlign: "center",
   },
   wordsLearned: {
     fontSize: 16,
     textAlign: "right",
-  },
-  sectionHeading: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#666",
-  },
-  buttonContainer: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "center",
-    width: "auto",
-    margin: 20,
-  },
-  progressContainer: {
-    position: "absolute",
-    top: 10,
-    right: 10,
-    zIndex: 20,
   },
 });
 

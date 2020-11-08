@@ -104,7 +104,6 @@ const Crossword = (props) => {
       value = "";
     let { x, y } = activeAnswer.cells[0];
     while (grid[y - 1][x - 1].locked) {
-      console.log(grid[y - 1][x - 1].value);
       value += grid[y - 1][x - 1].value;
       ({ x, y } = activeAnswer.cells[++i]);
     }

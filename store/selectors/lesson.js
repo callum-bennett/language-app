@@ -3,3 +3,7 @@ export const selectLessonsByCategoryId = (state, categoryId) => {
     (lesson) => lesson.category === categoryId
   );
 };
+
+export const selectLessonStatus = (state, lessonId) => {
+  return state.lessons.userProgress[lessonId] ?? null;
+};
