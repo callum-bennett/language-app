@@ -1,20 +1,31 @@
-import React, { useEffect } from "react";
-import { FlatList } from "react-native";
+import React, { useEffect, useState } from "react";
+import { FlatList, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { Snackbar } from "react-native-paper";
 
 import { fetchCategories } from "../store/actions/categories";
 import CategoryTile from "../components/CategoryTile";
 import { selectCategoriesAsArray } from "../store/selectors/category";
 import { fetchLessons } from "../store/actions/lessons";
+import AppText from "../components/AppText";
+import * as Colors from "../constants/Colors";
 
 const CategoryScreen = (props) => {
   const dispatch = useDispatch();
   const categories = useSelector(selectCategoriesAsArray);
+  const [snackbarMessage, setSnackbarMessage] = useState(false);
 
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchLessons());
   }, []);
+
+  useEffect(() => {
+    const { params } = props.route;
+    if (params?.error) {
+      setSnackbarMessage(params.error);
+    }
+  }, [props.route.params]);
 
   const renderCategoryTile = ({ item }) => (
     <CategoryTile
@@ -43,6 +54,16 @@ const CategoryScreen = (props) => {
         data={categories}
         renderItem={renderCategoryTile}
       />
+      <Snackbar
+        visible={snackbarMessage}
+        duration={3000}
+        onDismiss={() => setSnackbarMessage(false)}
+        style={{ backgroundColor: Colors.error }}
+      >
+        <View>
+          <AppText style={{ color: "#FFF" }}>{snackbarMessage}</AppText>
+        </View>
+      </Snackbar>
     </>
   );
 };

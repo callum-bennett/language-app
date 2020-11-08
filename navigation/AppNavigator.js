@@ -7,6 +7,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import DrawerNavigator from "./DrawerNavigator";
 import AuthenticationScreen from "../screens/AuthenticationScreen";
 import { setAuthenticated } from "../store/actions/authentication";
+import { navigationRef } from "./RootNavigation";
 
 const Stack = createStackNavigator();
 
@@ -27,7 +28,7 @@ export default () => {
   }, [authenticated]);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
         {authenticated ? (
           <Stack.Screen name="Home" component={DrawerNavigator} />
