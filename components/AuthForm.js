@@ -181,7 +181,7 @@ const AuthForm = (props) => {
               message: "Passwords don't match",
               value: state.fields.password.value,
             }}
-            // secureTextEntry={true}
+            secureTextEntry={true}
             value={state.fields.confirmPassword.value}
             onChange={handleChange}
             changed={props.isSignIn}
