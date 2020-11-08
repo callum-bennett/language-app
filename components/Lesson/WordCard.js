@@ -2,11 +2,12 @@ import React, { useRef, useState } from "react";
 import { StyleSheet, View, Image } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { AntDesign as Icon } from "@expo/vector-icons";
-
-import AppText from "../AppText";
 import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
+
+import AppText from "../AppText";
+import * as Colors from "../../constants/Colors";
 
 const WordCard = (props) => {
   const AnimationRef = useRef(null);
@@ -79,6 +80,7 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   audio: {
+    color: Colors.primary,
     marginTop: 15,
   },
 });
