@@ -155,7 +155,7 @@ const AuthForm = (props) => {
           required
           maxLength={50}
           returnKeyType={props.isSignIn ? "done" : "next"}
-          // secureTextEntry={!showPassword}
+          secureTextEntry={!showPassword}
           value={state.fields.password.value}
           onChange={handleChange}
           blurOnSubmit={props.isSignIn}
