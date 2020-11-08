@@ -29,7 +29,7 @@ const CategoryLessonScreen = (props) => {
   return (
     <View style={styles.screen}>
       {!lessonComplete ? (
-        <Lesson words={words} onComplete={handleCompleteLesson} />
+        <Lesson words={words} start={1} onComplete={handleCompleteLesson} />
       ) : !gameComplete ? (
         <Crossword words={words} onComplete={handleCompleteGame} />
       ) : (
