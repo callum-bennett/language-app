@@ -3,23 +3,49 @@ import { StyleSheet, View } from "react-native";
 import Lesson from "../components/Lesson";
 import { useSelector } from "react-redux";
 import { selectWordsByLessonId } from "../store/selectors/word";
+import { selectLessonStatus } from "../store/selectors/lesson";
 import Crossword from "../components/Lesson/Crossword";
 import AppButton from "../components/AppButton";
 import AppText from "../components/AppText";
+import apiClient from "../api/client";
+import { selectUserVocabularyByLessonId } from "../store/selectors/userVocabulary";
 
 const CategoryLessonScreen = (props) => {
   const lessonId = props.route.params.lessonId;
-  const words = useSelector((state) => selectWordsByLessonId(state, lessonId));
+  const [words, userLessonVocabulary, lessonStatus] = useSelector((state) => [
+    selectWordsByLessonId(state, lessonId),
+    selectUserVocabularyByLessonId(state, lessonId),
+    selectLessonStatus(state, lessonId),
+  ]);
 
-  const [lessonComplete, setLessonComplete] = useState(false);
-  const [gameComplete, setGameComplete] = useState(false);
+  const startSlide =
+    Object.values(userLessonVocabulary).filter((v) => v).length + 1;
 
-  const handleCompleteLesson = () => {
-    setLessonComplete(true);
+  const [lessonComplete, setLessonComplete] = useState(lessonStatus === 2);
+  const [gameComplete, setGameComplete] = useState(lessonStatus === 3);
+
+  const handleCompleteLesson = async () => {
+    try {
+      const res = await apiClient.patch(`/api/lesson/${lessonId}/finish`);
+      if (res) {
+        setLessonComplete(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const handleCompleteGame = () => {
-    setGameComplete(true);
+  const handleCompleteGame = async () => {
+    try {
+      const res = await apiClient.patch(
+        `/api/lesson/${lessonId}/finishcrossword`
+      );
+      if (res) {
+        setGameComplete(true);
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleSectionComplete = () => {
@@ -29,7 +55,11 @@ const CategoryLessonScreen = (props) => {
   return (
     <View style={styles.screen}>
       {!lessonComplete ? (
-        <Lesson words={words} start={1} onComplete={handleCompleteLesson} />
+        <Lesson
+          words={words}
+          start={startSlide}
+          onComplete={handleCompleteLesson}
+        />
       ) : !gameComplete ? (
         <Crossword words={words} onComplete={handleCompleteGame} />
       ) : (

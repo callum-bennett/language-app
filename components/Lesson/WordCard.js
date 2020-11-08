@@ -1,5 +1,10 @@
 import React, { useRef, useState } from "react";
-import { StyleSheet, View, Image } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Image,
+  TouchableWithoutFeedback,
+} from "react-native";
 import * as Animatable from "react-native-animatable";
 import { AntDesign as Icon } from "@expo/vector-icons";
 import GestureRecognizer, {
@@ -48,12 +53,14 @@ const WordCard = (props) => {
       <AppText style={styles.word}>{word.name}</AppText>
       <AppText style={styles.translation}>({word.translation})</AppText>
       <Animatable.View ref={AnimationRef} direction="alternate">
-        <Icon
-          style={styles.audio}
-          name="sound"
-          size={24}
+        <TouchableWithoutFeedback
+          hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
           onPress={handleAudioPress}
-        />
+        >
+          <View>
+            <Icon style={styles.audio} name="sound" size={24} />
+          </View>
+        </TouchableWithoutFeedback>
       </Animatable.View>
     </GestureRecognizer>
   );

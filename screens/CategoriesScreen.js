@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../store/actions/categories";
 import CategoryTile from "../components/CategoryTile";
 import { selectCategoriesAsArray } from "../store/selectors/category";
+import { fetchLessons } from "../store/actions/lessons";
 
 const CategoryScreen = (props) => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const CategoryScreen = (props) => {
 
   useEffect(() => {
     dispatch(fetchCategories());
+    dispatch(fetchLessons());
   }, []);
 
   const renderCategoryTile = ({ item }) => (
