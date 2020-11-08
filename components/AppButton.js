@@ -16,6 +16,12 @@ const AppButton = (props) => {
       ? TouchableNativeFeedback
       : TouchableOpacity;
 
+  const handleOnPress = (e) => {
+    if (!props.disabled) {
+      props.onPress(e);
+    }
+  };
+
   let buttonStyle = [styles.button];
   let textStyle = [styles.text];
 
@@ -24,12 +30,16 @@ const AppButton = (props) => {
     textStyle.push(styles.textSmall);
   }
 
+  if (props.disabled) {
+    buttonStyle.push(styles.disabled);
+  }
+
   buttonStyle.push(props.style.button);
 
   return (
     <Touchable
       hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
-      onPress={props.onPress}
+      onPress={handleOnPress}
     >
       <View style={buttonStyle}>
         <Text style={textStyle}>{props.children}</Text>
@@ -67,6 +77,9 @@ const styles = StyleSheet.create({
   textSmall: {
     fontSize: 14,
     fontWeight: "bold",
+  },
+  disabled: {
+    backgroundColor: Colors.light,
   },
 });
 
