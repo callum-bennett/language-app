@@ -98,7 +98,7 @@ const AuthenticationScreen = () => {
         }
       }
 
-      dispatch({ type: SET_ERROR, errMessage });
+      dispatch({ type: SET_ERROR, error: errMessage });
     }
 
     dispatch({ type: STOP_LOADING });
