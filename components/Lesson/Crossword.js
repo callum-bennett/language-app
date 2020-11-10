@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   StyleSheet,
@@ -38,6 +38,7 @@ const Crossword = (props) => {
   const animationRef = useRef(null);
 
   const [inputValue, setInputValue] = useState("");
+  const [inputLength, setInputLength] = useState(0);
   const [focusedCell, setFocusedCell] = useState(null);
   const [solutionShown, setSolutionShown] = useState(false);
   const cellDimension = 35;
@@ -93,22 +94,14 @@ const Crossword = (props) => {
   useEffect(() => {
     if (activeAnswer) {
       scrollToAnswer();
-      initializeInputValue();
+      const emptyCells = activeAnswer.cells.filter(
+        ({ x, y }) => !grid[y - 1][x - 1].locked
+      );
+      setInputLength(emptyCells.length);
     } else {
       setInputValue("");
     }
   }, [activeAnswer]);
-
-  const initializeInputValue = () => {
-    let i = 0,
-      value = "";
-    let { x, y } = activeAnswer.cells[0];
-    while (grid[y - 1][x - 1].locked) {
-      value += grid[y - 1][x - 1].value;
-      ({ x, y } = activeAnswer.cells[++i]);
-    }
-    setInputValue(value);
-  };
 
   const handleShowAnswers = () => {
     dispatch(showAnswers());
@@ -131,38 +124,13 @@ const Crossword = (props) => {
   };
 
   const handleChange = (e) => {
-    let inserted = false;
     let value = e.nativeEvent.text.toLowerCase();
-    const prevValue = inputValue;
-
-    // inserting character
-    if (value.length > prevValue.length) {
-      if (activeAnswer.cells.length > value.length) {
-        const { x, y } = activeAnswer.cells[value.length];
-        if (grid[y - 1][x - 1].locked) {
-          value += grid[y - 1][x - 1].value;
-          inserted = true;
-        }
-      }
-      // deleting character
-    } else {
-      const { x, y } = activeAnswer.cells[value.length];
-      if (grid[y - 1][x - 1].locked) {
-        value = value.substr(0, value.length - 1);
-      }
-    }
-
     if (!/^[a-zA-ZÁÉÍÑÓÚÜáéíñóúü]*$/.test(value)) {
       return;
     }
 
     setInputValue(value);
     dispatch(updateAnswer(value));
-
-    if (Platform.OS === "android" && inserted) {
-      answerInputRef.current.blur();
-      answerInputRef.current.focus();
-    }
   };
 
   const handleReset = () => {
@@ -170,7 +138,7 @@ const Crossword = (props) => {
   };
 
   const handleConfirm = () => {
-    if (inputValue === activeAnswerText) {
+    if (activeAnswer.currentGuess === activeAnswerText) {
       playSound(FEEDBACK_POSITIVE);
       dispatch(markAnswerCorrect(activeAnswerText));
     } else {
@@ -213,7 +181,7 @@ const Crossword = (props) => {
               onChange={handleChange}
               ref={answerInputRef}
               style={styles.answerInput}
-              maxLength={activeAnswerText.length}
+              maxLength={inputLength}
               value={inputValue}
               onSubmitEditing={handleConfirm}
             />

@@ -53,7 +53,13 @@ export default (state = initialState, action) => {
       const answer = state.answers[answerText];
 
       if (!state.activeCell || !answer.cells.includes(state.activeCell)) {
-        newState.activeCell = state.answers[answerText].cells[0];
+        let i = 0,
+          x,
+          y;
+        do {
+          ({ x, y } = newState.activeCell = answer.cells[i]);
+          i++;
+        } while (state.grid[y - 1][x - 1].locked);
       }
 
       return newState;
@@ -86,18 +92,33 @@ export default (state = initialState, action) => {
     case UPDATE_ANSWER: {
       const text = action.payload;
       const { answers, activeAnswerText } = state;
-      const activeAnswer = answers[activeAnswerText];
-      const activeCell = activeAnswer.cells[text.length];
+      const answerCells = answers[activeAnswerText].cells;
 
-      let newState = { ...state, dirty: true, activeCell };
+      let cell,
+        i = 0,
+        j = 0,
+        combinedText = "";
 
-      for (let index in activeAnswer.cells) {
-        const { x, y } = activeAnswer.cells[index];
-        if (!newState.grid[y - 1][x - 1].locked) {
-          newState.grid[y - 1][x - 1].value = text[index] ?? "";
+      do {
+        const { x, y } = answerCells[i];
+        cell = state.grid[y - 1][x - 1];
+        if (!cell.locked) {
+          cell.value = text[j] ?? "";
+          j++;
         }
-      }
-      activeAnswer.currentGuess = text;
+        if (cell.value) {
+          combinedText += cell.value;
+        }
+
+        i++;
+      } while (i < answerCells.length && cell.value);
+
+      let newState = {
+        ...state,
+        dirty: true,
+        activeCell: answerCells[combinedText.length],
+      };
+      newState.answers[activeAnswerText].currentGuess = combinedText;
 
       return newState;
     }
