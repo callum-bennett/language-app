@@ -13,6 +13,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import AppButton from "./AppButton";
 import FormControl from "./FormControl";
 import AppTextInput from "./AppTextInput";
+import * as Colors from "../constants/Colors";
 
 const INPUT_CHANGE = "input_change";
 const SWITCH_FORM = "switch_form";
@@ -195,7 +196,7 @@ const AuthForm = (props) => {
             {props.isSignIn ? "Log in" : "Create Account"}
           </AppButton>
         ) : (
-          <ActivityIndicator style={{ height: 36 }} />
+          <ActivityIndicator style={{ height: 36 }} color={Colors.accent} />
         )}
       </FormControl>
     </KeyboardAvoidingView>
