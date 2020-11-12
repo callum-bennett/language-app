@@ -13,6 +13,7 @@ import GestureRecognizer, {
 
 import AppText from "../AppText";
 import * as Colors from "../../constants/Colors";
+import { playSound, WORDS } from "../../utils/sounds";
 
 const WordCard = (props) => {
   const AnimationRef = useRef(null);
@@ -21,8 +22,8 @@ const WordCard = (props) => {
   const { word } = props;
 
   const handleAudioPress = () => {
-    //@ todo textToSpeech
-    //@ todo make sure volume is turned up
+    const sound = WORDS[props.word.name];
+    playSound(sound);
     if (AnimationRef) {
       AnimationRef.current.pulse();
     }
