@@ -44,10 +44,7 @@ const WordCard = (props) => {
       style={styles.card}
     >
       <View>
-        <Image
-          source={{ uri: "https://loremflickr.com/320/240" }}
-          style={styles.image}
-        />
+        <Image source={{ uri: word.imageUrl }} style={styles.image} />
       </View>
 
       <AppText style={styles.word}>{word.name}</AppText>
