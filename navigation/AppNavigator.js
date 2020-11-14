@@ -31,7 +31,7 @@ export default () => {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
         {authenticated ? (
-          <Stack.Screen name="Home" component={DrawerNavigator} />
+          <Stack.Screen name="Learn" component={DrawerNavigator} />
         ) : (
           <Stack.Screen
             name="Authentication"

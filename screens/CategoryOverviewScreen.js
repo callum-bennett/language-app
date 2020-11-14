@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   StyleSheet,
   View,
   SafeAreaView,
   ScrollView,
   RefreshControl,
+  TouchableWithoutFeedback,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -14,10 +15,11 @@ import { selectUserVocabularyByCategoryId } from "../store/selectors/userVocabul
 import { selectLessonsByCategoryId } from "../store/selectors/lesson";
 import { selectCategoryById } from "../store/selectors/category";
 import { fetchUserVocabulary, fetchWords } from "../store/actions/words";
-import { selectWordsByCategoryId } from "../store/selectors/word";
 import apiClient from "../api/client";
 import CategoryHeader from "../components/CategoryHeader";
 import CategoryLessonList from "../components/CategoryLessonList";
+import { ActivityIndicator } from "react-native-paper";
+import { CategoryContext } from "../navigation/RootNavigation";
 
 const wait = (timeout) => {
   return new Promise((resolve) => {
@@ -27,13 +29,13 @@ const wait = (timeout) => {
 
 const CategoryOverviewScreen = (props) => {
   const dispatch = useDispatch();
-  const categoryId = props.route.params.categoryId;
+  const { categoryId } = useContext(CategoryContext);
+
   const [loaded, setLoaded] = React.useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
 
-  const [category, words, lessons, vocabulary] = useSelector((state) => [
+  const [category, lessons, vocabulary] = useSelector((state) => [
     selectCategoryById(state, categoryId),
-    selectWordsByCategoryId(state, categoryId),
     selectLessonsByCategoryId(state, categoryId),
     selectUserVocabularyByCategoryId(state, categoryId),
   ]);
@@ -46,10 +48,13 @@ const CategoryOverviewScreen = (props) => {
       ? Math.ceil((wordsLearnedCount / wordCount) * 100)
       : 0;
 
-  const loadData = () => {
-    dispatch(fetchWords());
-    dispatch(fetchCategoryProgress(categoryId));
-    dispatch(fetchUserVocabulary());
+  const loadData = async () => {
+    await Promise.all([
+      dispatch(fetchWords()),
+      dispatch(fetchCategoryProgress(categoryId)),
+      dispatch(fetchUserVocabulary()),
+    ]);
+
     setLoaded(true);
   };
 
@@ -87,44 +92,59 @@ const CategoryOverviewScreen = (props) => {
     } catch (e) {}
   };
 
-  return category ? (
-    <SafeAreaView style={styles.container}>
+  const handlePressWords = () => {
+    props.navigation.navigate("CategoryWords", {
+      categoryId,
+    });
+  };
+
+  return (
+    <SafeAreaView style={styles.screen}>
       <ScrollView
-        contentContainerStyle={styles.scrollView}
+        contentContainerStyle={styles.screen}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
         }
       >
-        <View style={styles.screen}>
-          <CategoryHeader category={category} progress={progress} />
+        <CategoryHeader category={category} progress={progress} />
+        {loaded ? (
           <View style={styles.mainContainer}>
             {vocabArray.length > 0 && (
-              <AppText style={styles.wordsLearned}>
-                Words learned: {wordsLearnedCount} / {wordCount}
-              </AppText>
+              <TouchableWithoutFeedback onPress={handlePressWords}>
+                <View>
+                  <AppText style={styles.wordsLearned}>
+                    Words learned: {wordsLearnedCount} / {wordCount}
+                  </AppText>
+                </View>
+              </TouchableWithoutFeedback>
             )}
             <CategoryLessonList
               lessons={lessons}
               onPressLearn={handlePressLearn}
             />
           </View>
-        </View>
+        ) : (
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator />
+          </View>
+        )}
       </ScrollView>
     </SafeAreaView>
-  ) : (
-    <AppText>Loading</AppText>
   );
 };
 
 const styles = StyleSheet.create({
   screen: {
-    position: "relative",
+    flex: 1,
   },
-
   mainContainer: {
     padding: 10,
   },
-
+  loadingContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
   noLessons: {
     textAlign: "center",
   },
