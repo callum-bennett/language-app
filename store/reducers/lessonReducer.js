@@ -1,10 +1,18 @@
-import { FETCH_LESSONS } from "../actions/lessons";
+import {
+  ADVANCE_LESSON,
+  FETCH_LESSONS,
+  FETCH_LESSON_COMPONENTS,
+} from "../actions/lessons";
 import { arrayToObjectByKey } from "../../util";
 import { FETCH_CATEGORY_PROGRESS } from "../actions/categories";
 
 const initialState = {
   byId: {},
   allIds: {},
+  components: {
+    byId: {},
+    allIds: {},
+  },
   userProgress: {},
 };
 
@@ -21,6 +29,33 @@ export default (state = initialState, action) => {
       break;
     }
 
+    case ADVANCE_LESSON: {
+      const userProgress = action.payload;
+
+      return {
+        ...state,
+        userProgress: {
+          ...state.userProgress,
+          [userProgress.lesson]: userProgress,
+        },
+      };
+
+      break;
+    }
+
+    case FETCH_LESSON_COMPONENTS: {
+      const components = action.payload;
+
+      return {
+        ...state,
+        components: {
+          byId: arrayToObjectByKey(components),
+          allIds: components.map((component) => component.id),
+        },
+      };
+      break;
+    }
+
     case FETCH_CATEGORY_PROGRESS: {
       const { lessonProgress, lessons } = action.payload;
 
@@ -29,13 +64,14 @@ export default (state = initialState, action) => {
       let userProgress = {};
       if (state.allIds.length > 0) {
         state.allIds.forEach((lessonId) => {
-          userProgress[lessonId] = progressByLessonId[lessonId]?.status ?? null;
+          userProgress[lessonId] = progressByLessonId[lessonId];
         });
       }
 
       return {
         ...state,
-        lessons: lessons,
+        byId: arrayToObjectByKey(lessons),
+        allIds: lessons.map((lesson) => lesson.id),
         userProgress,
       };
     }

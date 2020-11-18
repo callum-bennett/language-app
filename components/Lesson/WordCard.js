@@ -22,20 +22,15 @@ const WordCard = (props) => {
   const { word } = props;
 
   const handleAudioPress = () => {
-    const sound = WORDS[props.word.name];
-    playSound(sound);
-    if (AnimationRef) {
-      AnimationRef.current.pulse();
-    }
-    props.onComplete(word.id);
+    playSound(WORDS[props.word.name]);
+    AnimationRef.current.pulse();
+    props.onWordComplete(word.id);
     setListened(true);
   };
 
   const handleSwipe = (dir) => {
     if (!listened && dir === swipeDirections.SWIPE_LEFT) {
-      if (AnimationRef) {
-        AnimationRef.current.bounce();
-      }
+      AnimationRef.current.bounce();
     }
   };
 
@@ -52,7 +47,7 @@ const WordCard = (props) => {
       <AppText style={styles.translation}>({word.translation})</AppText>
       <Animatable.View ref={AnimationRef} direction="alternate">
         <TouchableWithoutFeedback
-          hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
+          hitSlop={{ left: 30, right: 30, top: 30, bottom: 30 }}
           onPress={handleAudioPress}
         >
           <View>

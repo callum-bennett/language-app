@@ -4,9 +4,8 @@ import AppText from "./AppText";
 import AppButton from "./AppButton";
 import { useSelector } from "react-redux";
 
-const LESSON_STARTED = 1;
-const LESSON_COMPLETED = 2;
-const CROSSWORD_COMPLETED = 3;
+const LESSON_IN_PROGRESS = 0;
+const LESSON_COMPLETED = 1;
 
 const CategoryLessonList = (props) => {
   const { lessons } = props;
@@ -18,27 +17,19 @@ const CategoryLessonList = (props) => {
 
     let content;
     if (available) {
-      switch (lessonProgress) {
-        case LESSON_STARTED:
-        case LESSON_COMPLETED:
-          content = (
-            <AppButton onPress={() => props.onPressLearn(lesson)}>
-              Continue lesson
-            </AppButton>
-          );
-          break;
-
-        case CROSSWORD_COMPLETED:
-          content = <AppText style={{ fontSize: 18 }}>Complete!</AppText>;
-
-          break;
-        default:
-          content = (
-            <AppButton onPress={() => props.onPressLearn(lesson)}>
-              Start lesson
-            </AppButton>
-          );
-      }
+      if (!lessonProgress) {
+        content = (
+          <AppButton onPress={() => props.onPressLearn(lesson)}>
+            Start lesson
+          </AppButton>
+        );
+      } else if (lessonProgress.status === LESSON_IN_PROGRESS) {
+        content = (
+          <AppButton onPress={() => props.onPressLearn(lesson)}>
+            Continue lesson
+          </AppButton>
+        );
+      } else content = <AppText style={{ fontSize: 18 }}>Complete!</AppText>;
     } else {
       content = <AppButton disabled>Locked</AppButton>;
     }
@@ -53,7 +44,7 @@ const CategoryLessonList = (props) => {
       {lessons.length ? (
         Object.values(lessons).map((lesson, i) => {
           const content = getLessonAction(lesson, available);
-          available = userProgress[lesson.id] === CROSSWORD_COMPLETED;
+          available = userProgress[lesson.id] === LESSON_COMPLETED;
           return (
             <View key={i}>
               <AppText style={styles.sectionHeading}>Lesson {i + 1}</AppText>

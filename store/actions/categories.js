@@ -12,9 +12,7 @@ export const fetchCategories = () => async (dispatch) => {
         payload: JSON.parse(res.data),
       });
     }
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };
 
 export const fetchCategoryProgress = (id) => async (dispatch) => {
@@ -27,7 +25,5 @@ export const fetchCategoryProgress = (id) => async (dispatch) => {
         payload: JSON.parse(res.data),
       });
     }
-  } catch (err) {
-    console.log(err);
-  }
+  } catch (err) {}
 };

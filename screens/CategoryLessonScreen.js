@@ -1,72 +1,93 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, View } from "react-native";
-import Lesson from "../components/Lesson";
-import { useSelector } from "react-redux";
+import LessonComponent, {
+  LESSON_TYPE_CROSSWORD,
+  LESSON_TYPE_MULTIPLE_CHOICE,
+  LESSON_TYPE_SLIDES,
+} from "../components/LessonComponent";
+import { useDispatch, useSelector } from "react-redux";
 import { selectWordsByLessonId } from "../store/selectors/word";
-import { selectLessonStatus } from "../store/selectors/lesson";
+import {
+  selectActiveComponentKey,
+  selectLessonProgress,
+} from "../store/selectors/lesson";
 import Crossword from "../components/Lesson/Crossword";
 import AppButton from "../components/AppButton";
 import AppText from "../components/AppText";
-import apiClient from "../api/client";
 import { selectUserVocabularyByLessonId } from "../store/selectors/userVocabulary";
+import { ActivityIndicator } from "react-native-paper";
+import { advanceLesson } from "../store/actions/lessons";
+import { submitAttempt } from "../store/actions/words";
 
 const CategoryLessonScreen = (props) => {
+  const dispatch = useDispatch();
   const lessonId = props.route.params.lessonId;
-  const [words, userLessonVocabulary, lessonStatus] = useSelector((state) => [
+  const [
+    words,
+    userLessonVocabulary,
+    lessonProgress,
+    activeComponentKey,
+  ] = useSelector((state) => [
     selectWordsByLessonId(state, lessonId),
     selectUserVocabularyByLessonId(state, lessonId),
-    selectLessonStatus(state, lessonId),
+    selectLessonProgress(state, lessonId),
+    selectActiveComponentKey(state, lessonId),
   ]);
 
-  const startSlide =
-    Object.values(userLessonVocabulary).filter((v) => v).length + 1;
-
-  const [lessonComplete, setLessonComplete] = useState(lessonStatus === 2);
-  const [gameComplete, setGameComplete] = useState(lessonStatus === 3);
-
-  const handleCompleteLesson = async () => {
-    try {
-      const res = await apiClient.patch(`/api/lesson/${lessonId}/finish`);
-      if (res) {
-        setLessonComplete(true);
-      }
-    } catch (err) {
-      console.log(err);
+  let startSlide = 0;
+  if (activeComponentKey === LESSON_TYPE_SLIDES) {
+    const vocabLength = Object.values(userLessonVocabulary).filter((v) => v)
+      .length;
+    startSlide = vocabLength;
+    if (vocabLength === words.length) {
+      startSlide--;
     }
-  };
-
-  const handleCompleteGame = async () => {
-    try {
-      const res = await apiClient.patch(
-        `/api/lesson/${lessonId}/finishcrossword`
-      );
-      if (res) {
-        setGameComplete(true);
-      }
-    } catch (err) {
-      console.log(err);
+  } else if (activeComponentKey === LESSON_TYPE_MULTIPLE_CHOICE) {
+    if (lessonProgress.responses[activeComponentKey]) {
+      startSlide = Object.keys(lessonProgress.responses[activeComponentKey])
+        .length;
     }
+  }
+
+  const handleCompleteComponent = async () => {
+    dispatch(advanceLesson(lessonId));
   };
 
   const handleSectionComplete = () => {
     props.navigation.pop();
   };
 
+  const handleSubmitAnswer = (wordId, correct) => {
+    dispatch(submitAttempt(lessonId, wordId, correct));
+  };
+
   return (
     <View style={styles.screen}>
-      {!lessonComplete ? (
-        <Lesson
-          words={words}
-          start={startSlide}
-          onComplete={handleCompleteLesson}
-        />
-      ) : !gameComplete ? (
-        <Crossword words={words} onComplete={handleCompleteGame} />
+      {lessonProgress ? (
+        lessonProgress.status === 1 ? (
+          <>
+            <AppText style={styles.completeText}>Lesson complete!</AppText>
+            <AppButton onPress={handleSectionComplete}>Continue</AppButton>
+          </>
+        ) : [LESSON_TYPE_SLIDES, LESSON_TYPE_MULTIPLE_CHOICE].includes(
+            activeComponentKey
+          ) ? (
+          <LessonComponent
+            words={words}
+            start={startSlide}
+            onComplete={handleCompleteComponent}
+            type={activeComponentKey}
+            onSubmitAnswer={handleSubmitAnswer}
+          />
+        ) : activeComponentKey === LESSON_TYPE_CROSSWORD ? (
+          <Crossword words={words} onComplete={handleCompleteComponent} />
+        ) : (
+          <View>
+            <AppText>Oops! Something went wrong</AppText>
+          </View>
+        )
       ) : (
-        <>
-          <AppText style={styles.completeText}>Lesson complete!</AppText>
-          <AppButton onPress={handleSectionComplete}>Continue</AppButton>
-        </>
+        <ActivityIndicator />
       )}
     </View>
   );

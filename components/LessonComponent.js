@@ -1,8 +1,8 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel/src/carousel/Carousel";
 import WordCard from "./Lesson/WordCard";
-import { markWordAsSeen } from "../store/actions/words";
+import { markWordAsSeen, submitAttempt } from "../store/actions/words";
 import { useDispatch } from "react-redux";
 import AppText from "./AppText";
 import AppButton from "./AppButton";
@@ -12,14 +12,15 @@ const carouselWidth = Dimensions.get("window").width;
 const carouselHeight = Dimensions.get("window").height;
 const itemWidth = Math.round(carouselWidth * 0.9);
 
-export const LESSON_TYPE_SLIDES = 0;
-export const LESSON_TYPE_MULTIPLE_CHOICE = 1;
+export const LESSON_TYPE_SLIDES = "slides";
+export const LESSON_TYPE_MULTIPLE_CHOICE = "multiplechoice";
+export const LESSON_TYPE_CROSSWORD = "crossword";
 
-const Lesson = (props) => {
+const LessonComponent = (props) => {
   const carouselRef = useRef(null);
   const dispatch = useDispatch();
   const [allowScroll, setAllowScroll] = useState(false);
-  const [activeSlide, setActiveSlide] = useState(props.start);
+  const [activeSlide, setActiveSlide] = useState(props.start + 1);
 
   const renderItem = ({ item }) => {
     let content;
@@ -28,7 +29,7 @@ const Lesson = (props) => {
         content = (
           <WordCard
             word={item}
-            onComplete={handleCompleteItem}
+            onWordComplete={handleWordComplete}
             goNext={handleGoNext}
           />
         );
@@ -38,7 +39,8 @@ const Lesson = (props) => {
           <MultipleChoice
             word={item}
             words={props.words}
-            onComplete={handleCompleteItem}
+            onWordComplete={handleWordComplete}
+            onSubmitAnswer={props.onSubmitAnswer}
             goNext={handleGoNext}
           />
         );
@@ -47,7 +49,7 @@ const Lesson = (props) => {
     return <View style={styles.item}>{content}</View>;
   };
 
-  const handleCompleteItem = (wordId) => {
+  const handleWordComplete = (wordId) => {
     setAllowScroll(true);
     dispatch(markWordAsSeen(wordId));
   };
@@ -74,7 +76,8 @@ const Lesson = (props) => {
 
       <Carousel
         ref={carouselRef}
-        firstItem={props.start - 1}
+        firstItem={props.start}
+        initialNumToRender={props.words.length}
         layout={"default"}
         data={props.words}
         renderItem={renderItem}
@@ -97,7 +100,7 @@ const Lesson = (props) => {
   );
 };
 
-Lesson.defaultProps = {
+LessonComponent.defaultProps = {
   start: 1,
   type: LESSON_TYPE_SLIDES,
 };
@@ -113,6 +116,11 @@ const styles = StyleSheet.create({
     margin: "auto",
     textAlign: "center",
   },
+  buttonContainer: {
+    display: "flex",
+    alignItems: "center",
+    height: 80,
+  },
   progress: {
     textAlign: "center",
     top: 20,
@@ -121,4 +129,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Lesson;
+export default LessonComponent;
