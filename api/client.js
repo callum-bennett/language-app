@@ -20,7 +20,7 @@ apiClient.interceptors.response.use(
   (res) => res,
   (error) => {
     const { response } = error;
-    const redirectRoute = availableRoutes().contains("Authentication")
+    const redirectRoute = availableRoutes().includes("Authentication")
       ? "Authentication"
       : "Categories";
 
