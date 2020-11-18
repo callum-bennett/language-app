@@ -4,6 +4,16 @@ export const selectLessonsByCategoryId = (state, categoryId) => {
   );
 };
 
-export const selectLessonStatus = (state, lessonId) => {
+export const selectLessonProgress = (state, lessonId) => {
   return state.lessons.userProgress[lessonId] ?? null;
+};
+
+export const selectActiveComponentKey = (state, lessonId) => {
+  const progress = selectLessonProgress(state, lessonId);
+
+  if (progress?.status === 0) {
+    return state.lessons.components.byId[progress.activeComponent].shortname;
+  }
+
+  return null;
 };

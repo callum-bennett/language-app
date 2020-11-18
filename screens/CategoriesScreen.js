@@ -6,9 +6,10 @@ import { Snackbar } from "react-native-paper";
 import { fetchCategories } from "../store/actions/categories";
 import CategoryTile from "../components/CategoryTile";
 import { selectCategoriesAsArray } from "../store/selectors/category";
-import { fetchLessons } from "../store/actions/lessons";
+import { fetchLessons, fetchLessonComponents } from "../store/actions/lessons";
 import AppText from "../components/AppText";
 import * as Colors from "../constants/Colors";
+import { fetchWords } from "../store/actions/words";
 
 const CategoryScreen = (props) => {
   const dispatch = useDispatch();
@@ -18,6 +19,8 @@ const CategoryScreen = (props) => {
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(fetchLessons());
+    dispatch(fetchLessonComponents());
+    dispatch(fetchWords());
   }, []);
 
   useEffect(() => {

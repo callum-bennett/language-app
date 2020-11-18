@@ -30,6 +30,7 @@ import * as Animatable from "react-native-animatable";
 import * as Colors from "../../constants/Colors";
 import { playSound } from "../../utils/sounds";
 import { FEEDBACK_NEGATIVE, FEEDBACK_POSITIVE } from "../../utils/sounds";
+import BottomContainer from "./BottomContainer";
 
 const Crossword = (props) => {
   const dispatch = useDispatch();
@@ -164,7 +165,7 @@ const Crossword = (props) => {
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>
-      <View style={styles.controlContainer}>
+      <BottomContainer style={{ position: "absolute" }}>
         {activeAnswer ? (
           <>
             <AppText style={styles.clue}>
@@ -204,7 +205,7 @@ const Crossword = (props) => {
             )}
           </>
         )}
-      </View>
+      </BottomContainer>
     </View>
   ) : (
     <AppText>Loading</AppText>
@@ -212,19 +213,6 @@ const Crossword = (props) => {
 };
 
 const styles = StyleSheet.create({
-  controlContainer: {
-    backgroundColor: "#DDD",
-    borderTopWidth: 2,
-    borderTopColor: Colors.accent,
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    position: "absolute",
-    height: 50,
-    bottom: 0,
-    width: "100%",
-  },
   answerInput: {
     display: "none",
   },

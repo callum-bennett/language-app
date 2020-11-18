@@ -6,3 +6,6 @@ export const light = "#cbc9c9";
 export const dark = "#160c28";
 
 export const error = "#aa0000";
+
+export const correctBg = "#f0fff0";
+export const wrongBg = "#ffe1e1";
