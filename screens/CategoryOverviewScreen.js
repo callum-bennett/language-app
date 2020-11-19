@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
+import { useIsFocused } from "@react-navigation/native";
 
 import AppText from "../components/AppText";
 import { fetchCategoryProgress } from "../store/actions/categories";
@@ -29,6 +30,8 @@ const wait = (timeout) => {
 
 const CategoryOverviewScreen = (props) => {
   const dispatch = useDispatch();
+  const isFocused = useIsFocused();
+
   const { categoryId } = useContext(CategoryContext);
 
   const [loaded, setLoaded] = React.useState(false);
@@ -59,11 +62,15 @@ const CategoryOverviewScreen = (props) => {
   };
 
   useEffect(() => {
-    loadData();
-    return () => {
+    if (isFocused) {
+      loadData();
+      return () => {
+        setLoaded(false);
+      };
+    } else {
       setLoaded(false);
-    };
-  }, []);
+    }
+  }, [isFocused]);
 
   useEffect(() => {
     if (refreshing || !loaded) {
