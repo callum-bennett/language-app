@@ -1,10 +1,10 @@
-import apiClient from "../../api/client";
+import apiV1Client from "../../api/apiv1client";
 export const FETCH_WORDS = "fetch_words";
 export const FETCH_USER_VOCABULARY = "fetch_user_vocabulary";
 export const ADD_USER_VOCABULARY = "add_user_vocabulary";
 
 export const fetchWords = () => async (dispatch) => {
-  const res = await apiClient.get("/api/word");
+  const res = await apiV1Client.get("/word");
 
   if (res.data.length) {
     dispatch({
@@ -15,7 +15,7 @@ export const fetchWords = () => async (dispatch) => {
 };
 
 export const fetchUserVocabulary = () => async (dispatch) => {
-  const res = await apiClient.get("/api/user_vocabulary");
+  const res = await apiV1Client.get("/user_vocabulary");
 
   if (res.data) {
     dispatch({
@@ -27,7 +27,7 @@ export const fetchUserVocabulary = () => async (dispatch) => {
 
 export const markWordAsSeen = (id) => async (dispatch) => {
   try {
-    const res = await apiClient.post(`/api/word/${id}/mark_seen`);
+    const res = await apiV1Client.post(`/word/${id}/mark_seen`);
 
     if (res.data) {
       dispatch({
@@ -40,7 +40,7 @@ export const markWordAsSeen = (id) => async (dispatch) => {
 
 export const submitAttempt = (id, wordId, correct) => async (dispatch) => {
   try {
-    const res = await apiClient.post(`/api/lesson/${id}/submitAnswer`, {
+    const res = await apiV1Client.post(`/lesson/${id}/submitAnswer`, {
       wordId,
       correct,
     });

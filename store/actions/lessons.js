@@ -1,11 +1,11 @@
-import apiClient from "../../api/client";
+import apiV1Client from "../../api/apiv1client";
 export const ADVANCE_LESSON = "advance_lesson";
 export const FETCH_LESSONS = "fetch_lessons";
 export const FETCH_LESSON_COMPONENTS = "fetch_lesson_components";
 
 export const fetchLessons = () => async (dispatch) => {
   try {
-    const res = await apiClient.get("/api/lesson");
+    const res = await apiV1Client.get("/lesson");
 
     if (res.data) {
       dispatch({
@@ -18,7 +18,7 @@ export const fetchLessons = () => async (dispatch) => {
 
 export const advanceLesson = (lessonId) => async (dispatch) => {
   try {
-    const res = await apiClient.patch(`/api/lesson/${lessonId}/advance`);
+    const res = await apiV1Client.patch(`/lesson/${lessonId}/advance`);
 
     if (res.data) {
       dispatch({
@@ -31,7 +31,7 @@ export const advanceLesson = (lessonId) => async (dispatch) => {
 
 export const fetchLessonComponents = () => async (dispatch) => {
   try {
-    const res = await apiClient.get("/api/lesson_component");
+    const res = await apiV1Client.get("/lesson_component");
 
     if (res.data) {
       dispatch({

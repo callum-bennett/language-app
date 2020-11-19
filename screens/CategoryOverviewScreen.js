@@ -16,7 +16,7 @@ import { selectUserVocabularyByCategoryId } from "../store/selectors/userVocabul
 import { selectLessonsByCategoryId } from "../store/selectors/lesson";
 import { selectCategoryById } from "../store/selectors/category";
 import { fetchUserVocabulary, fetchWords } from "../store/actions/words";
-import apiClient from "../api/client";
+import apiV1Client from "../api/apiv1client";
 import CategoryHeader from "../components/CategoryHeader";
 import CategoryLessonList from "../components/CategoryLessonList";
 import { ActivityIndicator } from "react-native-paper";
@@ -86,7 +86,7 @@ const CategoryOverviewScreen = (props) => {
 
   const handlePressLearn = async (lesson) => {
     try {
-      const res = await apiClient.patch(`/api/lesson/${lesson.id}/start`);
+      const res = await apiV1Client.patch(`/lesson/${lesson.id}/start`);
       if (res) {
         props.navigation.navigate({
           name: "CategoryLesson",

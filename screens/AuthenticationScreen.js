@@ -8,12 +8,13 @@ import {
   View,
   Image,
 } from "react-native";
+import axios from "axios";
 
-import apiClient from "../api/client";
 import { setAuthenticated } from "../store/actions/authentication";
 import AuthForm from "../components/AuthForm";
 import AppText from "../components/AppText";
 import * as Colors from "../constants/Colors";
+import { ROOT_URI } from "../api";
 
 const SIGN_IN = "sign_in";
 const SIGN_UP = "sign_up";
@@ -74,7 +75,7 @@ const AuthenticationScreen = () => {
     formData.append("password", password);
 
     try {
-      const res = await apiClient.post(route, formData, {
+      const res = await axios.post(`${ROOT_URI}${route}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data;",
         },

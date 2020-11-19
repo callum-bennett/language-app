@@ -1,10 +1,10 @@
-import apiClient from "../../api/client";
+import apiV1Client from "../../api/apiv1client";
 export const FETCH_CATEGORIES = "fetch_categories";
 export const FETCH_CATEGORY_PROGRESS = "fetch_category_progress";
 
 export const fetchCategories = () => async (dispatch) => {
   try {
-    const res = await apiClient.get("/api/category");
+    const res = await apiV1Client.get("/category");
 
     if (res.data) {
       dispatch({
@@ -17,7 +17,7 @@ export const fetchCategories = () => async (dispatch) => {
 
 export const fetchCategoryProgress = (id) => async (dispatch) => {
   try {
-    const res = await apiClient.get(`/api/category/${id}/progress`);
+    const res = await apiV1Client.get(`/category/${id}/progress`);
 
     if (res.data) {
       dispatch({

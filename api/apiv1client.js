@@ -1,22 +1,19 @@
 import axios from "axios";
 import AsyncStorage from "@react-native-community/async-storage";
 import { availableRoutes, navigate } from "../navigation/RootNavigation";
+import { ROOT_URI } from "./index";
 
-const apiClient = axios.create({
-  baseURL: "http://192.168.0.7:8001",
+const apiV1Client = axios.create({
+  baseURL: `${ROOT_URI}/api/v1`,
   timeout: 2000,
 });
 
-apiClient.interceptors.request.use(async (req) => {
-  // Add auth token to headers
-  if (req.url.substr(0, 4) === "/api") {
-    req.headers["X-AUTH-TOKEN"] = await AsyncStorage.getItem("authToken");
-  }
-
+apiV1Client.interceptors.request.use(async (req) => {
+  req.headers["X-AUTH-TOKEN"] = await AsyncStorage.getItem("authToken");
   return req;
 });
 
-apiClient.interceptors.response.use(
+apiV1Client.interceptors.response.use(
   (res) => res,
   (error) => {
     const { response } = error;
@@ -44,4 +41,4 @@ apiClient.interceptors.response.use(
   }
 );
 
-export default apiClient;
+export default apiV1Client;
