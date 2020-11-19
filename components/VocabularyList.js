@@ -8,13 +8,20 @@ const VocabularyList = (props) => {
 
   const renderItem = ({ item }) => {
     const word = words[item.word];
+    const totalGuesses = item.correct + item.wrong;
 
-    const { guesses, successRate } = item;
+    let successRate = "-";
+    if (totalGuesses > 0) {
+      successRate = Math.round((item.correct / totalGuesses) * 100) + "%";
+    }
+
     return (
       <View style={styles.listItem}>
         <AppText style={styles.word}>{word.name}</AppText>
         <View>
-          <AppText style={styles.textSmall}>No. of guesses: {guesses}</AppText>
+          <AppText style={styles.textSmall}>
+            No. of guesses: {totalGuesses}
+          </AppText>
           <AppText style={styles.textSmall}>
             Success rate: {successRate}
           </AppText>
