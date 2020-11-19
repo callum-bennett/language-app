@@ -14,6 +14,12 @@ import AppButton from "./AppButton";
 import FormControl from "./FormControl";
 import AppTextInput from "./AppTextInput";
 import * as Colors from "../constants/Colors";
+import LoginForm from "./Auth/LoginForm";
+import SignUpForm from "./Auth/SignUpForm";
+import UsernameField from "./UsernameField";
+import EmailField from "./EmailField";
+import PasswordField from "./PasswordField";
+import PasswordConfirmField from "./PasswordConfirmField";
 
 const INPUT_CHANGE = "input_change";
 const SWITCH_FORM = "switch_form";
@@ -74,10 +80,6 @@ const reducer = (state, action) => {
 };
 
 const AuthForm = (props) => {
-  const [showPassword, setShowPassword] = useState(false);
-  const passwordInputRef = useRef(null);
-  const confirmPasswordInputRef = useRef(null);
-
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -103,93 +105,26 @@ const AuthForm = (props) => {
     }
   };
 
-  const ShowHideToggle = () => (
-    <TouchableWithoutFeedback
-      onPress={() => setShowPassword(!showPassword)}
-      hitSlop={{ top: 30, right: 40, bottom: 20, left: 40 }}
-    >
-      <View style={styles.passwordIcon}>
-        <MaterialCommunityIcons
-          name={showPassword ? "eye" : "eye-off"}
-          size={24}
-          color="#666"
-        />
-      </View>
-    </TouchableWithoutFeedback>
-  );
-
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : "height"}
       style={[styles.form]}
     >
-      <FormControl>
-        <AppTextInput
-          key="email"
-          id="email"
-          label="Email"
-          autoCapitalize="none"
-          required
-          regex={
-            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-          }
-          maxLength={50}
-          value={state.fields.email.value}
-          keyboardType="email-address"
-          onChange={handleChange}
-          blurOnSubmit={false}
-          returnKeyType={"next"}
-          onSubmitEditing={() => {
-            passwordInputRef.current?.focus();
-          }}
-          changed={props.isSignIn}
-          validate={state.dirty}
-        />
-      </FormControl>
-      <FormControl>
-        <AppTextInput
-          key="password"
-          id="password"
-          label="Password"
-          ref={passwordInputRef}
-          autoCapitalize="none"
-          required
-          maxLength={50}
-          returnKeyType={props.isSignIn ? "done" : "next"}
-          secureTextEntry={!showPassword}
-          value={state.fields.password.value}
-          onChange={handleChange}
-          blurOnSubmit={props.isSignIn}
-          onSubmitEditing={() => {
-            confirmPasswordInputRef.current?.focus();
-          }}
-          changed={props.isSignIn}
-          validate={state.dirty}
-          icon={<ShowHideToggle />}
-        />
-      </FormControl>
-      {!props.isSignIn && (
+      <View>
         <FormControl>
-          <AppTextInput
-            key="confirmPassword"
-            id="confirmPassword"
-            label="Confirm Password"
-            ref={confirmPasswordInputRef}
-            autoCapitalize="none"
-            required
-            maxLength={50}
-            equalTo={{
-              message: "Passwords don't match",
-              value: state.fields.password.value,
-            }}
-            secureTextEntry={true}
-            value={state.fields.confirmPassword.value}
-            onChange={handleChange}
-            changed={props.isSignIn}
-            validate={state.dirty}
-          />
+          <UsernameField />
         </FormControl>
-      )}
+        <FormControl>
+          <EmailField />
+        </FormControl>
+        <FormControl>
+          <PasswordField />
+        </FormControl>
+        <FormControl>
+          <PasswordConfirmField />
+        </FormControl>
+      </View>
+
       <FormControl>
         {!props.loading ? (
           <AppButton onPress={handleSubmit}>
