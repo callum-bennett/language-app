@@ -33,8 +33,6 @@ export const fetchLessonComponents = () => async (dispatch) => {
   try {
     const res = await apiClient.get("/api/lesson_component");
 
-    console.log(res.data);
-
     if (res.data) {
       dispatch({
         type: FETCH_LESSON_COMPONENTS,

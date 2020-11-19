@@ -44,7 +44,7 @@ const CategoryLessonList = (props) => {
       {lessons.length ? (
         Object.values(lessons).map((lesson, i) => {
           const content = getLessonAction(lesson, available);
-          available = userProgress[lesson.id] === LESSON_COMPLETED;
+          available = userProgress[lesson.id]?.status === LESSON_COMPLETED;
           return (
             <View key={i}>
               <AppText style={styles.sectionHeading}>Lesson {i + 1}</AppText>
