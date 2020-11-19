@@ -21,7 +21,7 @@ const SET_DIRTY = "set_dirty";
 
 const initialState = {
   fields: {
-    email: {
+    username: {
       value: "",
       valid: false,
     },
@@ -98,8 +98,8 @@ const AuthForm = (props) => {
     if (!state.valid) {
       dispatch({ type: SET_DIRTY });
     } else {
-      const { email, password } = state.fields;
-      props.onSubmit(email.value, password.value);
+      const { username, password } = state.fields;
+      props.onSubmit(username.value, password.value);
     }
   };
 
@@ -125,17 +125,13 @@ const AuthForm = (props) => {
     >
       <FormControl>
         <AppTextInput
-          key="email"
-          id="email"
-          label="Email"
+          key="username"
+          id="username"
+          label="Username"
           autoCapitalize="none"
           required
-          regex={
-            /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-          }
           maxLength={50}
-          value={state.fields.email.value}
-          keyboardType="email-address"
+          value={state.fields.username.value}
           onChange={handleChange}
           blurOnSubmit={false}
           returnKeyType={"next"}

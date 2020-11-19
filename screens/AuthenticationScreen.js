@@ -65,12 +65,12 @@ const AuthenticationScreen = () => {
     initialState
   );
 
-  const handleAuthenticate = async (email, password) => {
+  const handleAuthenticate = async (username, password) => {
     dispatch({ type: SET_LOADING });
 
     const route = mode === SIGN_UP ? "/register" : "/login";
     const formData = new FormData();
-    formData.append("email", email);
+    formData.append("username", username);
     formData.append("password", password);
 
     try {
