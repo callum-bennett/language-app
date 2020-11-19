@@ -23,7 +23,6 @@ import {
 } from "../../store/actions/crossword";
 import AppButton from "../AppButton";
 import { selectCompleteCount } from "../../store/selectors/crossword";
-import { submitAttempt } from "../../store/actions/words";
 import { arrayToObjectByKey } from "../../util";
 import AppText from "../AppText";
 import * as Animatable from "react-native-animatable";
@@ -139,13 +138,15 @@ const Crossword = (props) => {
   };
 
   const handleConfirm = () => {
-    if (activeAnswer.currentGuess === activeAnswerText) {
+    const isCorrect = activeAnswer.currentGuess === activeAnswerText;
+    if (isCorrect) {
       playSound(FEEDBACK_POSITIVE);
       dispatch(markAnswerCorrect(activeAnswerText));
     } else {
       animationRef.current?.shake();
       playSound(FEEDBACK_NEGATIVE);
     }
+    props.onSubmitAnswer(wordsByText[activeAnswerText].id, isCorrect);
   };
 
   return initialized ? (
@@ -165,7 +166,7 @@ const Crossword = (props) => {
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>
-      <BottomContainer style={{ position: "absolute" }}>
+      <BottomContainer>
         {activeAnswer ? (
           <>
             <AppText style={styles.clue}>

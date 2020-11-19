@@ -80,7 +80,11 @@ const CategoryLessonScreen = (props) => {
             onSubmitAnswer={handleSubmitAnswer}
           />
         ) : activeComponentKey === LESSON_TYPE_CROSSWORD ? (
-          <Crossword words={words} onComplete={handleCompleteComponent} />
+          <Crossword
+            words={words}
+            onComplete={handleCompleteComponent}
+            onSubmitAnswer={handleSubmitAnswer}
+          />
         ) : (
           <View>
             <AppText>Oops! Something went wrong</AppText>
