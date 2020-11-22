@@ -2,14 +2,23 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 const CenteredView = (props) => {
-  return <View style={[styles.view, props.style]}>{props.children}</View>;
+  let style = [styles.view];
+  if (props.grow) {
+    style.push(styles.grow);
+  }
+  style.push(props.style);
+
+  return <View style={style}>{props.children}</View>;
 };
 
 const styles = StyleSheet.create({
   view: {
-    flex: 1,
+    display: "flex",
     alignItems: "center",
     justifyContent: "center",
+  },
+  grow: {
+    flex: 1,
   },
 });
 

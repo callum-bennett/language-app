@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Pressable } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBadges, fetchUserBadges } from "../store/actions/badges";
 import Badge from "../components/Badge";
 import { ActivityIndicator } from "react-native-paper";
 import CenteredView from "../components/AppCenteredView";
 import { selectBadgesGroupedByType } from "../store/selectors/badge";
+import AppModal from "../components/AppModal";
+import AppText from "../components/AppText";
+import * as Colors from "../constants/Colors";
 
 const BadgesScreen = () => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
+  const [selectedBadge, setSelectedBadge] = useState(null);
 
   const groupedBadges = useSelector((state) =>
     selectBadgesGroupedByType(state)
@@ -23,14 +27,15 @@ const BadgesScreen = () => {
     })();
   }, []);
 
-  const renderBadge = (badge) => {
+  const renderBadge = (badge, userBadge, showDescription = false) => {
     return (
-      <View style={styles.badgeItem}>
+      <View key={badge.shortname} style={styles.badgeItem}>
         <Badge
           style={{ margin: 10 }}
-          key={badge.shortname}
           badge={badge}
-          userBadge={userBadges[badge.id] ?? null}
+          userBadge={userBadge}
+          showDescription={showDescription}
+          onSelectBadge={handleSelectBadge}
         />
       </View>
     );
@@ -39,19 +44,48 @@ const BadgesScreen = () => {
   const renderBadgeGroup = (badgeGroup, i) => {
     return (
       <View key={i} style={styles.badgeGroup}>
-        {Object.values(badgeGroup).map((badge) => renderBadge(badge))}
+        {Object.values(badgeGroup).map((badge) => {
+          const userBadge = userBadges[badge.id] ?? null;
+          return renderBadge(badge, userBadge);
+        })}
       </View>
     );
   };
 
+  const handleSelectBadge = (badge) => {
+    setSelectedBadge(badge);
+  };
+
+  const handleHideModal = () => {
+    setSelectedBadge(null);
+  };
+
   return (
-    <CenteredView>
+    <CenteredView grow onPress={handleHideModal}>
       {loaded ? (
-        <View style={styles.container}>
-          {Object.values(groupedBadges).map((badgeGroup, i) =>
-            renderBadgeGroup(badgeGroup, i)
-          )}
-        </View>
+        <Pressable onPress={handleHideModal}>
+          <CenteredView>
+            <CenteredView>
+              {selectedBadge && (
+                <AppModal onTouchAway={handleHideModal}>
+                  <CenteredView>
+                    {renderBadge(
+                      selectedBadge,
+                      userBadges[selectedBadge.id] ?? null,
+                      true
+                    )}
+                    <AppText style={styles.description}>
+                      {selectedBadge.description}
+                    </AppText>
+                  </CenteredView>
+                </AppModal>
+              )}
+            </CenteredView>
+            {Object.values(groupedBadges).map((badgeGroup, i) =>
+              renderBadgeGroup(badgeGroup, i)
+            )}
+          </CenteredView>
+        </Pressable>
       ) : (
         <ActivityIndicator />
       )}
@@ -64,6 +98,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  description: {
+    fontSize: 16,
+    marginTop: 5,
+    color: Colors.primary,
+    textAlign: "center",
+    maxWidth: "90%",
   },
   badgeGroup: {
     flexDirection: "row",

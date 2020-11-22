@@ -1,7 +1,8 @@
 import React from "react";
-import { Image, StyleSheet, View } from "react-native";
+import { Image, StyleSheet, View, Pressable } from "react-native";
 import AppText from "./AppText";
 import * as Colors from "../constants/Colors";
+import CenteredView from "./AppCenteredView";
 
 const Badge = (props) => {
   const { badge, userBadge } = props;
@@ -12,14 +13,15 @@ const Badge = (props) => {
     icon = badge.icon;
     containerStyle.push(styles.iconObtainedContainer);
   }
-
   return (
-    <View style={styles.container}>
-      <View style={containerStyle}>
-        <Image source={{ uri: icon }} style={styles.icon} />
-      </View>
-      <AppText style={styles.name}>{badge.name}</AppText>
-    </View>
+    <Pressable onPress={() => props.onSelectBadge(badge)}>
+      <CenteredView>
+        <View style={containerStyle}>
+          <Image source={{ uri: icon }} style={styles.icon} />
+        </View>
+        <AppText style={styles.name}>{badge.name}</AppText>
+      </CenteredView>
+    </Pressable>
   );
 };
 
@@ -46,12 +48,6 @@ const styles = StyleSheet.create({
   icon: {
     height: 40,
     width: 40,
-  },
-  container: {
-    display: "flex",
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
   },
 });
 
