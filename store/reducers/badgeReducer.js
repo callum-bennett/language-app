@@ -25,8 +25,6 @@ export default (state = initialState, action) => {
     case FETCH_USER_BADGES:
       const userBadges = action.payload;
 
-      console.log(userBadges);
-
       return {
         ...state,
         userBadges: {
