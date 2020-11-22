@@ -7,6 +7,7 @@ import crosswordReducer from "./reducers/crosswordReducer";
 import lessonReducer from "./reducers/lessonReducer";
 import userVocabularyReducer from "./reducers/userVocabularyReducer";
 import authenticationReducer from "./reducers/authenticationReducer";
+import badgeReducer from "./reducers/badgeReducer";
 
 const rootReducer = combineReducers({
   authentication: authenticationReducer,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   lessons: lessonReducer,
   userVocabulary: userVocabularyReducer,
   crossword: crosswordReducer,
+  badges: badgeReducer,
 });
 
 export default createStore(rootReducer, applyMiddleware(reduxThunk));
