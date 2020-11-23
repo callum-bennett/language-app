@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -8,12 +8,16 @@ import DrawerNavigator from "./DrawerNavigator";
 import AuthenticationScreen from "../screens/AuthenticationScreen";
 import { setAuthenticated } from "../store/actions/authentication";
 import { navigationRef } from "./RootNavigation";
+import { ActivityIndicator } from "react-native-paper";
+import CenteredView from "../components/AppCenteredView";
+import * as Colors from "../constants/Colors";
 
 const Stack = createStackNavigator();
 
 export default () => {
-  const dispatchStore = useDispatch();
+  const [tokenCheck, setTokenCheck] = useState(false);
 
+  const dispatchStore = useDispatch();
   const authenticated = useSelector(
     (state) => state.authentication.authenticated
   );
@@ -24,10 +28,11 @@ export default () => {
       if (existingToken) {
         dispatchStore(setAuthenticated(existingToken));
       }
+      setTokenCheck(true);
     })();
   }, [authenticated]);
 
-  return (
+  return tokenCheck ? (
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
         {authenticated ? (
@@ -48,5 +53,9 @@ export default () => {
         )}
       </Stack.Navigator>
     </NavigationContainer>
+  ) : (
+    <CenteredView grow>
+      <ActivityIndicator color={Colors.accent} />
+    </CenteredView>
   );
 };
