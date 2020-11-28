@@ -44,7 +44,7 @@ const WordCard = (props) => {
       </View>
 
       <AppText style={styles.word}>{word.name}</AppText>
-      <AppText style={styles.translation}>({word.translation})</AppText>
+      {/*<AppText style={styles.translation}>({word.translation})</AppText>*/}
       <Animatable.View ref={AnimationRef} direction="alternate">
         <TouchableWithoutFeedback
           hitSlop={{ left: 30, right: 30, top: 30, bottom: 30 }}
@@ -76,9 +76,9 @@ const styles = StyleSheet.create({
   word: {
     fontSize: 24,
   },
-  translation: {
-    fontStyle: "italic",
-  },
+  // translation: {
+  //   fontStyle: "italic",
+  // },
   audio: {
     color: Colors.primary,
     marginTop: 15,

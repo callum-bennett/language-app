@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MultipleChoiceOption;
+export default React.memo((props) => <MultipleChoiceOption {...props} />);

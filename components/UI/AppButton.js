@@ -30,11 +30,11 @@ const AppButton = (props) => {
     textStyle.push(styles.textSmall);
   }
 
+  buttonStyle.push(props.style.button);
+
   if (props.disabled) {
     buttonStyle.push(styles.disabled);
   }
-
-  buttonStyle.push(props.style.button);
 
   return (
     <Touchable

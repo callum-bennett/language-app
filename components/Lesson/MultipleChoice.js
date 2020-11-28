@@ -50,60 +50,34 @@ const MultipleChoice = (props) => {
     }
   };
 
-  const handleOnPress = () => {
-    props.goNext();
-    setAnswerSubmitted(false);
-  };
-
   return (
-    <>
-      <View style={styles.optionContainer}>
-        {data.map((row, i) => (
-          <View key={i} style={styles.row}>
-            {row.map((wordOption) => (
-              <View key={wordOption.id} style={styles.rowItem}>
-                <MultipleChoiceOption
-                  key={wordOption.id}
-                  value={wordOption.name}
-                  image={wordOption.imageUrl}
-                  isCorrect={wordOption.id === props.word.id}
-                  onChoose={handleChoose}
-                  locked={canProgress}
-                />
-              </View>
-            ))}
-          </View>
-        ))}
-      </View>
-      <BottomContainer>
-        <AppButton variant="small">Hint</AppButton>
-        <AppText
-          style={{
-            fontSize: 20,
-            fontWeight: "bold",
-          }}
-        >
-          {props.word.translation}
-        </AppText>
-        <AppButton
-          variant="small"
-          disabled={!canProgress}
-          onPress={handleOnPress}
-        >
-          Next
-        </AppButton>
-      </BottomContainer>
-    </>
+    <View style={styles.optionContainer}>
+      {data.map((row, i) => (
+        <View key={i} style={styles.row}>
+          {row.map((wordOption) => (
+            <View key={wordOption.id} style={styles.rowItem}>
+              <MultipleChoiceOption
+                key={wordOption.id}
+                value={wordOption.name}
+                image={wordOption.imageUrl}
+                isCorrect={wordOption.id === props.word.id}
+                onChoose={handleChoose}
+                locked={canProgress}
+              />
+            </View>
+          ))}
+        </View>
+      ))}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   optionContainer: {
     flex: 1,
-    height: "100%",
     justifyContent: "space-evenly",
     alignItems: "flex-start",
-    padding: 5,
+    paddingBottom: 20,
   },
   row: {
     flex: 1,

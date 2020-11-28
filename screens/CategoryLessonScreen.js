@@ -8,7 +8,7 @@ import Component, {
 import { useDispatch, useSelector } from "react-redux";
 import { selectWordsByLessonId } from "../store/selectors/word";
 import {
-  selectActiveComponentKey,
+  selectActiveComponent,
   selectLessonProgress,
 } from "../store/selectors/lesson";
 import Crossword from "../components/Lesson/Crossword";
@@ -26,15 +26,18 @@ const CategoryLessonScreen = (props) => {
     words,
     userLessonVocabulary,
     lessonProgress,
-    activeComponentKey,
+    activeComponent,
   ] = useSelector((state) => [
     selectWordsByLessonId(state, lessonId),
     selectUserVocabularyByLessonId(state, lessonId),
     selectLessonProgress(state, lessonId),
-    selectActiveComponentKey(state, lessonId),
+    selectActiveComponent(state, lessonId),
   ]);
 
+  const activeComponentKey = activeComponent.shortname;
+
   let startSlide = 0;
+
   if (activeComponentKey === LESSON_TYPE_SLIDES) {
     const vocabLength = Object.values(userLessonVocabulary).filter((v) => v)
       .length;
@@ -73,10 +76,11 @@ const CategoryLessonScreen = (props) => {
             activeComponentKey
           ) ? (
           <Component
+            key={activeComponentKey}
             words={words}
             start={startSlide}
             onComplete={handleCompleteComponent}
-            type={activeComponentKey}
+            component={activeComponent}
             onSubmitAnswer={handleSubmitAnswer}
           />
         ) : activeComponentKey === LESSON_TYPE_CROSSWORD ? (

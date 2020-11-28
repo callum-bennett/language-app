@@ -2,11 +2,15 @@ import React, { useRef, useState } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel/src/carousel/Carousel";
 import WordCard from "./WordCard";
-import { markWordAsSeen, submitAttempt } from "../../store/actions/words";
+import { markWordAsSeen } from "../../store/actions/words";
 import { useDispatch } from "react-redux";
 import AppText from "../UI/AppText";
 import AppButton from "../UI/AppButton";
 import MultipleChoice from "./MultipleChoice";
+import CenteredView from "../UI/AppCenteredView";
+import BottomContainer from "./BottomContainer";
+import * as Colors from "../../constants/Colors";
+import BottomContainerItem from "./BottomContainerItem";
 
 const carouselWidth = Dimensions.get("window").width;
 const carouselHeight = Dimensions.get("window").height;
@@ -22,9 +26,12 @@ const Component = (props) => {
   const [allowScroll, setAllowScroll] = useState(false);
   const [activeSlide, setActiveSlide] = useState(props.start + 1);
 
+  const { hintsAvailable } = props.component;
+  const isLastSlide = activeSlide === props.words.length;
+
   const renderItem = ({ item }) => {
     let content;
-    switch (props.type) {
+    switch (props.component.shortname) {
       case LESSON_TYPE_SLIDES:
         content = (
           <WordCard
@@ -54,26 +61,26 @@ const Component = (props) => {
     dispatch(markWordAsSeen(wordId));
   };
 
-  const handleSnapToItem = (index) => {
-    setActiveSlide(index + 1);
-  };
-
   const handleBeforeSnap = () => {
     setAllowScroll(false);
+    setActiveSlide((prevValue) => prevValue + 1);
   };
 
   const handleGoNext = () => {
     carouselRef.current?.snapToNext();
   };
 
+  const handlePressHint = () => {
+    console.log("Coming soon!");
+  };
+
   return (
-    <View style={styles.container}>
-      <View>
+    <CenteredView grow>
+      <CenteredView style={styles.progressContainer}>
         <AppText
           style={styles.progress}
         >{`${activeSlide} / ${props.words.length}`}</AppText>
-      </View>
-
+      </CenteredView>
       <Carousel
         ref={carouselRef}
         firstItem={props.start}
@@ -86,17 +93,49 @@ const Component = (props) => {
         itemWidth={itemWidth}
         scrollEnabled={allowScroll}
         onBeforeSnapToItem={handleBeforeSnap}
-        onSnapToItem={handleSnapToItem}
       />
 
-      <View style={styles.buttonContainer}>
-        {allowScroll && activeSlide === props.words.length && (
-          <AppButton onPress={props.onComplete} style={styles.button}>
-            Continue
-          </AppButton>
-        )}
-      </View>
-    </View>
+      <BottomContainer>
+        <BottomContainerItem>
+          {hintsAvailable && (
+            <AppButton
+              variant="small"
+              onPress={handlePressHint}
+              style={{
+                button: styles.hintButton,
+              }}
+            >
+              Hint
+            </AppButton>
+          )}
+        </BottomContainerItem>
+        <BottomContainerItem>
+          <AppText style={styles.translation}>
+            {props.words[activeSlide - 1].translation}
+          </AppText>
+        </BottomContainerItem>
+
+        <BottomContainerItem>
+          {isLastSlide ? (
+            <AppButton
+              variant="small"
+              disabled={!allowScroll}
+              onPress={props.onComplete}
+            >
+              Continue
+            </AppButton>
+          ) : (
+            <AppButton
+              variant="small"
+              disabled={!allowScroll}
+              onPress={handleGoNext}
+            >
+              Next
+            </AppButton>
+          )}
+        </BottomContainerItem>
+      </BottomContainer>
+    </CenteredView>
   );
 };
 
@@ -108,22 +147,25 @@ Component.defaultProps = {
 const styles = StyleSheet.create({
   carousel: {
     position: "relative",
+    width: "100%",
   },
   item: {
     flex: 1,
   },
-  button: {
-    margin: "auto",
-    textAlign: "center",
+  hintButton: {
+    backgroundColor: Colors.accent,
+    width: "auto",
   },
-  buttonContainer: {
-    display: "flex",
-    alignItems: "center",
-    height: 80,
+  translation: {
+    alignSelf: "center",
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  progressContainer: {
+    height: 40,
   },
   progress: {
     textAlign: "center",
-    top: 20,
     width: "100%",
     zIndex: 1,
   },
