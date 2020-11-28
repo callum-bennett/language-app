@@ -1,18 +1,30 @@
 import React from "react";
-import { StyleSheet, Modal, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Modal,
+  View,
+  TouchableWithoutFeedback,
+} from "react-native";
 import AppCenteredView from "./AppCenteredView";
 import AppCard from "./AppCard";
-import * as Colors from "../../constants/Colors";
 
 const AppModal = (props) => {
   return (
-    <Modal animationType="fade" transparent={true} visible={props.visible}>
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={props.visible}
+      closeOnClick={true}
+      onRequestClose={props.onTouchAway}
+    >
+      <TouchableWithoutFeedback onPress={props.onTouchAway}>
+        <View style={styles.overlay} />
+      </TouchableWithoutFeedback>
+
       <AppCenteredView grow>
-        <Pressable onPress={props.onTouchAway}>
-          <AppCard style={styles.card}>
-            <AppCenteredView>{props.children}</AppCenteredView>
-          </AppCard>
-        </Pressable>
+        <AppCard style={styles.card}>
+          <AppCenteredView>{props.children}</AppCenteredView>
+        </AppCard>
       </AppCenteredView>
     </Modal>
   );
@@ -20,8 +32,15 @@ const AppModal = (props) => {
 
 const styles = StyleSheet.create({
   card: {
-    borderColor: Colors.primary,
     padding: 30,
+  },
+  overlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    bottom: 0,
+    right: 0,
+    backgroundColor: "rgba(0,0,0,.15)",
   },
 });
 

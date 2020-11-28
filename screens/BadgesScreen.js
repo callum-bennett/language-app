@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchBadges, fetchUserBadges } from "../store/actions/badges";
 import Badge from "../components/Badge";
@@ -8,7 +8,6 @@ import CenteredView from "../components/UI/AppCenteredView";
 import { selectBadgesGroupedByType } from "../store/selectors/badge";
 import AppModal from "../components/UI/AppModal";
 import AppText from "../components/UI/AppText";
-import * as Colors from "../constants/Colors";
 
 const BadgesScreen = () => {
   const dispatch = useDispatch();
@@ -61,33 +60,27 @@ const BadgesScreen = () => {
   };
 
   return (
-    <CenteredView grow onPress={handleHideModal}>
+    <CenteredView grow>
       {loaded ? (
-        <Pressable onPress={handleHideModal}>
-          <CenteredView>
-            <CenteredView>
-              {selectedBadge && (
-                <AppModal onTouchAway={handleHideModal}>
-                  <CenteredView>
-                    {renderBadge(
-                      selectedBadge,
-                      userBadges[selectedBadge.id] ?? null,
-                      true
-                    )}
-                    <AppText style={styles.description}>
-                      {selectedBadge.description}
-                    </AppText>
-                  </CenteredView>
-                </AppModal>
-              )}
-            </CenteredView>
-            {Object.values(groupedBadges).map((badgeGroup, i) =>
-              renderBadgeGroup(badgeGroup, i)
-            )}
-          </CenteredView>
-        </Pressable>
+        Object.values(groupedBadges).map((badgeGroup, i) =>
+          renderBadgeGroup(badgeGroup, i)
+        )
       ) : (
         <ActivityIndicator />
+      )}
+      {selectedBadge && (
+        <AppModal onTouchAway={handleHideModal}>
+          <CenteredView>
+            {renderBadge(
+              selectedBadge,
+              userBadges[selectedBadge.id] ?? null,
+              true
+            )}
+            <AppText style={styles.description}>
+              {selectedBadge.description}
+            </AppText>
+          </CenteredView>
+        </AppModal>
       )}
     </CenteredView>
   );
@@ -102,7 +95,6 @@ const styles = StyleSheet.create({
   description: {
     fontSize: 16,
     marginTop: 5,
-    color: Colors.primary,
     textAlign: "center",
     maxWidth: "90%",
   },
