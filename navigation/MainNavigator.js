@@ -10,9 +10,25 @@ const Stack = createStackNavigator();
 export default () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Categories" component={CategoryScreen} />
-      <Stack.Screen name="CategoryNavigator" component={CategoryNavigator} />
-      <Stack.Screen name="CategoryLesson" component={CategoryLessonScreen} />
+      <Stack.Screen
+        name="Categories"
+        component={CategoryScreen}
+        options={{ title: "Learn" }}
+      />
+      <Stack.Screen
+        name="CategoryNavigator"
+        component={CategoryNavigator}
+        options={({ route }) => ({
+          title: route.params.title,
+        })}
+      />
+      <Stack.Screen
+        name="CategoryLesson"
+        component={CategoryLessonScreen}
+        options={({ route }) => ({
+          title: route.params.title,
+        })}
+      />
     </Stack.Navigator>
   );
 };
