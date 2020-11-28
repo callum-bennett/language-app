@@ -14,7 +14,16 @@ apiV1Client.interceptors.request.use(async (req) => {
 });
 
 apiV1Client.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    //@todo tidy up
+    if (res.data?.notifications) {
+      // @ todo dispatch notifications
+    }
+    if (res.data?.payload) {
+      res.data = res.data.payload;
+    }
+    return res;
+  },
   (error) => {
     const { response } = error;
     const redirectRoute = availableRoutes().includes("Authentication")

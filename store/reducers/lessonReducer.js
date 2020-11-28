@@ -2,6 +2,7 @@ import {
   ADVANCE_LESSON,
   FETCH_LESSONS,
   FETCH_LESSON_COMPONENTS,
+  START_LESSON,
 } from "../actions/lessons";
 import { arrayToObjectByKey } from "../../util";
 import { FETCH_CATEGORY_PROGRESS } from "../actions/categories";
@@ -41,6 +42,18 @@ export default (state = initialState, action) => {
       };
 
       break;
+    }
+
+    case START_LESSON: {
+      const userProgress = action.payload;
+
+      return {
+        ...state,
+        userProgress: {
+          ...state.userProgress,
+          [userProgress.lesson]: userProgress,
+        },
+      };
     }
 
     case FETCH_LESSON_COMPONENTS: {

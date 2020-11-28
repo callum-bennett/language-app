@@ -21,6 +21,7 @@ import CategoryHeader from "../components/CategoryHeader";
 import CategoryLessonList from "../components/CategoryLessonList";
 import { ActivityIndicator } from "react-native-paper";
 import { CategoryContext } from "../navigation/RootNavigation";
+import { startLesson } from "../store/actions/lessons";
 
 const wait = (timeout) => {
   return new Promise((resolve) => {
@@ -85,18 +86,14 @@ const CategoryOverviewScreen = (props) => {
   }, []);
 
   const handlePressLearn = async (lesson) => {
-    try {
-      const res = await apiV1Client.patch(`/lesson/${lesson.id}/start`);
-      if (res) {
-        props.navigation.navigate({
-          name: "CategoryLesson",
-          params: {
-            lessonId: lesson.id,
-            title: `${category.name} / Lesson ${lesson.sequence + 1}`,
-          },
-        });
-      }
-    } catch (e) {}
+    dispatch(startLesson(lesson.id));
+    props.navigation.navigate({
+      name: "CategoryLesson",
+      params: {
+        lessonId: lesson.id,
+        title: `${category.name} / Lesson ${lesson.sequence + 1}`,
+      },
+    });
   };
 
   const handlePressWords = () => {
