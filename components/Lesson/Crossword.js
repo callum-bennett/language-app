@@ -10,8 +10,8 @@ import {
 } from "react-native";
 
 import { people1 as crosswordConfig } from "../../data/crosswords";
-import Grid from "../Game/Crossword/Grid";
-import Clues from "../Game/Crossword/Clues";
+import Grid from "./Crossword/Grid";
+import Clues from "./Crossword/Clues";
 import {
   clearActiveAnswer,
   startCrossword,

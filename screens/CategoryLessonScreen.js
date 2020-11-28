@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import LessonComponent, {
+import Component, {
   LESSON_TYPE_CROSSWORD,
   LESSON_TYPE_MULTIPLE_CHOICE,
   LESSON_TYPE_SLIDES,
-} from "../components/LessonComponent";
+} from "../components/Lesson/Component";
 import { useDispatch, useSelector } from "react-redux";
 import { selectWordsByLessonId } from "../store/selectors/word";
 import {
@@ -72,7 +72,7 @@ const CategoryLessonScreen = (props) => {
         ) : [LESSON_TYPE_SLIDES, LESSON_TYPE_MULTIPLE_CHOICE].includes(
             activeComponentKey
           ) ? (
-          <LessonComponent
+          <Component
             words={words}
             start={startSlide}
             onComplete={handleCompleteComponent}

@@ -1,12 +1,12 @@
 import React, { useRef, useState } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel/src/carousel/Carousel";
-import WordCard from "./Lesson/WordCard";
-import { markWordAsSeen, submitAttempt } from "../store/actions/words";
+import WordCard from "./WordCard";
+import { markWordAsSeen, submitAttempt } from "../../store/actions/words";
 import { useDispatch } from "react-redux";
-import AppText from "./UI/AppText";
-import AppButton from "./UI/AppButton";
-import MultipleChoice from "./Lesson/MultipleChoice";
+import AppText from "../UI/AppText";
+import AppButton from "../UI/AppButton";
+import MultipleChoice from "./MultipleChoice";
 
 const carouselWidth = Dimensions.get("window").width;
 const carouselHeight = Dimensions.get("window").height;
@@ -16,7 +16,7 @@ export const LESSON_TYPE_SLIDES = "slides";
 export const LESSON_TYPE_MULTIPLE_CHOICE = "multiplechoice";
 export const LESSON_TYPE_CROSSWORD = "crossword";
 
-const LessonComponent = (props) => {
+const Component = (props) => {
   const carouselRef = useRef(null);
   const dispatch = useDispatch();
   const [allowScroll, setAllowScroll] = useState(false);
@@ -100,7 +100,7 @@ const LessonComponent = (props) => {
   );
 };
 
-LessonComponent.defaultProps = {
+Component.defaultProps = {
   start: 1,
   type: LESSON_TYPE_SLIDES,
 };
@@ -129,4 +129,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LessonComponent;
+export default Component;
