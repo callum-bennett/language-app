@@ -4,8 +4,8 @@ import Carousel from "react-native-snap-carousel/src/carousel/Carousel";
 import WordCard from "./Lesson/WordCard";
 import { markWordAsSeen, submitAttempt } from "../store/actions/words";
 import { useDispatch } from "react-redux";
-import AppText from "./AppText";
-import AppButton from "./AppButton";
+import AppText from "./UI/AppText";
+import AppButton from "./UI/AppButton";
 import MultipleChoice from "./Lesson/MultipleChoice";
 
 const carouselWidth = Dimensions.get("window").width;

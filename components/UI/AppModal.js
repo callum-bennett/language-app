@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Modal, Pressable } from "react-native";
 import AppCenteredView from "./AppCenteredView";
 import AppCard from "./AppCard";
-import * as Colors from "../constants/Colors";
+import * as Colors from "../../constants/Colors";
 
 const AppModal = (props) => {
   return (

@@ -6,8 +6,8 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import AppCard from "../AppCard";
-import AppText from "../AppText";
+import AppCard from "../UI/AppCard";
+import AppText from "../UI/AppText";
 import * as Colors from "../../constants/Colors";
 
 const MultipleChoiceOption = (props) => {

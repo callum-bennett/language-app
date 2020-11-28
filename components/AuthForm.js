@@ -10,9 +10,9 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import AppButton from "./AppButton";
+import AppButton from "./UI/AppButton";
 import FormControl from "./FormControl";
-import AppTextInput from "./AppTextInput";
+import AppTextInput from "./UI/AppTextInput";
 import * as Colors from "../constants/Colors";
 
 const INPUT_CHANGE = "input_change";

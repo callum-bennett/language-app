@@ -7,7 +7,7 @@ import { fetchCategories } from "../store/actions/categories";
 import CategoryTile from "../components/CategoryTile";
 import { selectCategoriesAsArray } from "../store/selectors/category";
 import { fetchLessons, fetchLessonComponents } from "../store/actions/lessons";
-import AppText from "../components/AppText";
+import AppText from "../components/UI/AppText";
 import * as Colors from "../constants/Colors";
 import { fetchWords } from "../store/actions/words";
 

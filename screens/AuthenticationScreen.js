@@ -12,7 +12,7 @@ import axios from "axios";
 
 import { setAuthenticated } from "../store/actions/authentication";
 import AuthForm from "../components/AuthForm";
-import AppText from "../components/AppText";
+import AppText from "../components/UI/AppText";
 import * as Colors from "../constants/Colors";
 import { ROOT_URI } from "../api";
 

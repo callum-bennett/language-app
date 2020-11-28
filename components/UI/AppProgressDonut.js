@@ -1,6 +1,6 @@
 import React from "react";
 import AnimatedProgressWheel from "react-native-progress-wheel";
-import * as Colors from "../constants/Colors";
+import * as Colors from "../../constants/Colors";
 
 const AppProgressDonut = (props) => {
   return (

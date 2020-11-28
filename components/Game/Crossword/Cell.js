@@ -6,7 +6,7 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
-import AppText from "../../AppText";
+import AppText from "../../UI/AppText";
 import { useDispatch, useSelector } from "react-redux";
 import { setActiveAnswer } from "../../../store/actions/crossword";
 

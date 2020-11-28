@@ -11,7 +11,7 @@ import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
 
-import AppText from "../AppText";
+import AppText from "../UI/AppText";
 import * as Colors from "../../constants/Colors";
 import { playSound, WORDS } from "../../utils/sounds";
 

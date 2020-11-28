@@ -21,10 +21,10 @@ import {
   markAnswerCorrect,
   setActiveCell,
 } from "../../store/actions/crossword";
-import AppButton from "../AppButton";
+import AppButton from "../UI/AppButton";
 import { selectCompleteCount } from "../../store/selectors/crossword";
 import { arrayToObjectByKey } from "../../util";
-import AppText from "../AppText";
+import AppText from "../UI/AppText";
 import * as Animatable from "react-native-animatable";
 import * as Colors from "../../constants/Colors";
 import { playSound } from "../../utils/sounds";

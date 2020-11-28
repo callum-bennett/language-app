@@ -1,6 +1,6 @@
 import React from "react";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
-import AppText from "./AppText";
+import AppText from "./UI/AppText";
 
 const CategoryImageWithTitle = (props) => {
   return (

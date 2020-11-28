@@ -9,7 +9,7 @@ import AuthenticationScreen from "../screens/AuthenticationScreen";
 import { setAuthenticated } from "../store/actions/authentication";
 import { navigationRef } from "./RootNavigation";
 import { ActivityIndicator } from "react-native-paper";
-import CenteredView from "../components/AppCenteredView";
+import CenteredView from "../components/UI/AppCenteredView";
 import * as Colors from "../constants/Colors";
 
 const Stack = createStackNavigator();

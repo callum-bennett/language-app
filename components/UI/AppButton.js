@@ -8,7 +8,7 @@ import {
   TouchableNativeFeedback,
 } from "react-native";
 
-import * as Colors from "../constants/Colors";
+import * as Colors from "../../constants/Colors";
 
 const AppButton = (props) => {
   const Touchable =

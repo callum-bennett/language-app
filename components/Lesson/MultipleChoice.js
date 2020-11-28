@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import MultipleChoiceOption from "./MultipleChoiceOption";
 import BottomContainer from "./BottomContainer";
-import AppText from "../AppText";
+import AppText from "../UI/AppText";
 import {
   FEEDBACK_NEGATIVE,
   FEEDBACK_POSITIVE,
   playSound,
 } from "../../utils/sounds";
-import AppButton from "../AppButton";
+import AppButton from "../UI/AppButton";
 
 const MultipleChoice = (props) => {
   const [canProgress, setCanProgress] = useState(false);

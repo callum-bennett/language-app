@@ -4,10 +4,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchBadges, fetchUserBadges } from "../store/actions/badges";
 import Badge from "../components/Badge";
 import { ActivityIndicator } from "react-native-paper";
-import CenteredView from "../components/AppCenteredView";
+import CenteredView from "../components/UI/AppCenteredView";
 import { selectBadgesGroupedByType } from "../store/selectors/badge";
-import AppModal from "../components/AppModal";
-import AppText from "../components/AppText";
+import AppModal from "../components/UI/AppModal";
+import AppText from "../components/UI/AppText";
 import * as Colors from "../constants/Colors";
 
 const BadgesScreen = () => {

@@ -1,7 +1,7 @@
 import React, { useEffect, useReducer } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import AppText from "./AppText";
-import * as Colors from "../constants/Colors";
+import * as Colors from "../../constants/Colors";
 
 const SET_FOCUSSED = "set_focussed";
 const SET_TOUCHED = "set_touched";

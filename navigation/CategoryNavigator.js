@@ -4,7 +4,7 @@ import CategoryOverviewScreen from "../screens/CategoryOverviewScreen";
 import CategoryWordsScreen from "../screens/CategoryWordsScreen";
 import * as Colors from "../constants/Colors";
 import { FontAwesome5 } from "@expo/vector-icons";
-import AppText from "../components/AppText";
+import AppText from "../components/UI/AppText";
 import { CategoryContext } from "./RootNavigation";
 
 const Tab = createBottomTabNavigator();

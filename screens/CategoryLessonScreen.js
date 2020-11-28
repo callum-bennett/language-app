@@ -12,8 +12,8 @@ import {
   selectLessonProgress,
 } from "../store/selectors/lesson";
 import Crossword from "../components/Lesson/Crossword";
-import AppButton from "../components/AppButton";
-import AppText from "../components/AppText";
+import AppButton from "../components/UI/AppButton";
+import AppText from "../components/UI/AppText";
 import { selectUserVocabularyByLessonId } from "../store/selectors/userVocabulary";
 import { ActivityIndicator } from "react-native-paper";
 import { advanceLesson } from "../store/actions/lessons";

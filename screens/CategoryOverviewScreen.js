@@ -10,7 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 
-import AppText from "../components/AppText";
+import AppText from "../components/UI/AppText";
 import { fetchCategoryProgress } from "../store/actions/categories";
 import { selectUserVocabularyByCategoryId } from "../store/selectors/userVocabulary";
 import { selectLessonsByCategoryId } from "../store/selectors/lesson";
