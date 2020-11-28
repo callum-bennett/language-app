@@ -8,6 +8,15 @@ export const selectLessonProgress = (state, lessonId) => {
   return state.lessons.userProgress[lessonId] ?? null;
 };
 
+export const selectLessonResponsesByType = (state, lessonId, type) => {
+  let responses = [];
+  const lessonProgress = selectLessonProgress(state, lessonId);
+  if (lessonProgress) {
+    responses = lessonProgress.responses?.[type];
+  }
+  return responses;
+};
+
 export const selectActiveComponent = (state, lessonId) => {
   const progress = selectLessonProgress(state, lessonId);
 

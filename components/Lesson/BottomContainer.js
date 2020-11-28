@@ -1,9 +1,19 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import * as Colors from "../../constants/Colors";
+import BottomContainerItem from "./BottomContainerItem";
 
 const BottomContainer = (props) => {
-  return <View style={styles.container}>{props.children}</View>;
+  let content;
+  if (props.items) {
+    content = props.items.map((item, i) => (
+      <BottomContainerItem key={i}>{item}</BottomContainerItem>
+    ));
+  } else {
+    content = props.children;
+  }
+
+  return <View style={styles.container}>{content}</View>;
 };
 
 const styles = StyleSheet.create({

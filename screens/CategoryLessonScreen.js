@@ -10,6 +10,7 @@ import { selectWordsByLessonId } from "../store/selectors/word";
 import {
   selectActiveComponent,
   selectLessonProgress,
+  selectLessonResponsesByType,
 } from "../store/selectors/lesson";
 import Crossword from "../components/Lesson/Crossword";
 import AppButton from "../components/UI/AppButton";
@@ -34,7 +35,7 @@ const CategoryLessonScreen = (props) => {
     selectActiveComponent(state, lessonId),
   ]);
 
-  const activeComponentKey = activeComponent.shortname;
+  const activeComponentKey = activeComponent?.shortname;
 
   let startSlide = 0;
 
@@ -88,6 +89,12 @@ const CategoryLessonScreen = (props) => {
             words={words}
             onComplete={handleCompleteComponent}
             onSubmitAnswer={handleSubmitAnswer}
+            completedAnswers={
+              // @todo tidy up
+              lessonProgress.responses?.crossword
+                ? Object.keys(lessonProgress.responses.crossword)
+                : []
+            }
           />
         ) : (
           <View>

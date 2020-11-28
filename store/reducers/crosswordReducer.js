@@ -1,12 +1,10 @@
 import {
   UPDATE_ANSWER,
   SET_ACTIVE_ANSWER,
-  SET_ACTIVE_CELL,
   START_CROSSWORD,
   CLEAR_ACTIVE_ANSWER,
-  SHOW_ANSWERS,
-  CHECK_ANSWERS,
   MARK_ANSWER_CORRECT,
+  INSERT_ANSWER,
 } from "../actions/crossword";
 import { arrayToObjectByKey } from "../../util";
 import { drawCrossword } from "../../utils/crosswordGenerator";
@@ -16,12 +14,10 @@ const initialState = {
   activeCell: null,
   activeAnswerText: null,
   complete: false,
-  dirty: false,
   answers: {},
 };
 
 export const ANSWER_INCOMPLETE = "incomplete";
-export const ANSWER_INCORRECT = "incorrect";
 export const ANSWER_CORRECT = "correct";
 
 export default (state = initialState, action) => {
@@ -89,6 +85,23 @@ export default (state = initialState, action) => {
       return newState;
     }
 
+    case INSERT_ANSWER: {
+      const answerText = action.payload;
+      const answerCells = state.answers[answerText].cells;
+
+      let newState = { ...state };
+      newState.answers[answerText].status = ANSWER_CORRECT;
+
+      for (let i = 0; i < answerCells.length; i++) {
+        const { x, y } = answerCells[i];
+        const cell = state.grid[y - 1][x - 1];
+        cell.value = answerText[i];
+        cell.locked = true;
+      }
+
+      return newState;
+    }
+
     case UPDATE_ANSWER: {
       const text = action.payload;
       const { answers, activeAnswerText } = state;
@@ -115,56 +128,11 @@ export default (state = initialState, action) => {
 
       let newState = {
         ...state,
-        dirty: true,
         activeCell: answerCells[combinedText.length],
       };
       newState.answers[activeAnswerText].currentGuess = combinedText;
 
       return newState;
-    }
-
-    case SHOW_ANSWERS: {
-      let newState = { ...state };
-
-      Object.values(newState.answers).forEach((answer) => {
-        answer.currentGuess = answer.text;
-        answer.status = ANSWER_CORRECT;
-      });
-
-      newState.grid.forEach((row) => {
-        row.forEach((cell) => {
-          if (cell) {
-            cell.value = cell.correctValue;
-          }
-        });
-      });
-
-      return newState;
-    }
-
-    case CHECK_ANSWERS: {
-      let newState = { ...state };
-
-      Object.values(newState.answers).forEach((answer) => {
-        const match = answer.text === answer.currentGuess;
-        if (match) {
-          answer.status = ANSWER_CORRECT;
-        } else {
-          answer.status = ANSWER_INCORRECT;
-        }
-      });
-
-      return newState;
-    }
-
-    case SET_ACTIVE_CELL: {
-      let activeCell = action.payload;
-
-      return {
-        ...state,
-        activeCell,
-      };
-      break;
     }
 
     default:

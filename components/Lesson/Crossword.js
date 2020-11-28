@@ -15,18 +15,15 @@ import Clues from "./Crossword/Clues";
 import {
   clearActiveAnswer,
   startCrossword,
-  showAnswers,
-  checkAnswers,
   updateAnswer,
   markAnswerCorrect,
-  setActiveCell,
+  insertAnswer,
 } from "../../store/actions/crossword";
 import AppButton from "../UI/AppButton";
 import { selectCompleteCount } from "../../store/selectors/crossword";
 import { arrayToObjectByKey } from "../../util";
 import AppText from "../UI/AppText";
 import * as Animatable from "react-native-animatable";
-import * as Colors from "../../constants/Colors";
 import { playSound } from "../../utils/sounds";
 import { FEEDBACK_NEGATIVE, FEEDBACK_POSITIVE } from "../../utils/sounds";
 import BottomContainer from "./BottomContainer";
@@ -36,38 +33,27 @@ const Crossword = (props) => {
   const scrollViewRef = useRef(null);
   const answerInputRef = useRef(null);
   const animationRef = useRef(null);
-
   const [inputValue, setInputValue] = useState("");
   const [inputLength, setInputLength] = useState(0);
-  const [focusedCell, setFocusedCell] = useState(null);
-  const [solutionShown, setSolutionShown] = useState(false);
   const cellDimension = 35;
 
   let gridOffsetY = 0;
 
-  const [
-    activeAnswerText,
-    activeCell,
-    answers,
-    dirty,
-    grid,
-    initialized,
-    completedCount,
-  ] = useSelector(({ crossword }) => [
-    crossword.activeAnswerText,
-    crossword.activeCell,
-    crossword.answers,
-    crossword.dirty,
-    crossword.grid,
-    crossword.initialized,
-    selectCompleteCount(crossword),
+  const [crossword, completedCount] = useSelector((state) => [
+    state.crossword,
+    selectCompleteCount(state.crossword),
   ]);
 
+  const { activeAnswerText, answers, grid, initialized } = crossword;
   const activeAnswer = answers[activeAnswerText];
+  const wordsById = arrayToObjectByKey(props.words);
   const wordsByText = arrayToObjectByKey(props.words, "name");
 
   useEffect(() => {
     dispatch(startCrossword(crosswordConfig));
+    props.completedAnswers.forEach((wordId) => {
+      dispatch(insertAnswer(wordsById[wordId].name));
+    });
   }, [0]);
 
   useEffect(() => {
@@ -103,11 +89,6 @@ const Crossword = (props) => {
     }
   }, [activeAnswer]);
 
-  const handleShowAnswers = () => {
-    dispatch(showAnswers());
-    setSolutionShown(true);
-  };
-
   const handleContinue = () => {
     props.onComplete();
   };
@@ -118,11 +99,6 @@ const Crossword = (props) => {
     dispatch(clearActiveAnswer());
   };
 
-  const handleFocus = (i) => {
-    setFocusedCell(i);
-    dispatch(setActiveCell(activeAnswer.cells[i]));
-  };
-
   const handleChange = (e) => {
     let value = e.nativeEvent.text.toLowerCase();
     if (!/^[a-zA-ZÁÉÍÑÓÚÜáéíñóúü]*$/.test(value)) {
@@ -131,10 +107,6 @@ const Crossword = (props) => {
 
     setInputValue(value);
     dispatch(updateAnswer(value));
-  };
-
-  const handleReset = () => {
-    dispatch(startCrossword(crosswordConfig));
   };
 
   const handleConfirm = () => {
@@ -166,47 +138,46 @@ const Crossword = (props) => {
           </View>
         </TouchableWithoutFeedback>
       </ScrollView>
-      <BottomContainer>
-        {activeAnswer ? (
-          <>
-            <AppText style={styles.clue}>
-              {wordsByText[activeAnswerText].translation}
-            </AppText>
-            <AppButton variant="small" onPress={handleConfirm}>
-              Submit
-            </AppButton>
-
+      {activeAnswer ? (
+        <BottomContainer
+          items={[
             <TextInput
               autoCapitalize="none"
               autoCorrect={false}
               autoFocus={true}
+              blurOnSubmit={false}
               onChange={handleChange}
               ref={answerInputRef}
               style={styles.answerInput}
               maxLength={inputLength}
               value={inputValue}
               onSubmitEditing={handleConfirm}
-            />
-          </>
-        ) : (
-          <>
+            />,
+            <AppText style={styles.clue}>
+              {wordsByText[activeAnswerText].translation}
+            </AppText>,
+            <AppButton variant="small" onPress={handleConfirm}>
+              Submit
+            </AppButton>,
+          ]}
+        />
+      ) : (
+        <BottomContainer
+          items={[
+            <></>,
             <AppText>
               {`Completed: ${completedCount} / ${props.words.length}`}
-            </AppText>
-            {/*{dirty && <AppButton onPress={handleReset}>Reset</AppButton>}*/}
-            {/*{!submitted && !solutionShown && (*/}
-            {/*  <AppButton variant="small" onPress={handleShowAnswers}>*/}
-            {/*    Show solution*/}
-            {/*  </AppButton>*/}
-            {/*)}*/}
-            {completedCount === props.words.length && (
-              <AppButton variant="small" onPress={handleContinue}>
-                Continue
-              </AppButton>
-            )}
-          </>
-        )}
-      </BottomContainer>
+            </AppText>,
+            <View>
+              {completedCount === props.words.length && (
+                <AppButton variant="small" onPress={handleContinue}>
+                  Continue
+                </AppButton>
+              )}
+            </View>,
+          ]}
+        />
+      )}
     </View>
   ) : (
     <AppText>Loading</AppText>

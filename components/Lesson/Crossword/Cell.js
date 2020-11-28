@@ -42,25 +42,26 @@ const Cell = ({
     dispatch(setActiveAnswer(answerText));
   };
 
-  let style = styles.cell;
+  let cellStyle = [styles.cell];
   if (empty) {
-    style = { ...style, ...styles.empty };
+    cellStyle.push(styles.empty);
   } else {
-    style = { ...style, ...styles.letterCell };
+    cellStyle.push(styles.letterCell);
   }
   if (inActiveAnswer) {
-    style = { ...style, ...styles.inActiveAnswer };
+    cellStyle.push(styles.inActiveAnswer);
   }
   if (active) {
-    style = { ...style, ...styles.activeCell };
+    cellStyle.push(styles.activeCell);
   }
   if (locked) {
-    style = { ...style, ...styles.locked };
+    cellStyle.push(styles.locked);
   }
+  cellStyle.push({ width: cellDimension, height: cellDimension });
 
   return (
     <Touchable onPress={() => handleTouch()}>
-      <View style={{ ...style, width: cellDimension, height: cellDimension }}>
+      <View style={cellStyle}>
         <AppText style={styles.letter}>{value}</AppText>
         {number && (
           <View style={styles.origin}>
