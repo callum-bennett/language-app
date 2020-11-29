@@ -1,5 +1,5 @@
-import { FETCH_BADGES, FETCH_USER_BADGES } from "../actions/badges";
 import { arrayToObjectByKey } from "../../util";
+import { FETCH_BADGES, FETCH_USER_BADGES } from "../actions/types";
 
 const initialState = {
   byId: {},

@@ -1,5 +1,5 @@
-import { FETCH_CATEGORIES } from "../actions/categories";
 import { arrayToObjectByKey } from "../../util";
+import { FETCH_CATEGORIES } from "../actions/types";
 
 const initialState = {
   byId: {},

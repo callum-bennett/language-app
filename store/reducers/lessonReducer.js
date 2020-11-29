@@ -1,11 +1,11 @@
+import { arrayToObjectByKey } from "../../util";
 import {
   ADVANCE_LESSON,
-  FETCH_LESSONS,
+  FETCH_CATEGORY_PROGRESS,
   FETCH_LESSON_COMPONENTS,
+  FETCH_LESSONS,
   START_LESSON,
-} from "../actions/lessons";
-import { arrayToObjectByKey } from "../../util";
-import { FETCH_CATEGORY_PROGRESS } from "../actions/categories";
+} from "../actions/types";
 
 const initialState = {
   byId: {},

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 
-import AppNavigator from "./navigation/AppNavigator";
+import AppNavigator from "./navigation/AuthNavigator";
 import { Provider } from "react-redux";
 
 import store from "./store/store";

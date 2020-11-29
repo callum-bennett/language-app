@@ -1,13 +1,13 @@
-import {
-  UPDATE_ANSWER,
-  SET_ACTIVE_ANSWER,
-  START_CROSSWORD,
-  CLEAR_ACTIVE_ANSWER,
-  MARK_ANSWER_CORRECT,
-  INSERT_ANSWER,
-} from "../actions/crossword";
 import { arrayToObjectByKey } from "../../util";
 import { drawCrossword } from "../../utils/crosswordGenerator";
+import {
+  CLEAR_ACTIVE_ANSWER,
+  INSERT_ANSWER,
+  MARK_ANSWER_CORRECT,
+  SET_ACTIVE_ANSWER,
+  START_CROSSWORD,
+  UPDATE_ANSWER,
+} from "../actions/types";
 
 const initialState = {
   initialized: false,

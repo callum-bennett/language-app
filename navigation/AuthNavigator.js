@@ -4,13 +4,13 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-community/async-storage";
 
-import DrawerNavigator from "./DrawerNavigator";
 import AuthenticationScreen from "../screens/AuthenticationScreen";
 import { setAuthenticated } from "../store/actions/authentication";
 import { navigationRef } from "./RootNavigation";
 import { ActivityIndicator } from "react-native-paper";
 import CenteredView from "../components/UI/AppCenteredView";
 import * as Colors from "../constants/Colors";
+import MainNavigator from "./MainNavigator";
 
 const Stack = createStackNavigator();
 
@@ -38,7 +38,7 @@ export default () => {
         {authenticated ? (
           <Stack.Screen
             name="Learn"
-            component={DrawerNavigator}
+            component={MainNavigator}
             options={{ headerShown: false }}
           />
         ) : (

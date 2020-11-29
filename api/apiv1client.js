@@ -2,6 +2,8 @@ import axios from "axios";
 import AsyncStorage from "@react-native-community/async-storage";
 import { availableRoutes, navigate } from "../navigation/RootNavigation";
 import { ROOT_URI } from "./index";
+import store from "../store/store";
+import { setNotifications } from "../store/actions/app";
 
 const apiV1Client = axios.create({
   baseURL: `${ROOT_URI}/api/v1`,
@@ -15,13 +17,15 @@ apiV1Client.interceptors.request.use(async (req) => {
 
 apiV1Client.interceptors.response.use(
   (res) => {
-    //@todo tidy up
-    if (res.data?.notifications) {
-      // @ todo dispatch notifications
+    const { notifications, payload } = res.data;
+
+    if (notifications) {
+      store.dispatch(setNotifications(notifications));
     }
-    if (res.data?.payload) {
-      res.data = res.data.payload;
+    if (payload) {
+      res.data = payload;
     }
+
     return res;
   },
   (error) => {

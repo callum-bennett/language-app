@@ -1,8 +1,10 @@
 import apiV1Client from "../../api/apiv1client";
-export const ADVANCE_LESSON = "advance_lesson";
-export const START_LESSON = "start_lesson";
-export const FETCH_LESSONS = "fetch_lessons";
-export const FETCH_LESSON_COMPONENTS = "fetch_lesson_components";
+import {
+  ADVANCE_LESSON,
+  FETCH_LESSON_COMPONENTS,
+  FETCH_LESSONS,
+  START_LESSON,
+} from "./types";
 
 export const fetchLessons = () => async (dispatch) => {
   try {

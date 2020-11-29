@@ -1,9 +1,11 @@
-export const UPDATE_ANSWER = "update_answer";
-export const START_CROSSWORD = "start_crossword";
-export const SET_ACTIVE_ANSWER = "set_active_answer";
-export const CLEAR_ACTIVE_ANSWER = "clear_active_answer";
-export const MARK_ANSWER_CORRECT = "mark_answer_correct";
-export const INSERT_ANSWER = "insert_answer";
+import {
+  CLEAR_ACTIVE_ANSWER,
+  INSERT_ANSWER,
+  MARK_ANSWER_CORRECT,
+  SET_ACTIVE_ANSWER,
+  START_CROSSWORD,
+  UPDATE_ANSWER,
+} from "./types";
 
 export const startCrossword = (config) => {
   return {

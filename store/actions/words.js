@@ -1,7 +1,9 @@
 import apiV1Client from "../../api/apiv1client";
-export const FETCH_WORDS = "fetch_words";
-export const FETCH_USER_VOCABULARY = "fetch_user_vocabulary";
-export const ADD_USER_VOCABULARY = "add_user_vocabulary";
+import {
+  ADD_USER_VOCABULARY,
+  FETCH_USER_VOCABULARY,
+  FETCH_WORDS,
+} from "./types";
 
 export const fetchWords = () => async (dispatch) => {
   const res = await apiV1Client.get("/word");
