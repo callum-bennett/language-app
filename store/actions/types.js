@@ -1,4 +1,5 @@
 /* App */
+export const CLEAR_NOTIFICATIONS = "clear_notifications";
 export const SET_NOTIFICATIONS = "set_notifications";
 
 /* Authentication */

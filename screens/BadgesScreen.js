@@ -8,19 +8,26 @@ import CenteredView from "../components/UI/AppCenteredView";
 import { selectBadgesGroupedByType } from "../store/selectors/badge";
 import AppModal from "../components/UI/AppModal";
 import AppText from "../components/UI/AppText";
+import { selectNotificationsByType } from "../store/selectors/app";
+import { clearNotifications } from "../store/actions/app";
 
 const BadgesScreen = () => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const [selectedBadge, setSelectedBadge] = useState(null);
 
-  const groupedBadges = useSelector((state) =>
-    selectBadgesGroupedByType(state)
-  );
+  const [groupedBadges, notifications] = useSelector((state) => [
+    selectBadgesGroupedByType(state),
+    selectNotificationsByType(state, "badge"),
+  ]);
+
   const userBadges = useSelector((state) => state.badges.userBadges.byBadgeId);
 
   useEffect(() => {
     (async () => {
+      if (notifications) {
+        dispatch(clearNotifications("badge"));
+      }
       await Promise.all([dispatch(fetchBadges()), dispatch(fetchUserBadges())]);
       setLoaded(true);
     })();
