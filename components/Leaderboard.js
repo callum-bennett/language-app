@@ -22,7 +22,9 @@ const Leaderboard = (props) => {
     try {
       const res = await apiV1Client.get(`/xp/leaderboard/${props.type}`);
       setData(JSON.parse(res.data));
-    } catch (err) {}
+    } catch (err) {
+      setData(false);
+    }
     setLoaded(true);
   };
 
@@ -58,27 +60,28 @@ const Leaderboard = (props) => {
   };
 
   return (
-    <ScrollView
-      contentContainerStyle={styles.screen}
-      refreshControl={
-        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-      }
-    >
-      <CenteredView grow>
-        {loaded ? (
-          Object.values(data).map((item, index) => renderItem(item, index))
-        ) : (
-          <ActivityIndicator />
-        )}
-      </CenteredView>
-    </ScrollView>
+    <CenteredView grow>
+      {loaded ? (
+        <ScrollView
+          contentContainerStyle={styles.screen}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+          }
+        >
+          {data ? (
+            Object.values(data).map((item, index) => renderItem(item, index))
+          ) : (
+            <AppText>The leaderboard is currently unavailable.</AppText>
+          )}
+        </ScrollView>
+      ) : (
+        <ActivityIndicator />
+      )}
+    </CenteredView>
   );
 };
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
   container: {
     width: "100%",
   },
