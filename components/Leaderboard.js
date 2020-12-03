@@ -17,13 +17,16 @@ const Leaderboard = (props) => {
   const [loaded, setLoaded] = useState(false);
   const [refreshing, setRefreshing] = React.useState(false);
   const [data, setData] = useState([]);
+  const [error, setError] = useState(false);
 
   const loadData = async () => {
     try {
-      const res = await apiV1Client.get(`/xp/leaderboard/${props.type}`);
+      const res = await apiV1Client.get(`/xp/leaderboard/${props.type}`, {
+        handleException: false,
+      });
       setData(JSON.parse(res.data));
     } catch (err) {
-      setData(false);
+      setError(true);
     }
     setLoaded(true);
   };
@@ -60,28 +63,31 @@ const Leaderboard = (props) => {
   };
 
   return (
-    <CenteredView grow>
-      {loaded ? (
-        <ScrollView
-          contentContainerStyle={styles.screen}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
-          }
-        >
-          {data ? (
-            Object.values(data).map((item, index) => renderItem(item, index))
-          ) : (
+    <ScrollView
+      contentContainerStyle={styles.scrollView}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
+      }
+    >
+      <CenteredView grow>
+        {loaded ? (
+          error ? (
             <AppText>The leaderboard is currently unavailable.</AppText>
-          )}
-        </ScrollView>
-      ) : (
-        <ActivityIndicator />
-      )}
-    </CenteredView>
+          ) : (
+            Object.values(data).map((item, index) => renderItem(item, index))
+          )
+        ) : (
+          <ActivityIndicator />
+        )}
+      </CenteredView>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+  },
   container: {
     width: "100%",
   },
