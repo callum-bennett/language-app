@@ -10,6 +10,7 @@ import AppModal from "../components/UI/AppModal";
 import AppText from "../components/UI/AppText";
 import { selectNotificationsByType } from "../store/selectors/app";
 import { clearNotifications } from "../store/actions/app";
+import apiV1Client from "../api/apiv1client";
 
 const BadgesScreen = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,7 @@ const BadgesScreen = () => {
   useEffect(() => {
     (async () => {
       if (notifications) {
-        dispatch(clearNotifications("badge"));
+        dispatch(clearNotifications("badge", apiV1Client));
       }
       await Promise.all([dispatch(fetchBadges()), dispatch(fetchUserBadges())]);
       setLoaded(true);

@@ -1,4 +1,3 @@
-import apiV1Client from "../../api/apiv1client";
 import { CLEAR_NOTIFICATIONS, SET_NOTIFICATIONS } from "./types";
 
 export const setNotifications = (notifications) => {
@@ -8,7 +7,7 @@ export const setNotifications = (notifications) => {
   };
 };
 
-export const clearNotifications = (type) => async (dispatch) => {
+export const clearNotifications = (type, apiV1Client) => async (dispatch) => {
   const res = await apiV1Client.post("/user/clear_notifications", { type });
 
   if (res.data) {
