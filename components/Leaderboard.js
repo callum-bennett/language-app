@@ -38,13 +38,6 @@ const Leaderboard = (props) => {
     }
   }, [refreshing]);
 
-  useEffect(() => {
-    loadData();
-    return () => {
-      setLoaded(false);
-    };
-  }, []);
-
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
     await wait(1000);

@@ -27,6 +27,7 @@ const LeaderboardScreen = () => {
 
   return (
     <TabView
+      lazy
       renderTabBar={renderTabBar}
       navigationState={{ index, routes }}
       onIndexChange={setIndex}
