@@ -13,7 +13,7 @@ import GestureRecognizer, {
 
 import AppText from "../UI/AppText";
 import * as Colors from "../../constants/Colors";
-import { playSound, WORDS } from "../../utils/sounds";
+import { playSound } from "../../utils/sounds";
 
 const WordCard = (props) => {
   const AnimationRef = useRef(null);
@@ -22,7 +22,7 @@ const WordCard = (props) => {
   const { word } = props;
 
   const handleAudioPress = () => {
-    playSound(WORDS[props.word.name]);
+    playSound({ uri: props.word.soundUri });
     AnimationRef.current.pulse();
     props.onWordComplete(word.id);
     setListened(true);
@@ -44,7 +44,6 @@ const WordCard = (props) => {
       </View>
 
       <AppText style={styles.word}>{word.name}</AppText>
-      {/*<AppText style={styles.translation}>({word.translation})</AppText>*/}
       <Animatable.View ref={AnimationRef} direction="alternate">
         <TouchableWithoutFeedback
           hitSlop={{ left: 30, right: 30, top: 30, bottom: 30 }}
@@ -76,9 +75,6 @@ const styles = StyleSheet.create({
   word: {
     fontSize: 24,
   },
-  // translation: {
-  //   fontStyle: "italic",
-  // },
   audio: {
     color: Colors.primary,
     marginTop: 15,
