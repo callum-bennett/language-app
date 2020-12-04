@@ -38,12 +38,13 @@ apiV1Client.interceptors.response.use(
       return navigate(redirectRoute, {
         error: "Oops! Something went wrong",
       });
-    } else {
+    } else if (response.config.handleException !== false) {
       const { status } = response;
       if (status === 401) {
         AsyncStorage.removeItem("authToken");
         return navigate("Authentication");
       } else if (status === 500) {
+        // console.log(error.response.data);
         return navigate(redirectRoute, {
           error: "Oops! Something went wrong",
         });

@@ -25,6 +25,7 @@ const Leaderboard = (props) => {
         handleException: false,
       });
       setData(JSON.parse(res.data));
+      setError(false);
     } catch (err) {
       setError(true);
     }
@@ -74,7 +75,11 @@ const Leaderboard = (props) => {
           error ? (
             <AppText>The leaderboard is currently unavailable.</AppText>
           ) : (
-            Object.values(data).map((item, index) => renderItem(item, index))
+            <View style={styles.listItems}>
+              {Object.values(data).map((item, index) =>
+                renderItem(item, index)
+              )}
+            </View>
           )
         ) : (
           <ActivityIndicator />
@@ -86,6 +91,9 @@ const Leaderboard = (props) => {
 
 const styles = StyleSheet.create({
   scrollView: {
+    flex: 1,
+  },
+  listItems: {
     flex: 1,
   },
   container: {
