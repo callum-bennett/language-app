@@ -22,7 +22,7 @@ const WordCard = (props) => {
   const { word } = props;
 
   const handleAudioPress = () => {
-    playSound({ uri: props.word.soundUri });
+    playSound({ uri: props.word.soundUrl });
     AnimationRef.current.pulse();
     props.onWordComplete(word.id);
     setListened(true);
