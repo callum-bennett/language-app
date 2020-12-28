@@ -19,6 +19,8 @@ import { selectUserVocabularyByLessonId } from "../store/selectors/userVocabular
 import { ActivityIndicator } from "react-native-paper";
 import { advanceLesson } from "../store/actions/lessons";
 import { submitAttempt } from "../store/actions/words";
+import { selectCategoryByLessonId } from "../store/selectors/category";
+import { crosswordConfig } from "../data/crosswords";
 
 const CategoryLessonScreen = (props) => {
   const dispatch = useDispatch();
@@ -28,11 +30,15 @@ const CategoryLessonScreen = (props) => {
     userLessonVocabulary,
     lessonProgress,
     activeComponent,
+    category,
+    lesson,
   ] = useSelector((state) => [
     selectWordsByLessonId(state, lessonId),
     selectUserVocabularyByLessonId(state, lessonId),
     selectLessonProgress(state, lessonId),
     selectActiveComponent(state, lessonId),
+    selectCategoryByLessonId(state, lessonId),
+    state.lessons.byId[lessonId],
   ]);
 
   const activeComponentKey = activeComponent?.shortname;
@@ -86,6 +92,9 @@ const CategoryLessonScreen = (props) => {
           />
         ) : activeComponentKey === LESSON_TYPE_CROSSWORD ? (
           <Crossword
+            config={
+              crosswordConfig[category.name.toLowerCase()][lesson.sequence]
+            }
             words={words}
             onComplete={handleCompleteComponent}
             onSubmitAnswer={handleSubmitAnswer}

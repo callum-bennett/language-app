@@ -9,7 +9,6 @@ import {
   TextInput,
 } from "react-native";
 
-import { people1 as crosswordConfig } from "../../data/crosswords";
 import Grid from "./Crossword/Grid";
 import Clues from "./Crossword/Clues";
 import {
@@ -35,7 +34,7 @@ const Crossword = (props) => {
   const animationRef = useRef(null);
   const [inputValue, setInputValue] = useState("");
   const [inputLength, setInputLength] = useState(0);
-  const cellDimension = 35;
+  const cellDimension = props.config.width >= 10 ? 30 : 35;
 
   let gridOffsetY = 0;
 
@@ -50,7 +49,7 @@ const Crossword = (props) => {
   const wordsByText = arrayToObjectByKey(props.words, "name");
 
   useEffect(() => {
-    dispatch(startCrossword(crosswordConfig));
+    dispatch(startCrossword(props.config));
     props.completedAnswers.forEach((wordId) => {
       dispatch(insertAnswer(wordsById[wordId].name));
     });
