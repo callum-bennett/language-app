@@ -11,6 +11,7 @@ import CenteredView from "../UI/AppCenteredView";
 import BottomContainer from "./BottomContainer";
 import * as Colors from "../../constants/Colors";
 import BottomContainerItem from "./BottomContainerItem";
+import { playSound } from "../../utils/sounds";
 
 const carouselWidth = Dimensions.get("window").width;
 const carouselHeight = Dimensions.get("window").height;
@@ -23,10 +24,13 @@ export const LESSON_TYPE_CROSSWORD = "crossword";
 const Component = (props) => {
   const carouselRef = useRef(null);
   const dispatch = useDispatch();
-  const [allowScroll, setAllowScroll] = useState(false);
-  const [activeSlide, setActiveSlide] = useState(props.start + 1);
 
   const { hintsAvailable } = props.component;
+
+  const [allowScroll, setAllowScroll] = useState(false);
+  const [allowHint, setAllowHint] = useState(hintsAvailable);
+  const [activeSlide, setActiveSlide] = useState(props.start + 1);
+
   const isLastSlide = activeSlide === props.words.length;
 
   const renderItem = ({ item }) => {
@@ -58,11 +62,16 @@ const Component = (props) => {
 
   const handleWordComplete = (wordId) => {
     setAllowScroll(true);
+    setAllowHint(false);
+
     dispatch(markWordAsSeen(wordId));
   };
 
   const handleBeforeSnap = () => {
     setAllowScroll(false);
+    if (hintsAvailable) {
+      setAllowHint(true);
+    }
     setActiveSlide((prevValue) => prevValue + 1);
   };
 
@@ -71,7 +80,7 @@ const Component = (props) => {
   };
 
   const handlePressHint = () => {
-    console.log("Coming soon!");
+    playSound({ uri: props.words[activeSlide - 1].soundUrl });
   };
 
   return (
@@ -101,6 +110,7 @@ const Component = (props) => {
             <AppButton
               variant="small"
               onPress={handlePressHint}
+              disabled={!allowHint}
               style={{
                 button: styles.hintButton,
               }}

@@ -26,6 +26,7 @@ import * as Animatable from "react-native-animatable";
 import { playSound } from "../../utils/sounds";
 import { FEEDBACK_NEGATIVE, FEEDBACK_POSITIVE } from "../../utils/sounds";
 import BottomContainer from "./BottomContainer";
+import * as Colors from "../../constants/Colors";
 
 const Crossword = (props) => {
   const dispatch = useDispatch();
@@ -120,6 +121,10 @@ const Crossword = (props) => {
     props.onSubmitAnswer(wordsByText[activeAnswerText].id, isCorrect);
   };
 
+  const handlePressHint = () => {
+    playSound({ uri: wordsByText[activeAnswerText].soundUrl });
+  };
+
   return initialized ? (
     <View>
       <ScrollView ref={scrollViewRef} keyboardShouldPersistTaps="always">
@@ -140,18 +145,29 @@ const Crossword = (props) => {
       {activeAnswer ? (
         <BottomContainer
           items={[
-            <TextInput
-              autoCapitalize="none"
-              autoCorrect={false}
-              autoFocus={true}
-              blurOnSubmit={false}
-              onChange={handleChange}
-              ref={answerInputRef}
-              style={styles.answerInput}
-              maxLength={inputLength}
-              value={inputValue}
-              onSubmitEditing={handleConfirm}
-            />,
+            <>
+              <TextInput
+                autoCapitalize="none"
+                autoCorrect={false}
+                autoFocus={true}
+                blurOnSubmit={false}
+                onChange={handleChange}
+                ref={answerInputRef}
+                style={styles.answerInput}
+                maxLength={inputLength}
+                value={inputValue}
+                onSubmitEditing={handleConfirm}
+              />
+              <AppButton
+                variant="small"
+                onPress={handlePressHint}
+                style={{
+                  button: styles.hintButton,
+                }}
+              >
+                Hint
+              </AppButton>
+            </>,
             <AppText style={styles.clue}>
               {wordsByText[activeAnswerText].translation}
             </AppText>,
@@ -186,6 +202,15 @@ const Crossword = (props) => {
 const styles = StyleSheet.create({
   answerInput: {
     display: "none",
+  },
+  hintButton: {
+    backgroundColor: Colors.accent,
+    width: "auto",
+  },
+  hintOption: {
+    color: Colors.primary,
+    fontSize: 18,
+    marginVertical: 8,
   },
   clue: {
     fontSize: 16,

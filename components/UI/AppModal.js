@@ -22,12 +22,18 @@ const AppModal = (props) => {
       </TouchableWithoutFeedback>
 
       <AppCenteredView grow>
-        <AppCard style={styles.card}>
+        <AppCard style={[styles.card, props.style.card]}>
           <AppCenteredView>{props.children}</AppCenteredView>
         </AppCard>
       </AppCenteredView>
     </Modal>
   );
+};
+
+AppModal.defaultProps = {
+  style: {
+    card: {},
+  },
 };
 
 const styles = StyleSheet.create({
