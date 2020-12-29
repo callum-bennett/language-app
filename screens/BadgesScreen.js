@@ -11,11 +11,13 @@ import AppText from "../components/UI/AppText";
 import { selectNotificationsByType } from "../store/selectors/app";
 import { clearNotifications } from "../store/actions/app";
 import apiV1Client from "../api/apiv1client";
+import { useIsFocused } from "@react-navigation/native";
 
 const BadgesScreen = () => {
   const dispatch = useDispatch();
   const [loaded, setLoaded] = useState(false);
   const [selectedBadge, setSelectedBadge] = useState(null);
+  const isFocused = useIsFocused();
 
   const [groupedBadges, notifications] = useSelector((state) => [
     selectBadgesGroupedByType(state),
@@ -24,15 +26,24 @@ const BadgesScreen = () => {
 
   const userBadges = useSelector((state) => state.badges.userBadges.byBadgeId);
 
+  const loadData = async () => {
+    if (notifications) {
+      dispatch(clearNotifications("badge", apiV1Client));
+    }
+    await Promise.all([dispatch(fetchBadges()), dispatch(fetchUserBadges())]);
+    setLoaded(true);
+  };
+
   useEffect(() => {
-    (async () => {
-      if (notifications) {
-        dispatch(clearNotifications("badge", apiV1Client));
-      }
-      await Promise.all([dispatch(fetchBadges()), dispatch(fetchUserBadges())]);
-      setLoaded(true);
-    })();
-  }, []);
+    if (isFocused) {
+      loadData();
+      return () => {
+        setLoaded(false);
+      };
+    } else {
+      setLoaded(false);
+    }
+  }, [isFocused]);
 
   const renderBadge = (badge, userBadge, showDescription = false) => {
     return (
