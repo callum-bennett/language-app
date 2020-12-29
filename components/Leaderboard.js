@@ -67,12 +67,14 @@ const Leaderboard = (props) => {
         {loaded ? (
           error ? (
             <AppText>The leaderboard is currently unavailable.</AppText>
-          ) : (
+          ) : data ? (
             <View style={styles.listItems}>
               {Object.values(data).map((item, index) =>
                 renderItem(item, index)
               )}
             </View>
+          ) : (
+            <AppText>There are no scores to display.</AppText>
           )
         ) : (
           <ActivityIndicator />
