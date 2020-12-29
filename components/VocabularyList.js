@@ -36,7 +36,7 @@ const VocabularyList = (props) => {
         style={styles.list}
         data={props.vocabulary}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
       />
     </View>
   );
