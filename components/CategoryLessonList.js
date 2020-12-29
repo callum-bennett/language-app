@@ -3,6 +3,8 @@ import { StyleSheet, Text, View } from "react-native";
 import AppText from "./UI/AppText";
 import AppButton from "./UI/AppButton";
 import { useSelector } from "react-redux";
+import StepIndicator from "react-native-step-indicator";
+import * as Colors from "../constants/Colors";
 
 const LESSON_IN_PROGRESS = 0;
 const LESSON_COMPLETED = 1;
@@ -10,7 +12,10 @@ const LESSON_COMPLETED = 1;
 const CategoryLessonList = (props) => {
   const { lessons } = props;
 
-  const userProgress = useSelector(({ lessons }) => lessons.userProgress);
+  const [userProgress, components] = useSelector(({ lessons }) => [
+    lessons.userProgress,
+    lessons.components.byId,
+  ]);
 
   const getLessonAction = (lesson, available) => {
     const lessonProgress = userProgress[lesson.id];
@@ -44,10 +49,49 @@ const CategoryLessonList = (props) => {
       {lessons.length ? (
         Object.values(lessons).map((lesson, i) => {
           const content = getLessonAction(lesson, available);
+          const labels = lesson.lessonComponentInstances.map(
+            (id) => components[id].name
+          );
+          let activeStep = 0;
+          if (userProgress[lesson.id]) {
+            const { activeComponent } = userProgress[lesson.id];
+            activeStep = activeComponent
+              ? Object.keys(components).indexOf(activeComponent.toString())
+              : Object.keys(components).length;
+          }
+
           available = userProgress[lesson.id]?.status === LESSON_COMPLETED;
           return (
             <View key={i}>
               <AppText style={styles.sectionHeading}>Lesson {i + 1}</AppText>
+              <StepIndicator
+                stepCount={labels.length}
+                customStyles={{
+                  stepIndicatorSize: 25,
+                  currentStepIndicatorSize: 30,
+                  separatorStrokeWidth: 1,
+                  currentStepStrokeWidth: 1,
+                  stepStrokeCurrentColor: Colors.accent,
+                  stepStrokeWidth: 1,
+                  stepStrokeFinishedColor: Colors.accent,
+                  stepStrokeUnFinishedColor: "#aaaaaa",
+                  separatorFinishedColor: Colors.accent,
+                  separatorUnFinishedColor: "#aaaaaa",
+                  stepIndicatorFinishedColor: Colors.accent,
+                  stepIndicatorUnFinishedColor: "#ffffff",
+                  stepIndicatorCurrentColor: "#ffffff",
+                  stepIndicatorLabelFontSize: 13,
+                  currentStepIndicatorLabelFontSize: 13,
+                  stepIndicatorLabelCurrentColor: Colors.accent,
+                  stepIndicatorLabelFinishedColor: "#ffffff",
+                  stepIndicatorLabelUnFinishedColor: "#aaaaaa",
+                  labelColor: "#999999",
+                  currentStepLabelColor: Colors.accent,
+                }}
+                currentPosition={activeStep}
+                labels={labels}
+              />
+
               <View style={styles.buttonContainer}>{content}</View>
             </View>
           );
@@ -69,6 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     color: "#666",
+    marginBottom: 20,
   },
   buttonContainer: {
     display: "flex",
