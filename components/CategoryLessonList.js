@@ -52,6 +52,7 @@ const CategoryLessonList = (props) => {
           const labels = lesson.lessonComponentInstances.map(
             (id) => components[id].name
           );
+          const displayStep = available;
           let activeStep = 0;
           if (userProgress[lesson.id]) {
             const { activeComponent } = userProgress[lesson.id];
@@ -61,36 +62,39 @@ const CategoryLessonList = (props) => {
           }
 
           available = userProgress[lesson.id]?.status === LESSON_COMPLETED;
+
           return (
             <View key={i}>
               <AppText style={styles.sectionHeading}>Lesson {i + 1}</AppText>
-              <StepIndicator
-                stepCount={labels.length}
-                customStyles={{
-                  stepIndicatorSize: 25,
-                  currentStepIndicatorSize: 30,
-                  separatorStrokeWidth: 1,
-                  currentStepStrokeWidth: 1,
-                  stepStrokeCurrentColor: Colors.accent,
-                  stepStrokeWidth: 1,
-                  stepStrokeFinishedColor: Colors.accent,
-                  stepStrokeUnFinishedColor: "#aaaaaa",
-                  separatorFinishedColor: Colors.accent,
-                  separatorUnFinishedColor: "#aaaaaa",
-                  stepIndicatorFinishedColor: Colors.accent,
-                  stepIndicatorUnFinishedColor: "#ffffff",
-                  stepIndicatorCurrentColor: "#ffffff",
-                  stepIndicatorLabelFontSize: 13,
-                  currentStepIndicatorLabelFontSize: 13,
-                  stepIndicatorLabelCurrentColor: Colors.accent,
-                  stepIndicatorLabelFinishedColor: "#ffffff",
-                  stepIndicatorLabelUnFinishedColor: "#aaaaaa",
-                  labelColor: "#999999",
-                  currentStepLabelColor: Colors.accent,
-                }}
-                currentPosition={activeStep}
-                labels={labels}
-              />
+              {displayStep && (
+                <StepIndicator
+                  stepCount={labels.length}
+                  customStyles={{
+                    stepIndicatorSize: 25,
+                    currentStepIndicatorSize: 30,
+                    separatorStrokeWidth: 1,
+                    currentStepStrokeWidth: 1,
+                    stepStrokeCurrentColor: Colors.accent,
+                    stepStrokeWidth: 1,
+                    stepStrokeFinishedColor: Colors.accent,
+                    stepStrokeUnFinishedColor: "#aaaaaa",
+                    separatorFinishedColor: Colors.accent,
+                    separatorUnFinishedColor: "#aaaaaa",
+                    stepIndicatorFinishedColor: Colors.accent,
+                    stepIndicatorUnFinishedColor: "#ffffff",
+                    stepIndicatorCurrentColor: "#ffffff",
+                    stepIndicatorLabelFontSize: 13,
+                    currentStepIndicatorLabelFontSize: 13,
+                    stepIndicatorLabelCurrentColor: Colors.accent,
+                    stepIndicatorLabelFinishedColor: "#ffffff",
+                    stepIndicatorLabelUnFinishedColor: "#aaaaaa",
+                    labelColor: "#999999",
+                    currentStepLabelColor: Colors.accent,
+                  }}
+                  currentPosition={activeStep}
+                  labels={labels}
+                />
+              )}
 
               <View style={styles.buttonContainer}>{content}</View>
             </View>
