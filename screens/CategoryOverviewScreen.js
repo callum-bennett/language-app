@@ -22,6 +22,7 @@ import CategoryLessonList from "../components/CategoryLessonList";
 import { ActivityIndicator } from "react-native-paper";
 import { CategoryContext } from "../navigation/RootNavigation";
 import { startLesson } from "../store/actions/lessons";
+import CenteredView from "../components/UI/AppCenteredView";
 
 const wait = (timeout) => {
   return new Promise((resolve) => {
@@ -105,7 +106,6 @@ const CategoryOverviewScreen = (props) => {
   return (
     <SafeAreaView style={styles.screen}>
       <ScrollView
-        contentContainerStyle={styles.screen}
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
         }
@@ -128,9 +128,9 @@ const CategoryOverviewScreen = (props) => {
             />
           </View>
         ) : (
-          <View style={styles.loadingContainer}>
+          <CenteredView grow style={styles.loadingContainer}>
             <ActivityIndicator />
-          </View>
+          </CenteredView>
         )}
       </ScrollView>
     </SafeAreaView>
@@ -145,9 +145,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   loadingContainer: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
+    marginTop: 60,
   },
   noLessons: {
     textAlign: "center",
