@@ -40,7 +40,7 @@ const CategoryScreen = (props) => {
   );
 
   const handleSelectCategory = (item) => {
-    props.navigation.navigate("CategoryNavigator", {
+    props.navigation.navigate("CategoryScreen", {
       categoryId: item.id,
       title: item.name,
     });

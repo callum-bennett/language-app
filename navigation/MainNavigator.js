@@ -44,7 +44,6 @@ const MainNavigator = (props) => {
     <Tab.Navigator {...tabOptions}>
       <Tab.Screen name="Leaderboard" component={LeaderboardScreen} />
       <Tab.Screen name="Learn" component={DrawerNavigator} />
-      {/*<Tab.Screen name="My Vocabulary" component={CategoryWordsScreen} />*/}
       <Tab.Screen
         name="Achievements"
         component={BadgesScreen}

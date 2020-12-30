@@ -5,7 +5,6 @@ import {
   SafeAreaView,
   ScrollView,
   RefreshControl,
-  TouchableWithoutFeedback,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
@@ -16,12 +15,10 @@ import { selectUserVocabularyByCategoryId } from "../store/selectors/userVocabul
 import { selectLessonsByCategoryId } from "../store/selectors/lesson";
 import { selectCategoryById } from "../store/selectors/category";
 import { fetchUserVocabulary, fetchWords } from "../store/actions/words";
-import apiV1Client from "../api/apiv1client";
 import CategoryHeader from "../components/CategoryHeader";
 import CategoryLessonList from "../components/CategoryLessonList";
 import { ActivityIndicator } from "react-native-paper";
 import { CategoryContext } from "../navigation/RootNavigation";
-import { startLesson } from "../store/actions/lessons";
 import CenteredView from "../components/UI/AppCenteredView";
 
 const wait = (timeout) => {
@@ -30,7 +27,7 @@ const wait = (timeout) => {
   });
 };
 
-const CategoryOverviewScreen = (props) => {
+const CategoryOverview = (props) => {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
@@ -86,23 +83,6 @@ const CategoryOverviewScreen = (props) => {
     setRefreshing(false);
   }, []);
 
-  const handlePressLearn = async (lesson) => {
-    dispatch(startLesson(lesson.id));
-    props.navigation.navigate({
-      name: "CategoryLesson",
-      params: {
-        lessonId: lesson.id,
-        title: `${category.name} / Lesson ${lesson.sequence + 1}`,
-      },
-    });
-  };
-
-  const handlePressWords = () => {
-    props.navigation.navigate("CategoryWords", {
-      categoryId,
-    });
-  };
-
   return (
     <SafeAreaView style={styles.screen}>
       <ScrollView
@@ -114,17 +94,15 @@ const CategoryOverviewScreen = (props) => {
         {loaded ? (
           <View style={styles.mainContainer}>
             {vocabArray.length > 0 && (
-              <TouchableWithoutFeedback onPress={handlePressWords}>
-                <View>
-                  <AppText style={styles.wordsLearned}>
-                    Words learned: {wordsLearnedCount} / {wordCount}
-                  </AppText>
-                </View>
-              </TouchableWithoutFeedback>
+              <View>
+                <AppText style={styles.wordsLearned}>
+                  Words learned: {wordsLearnedCount} / {wordCount}
+                </AppText>
+              </View>
             )}
             <CategoryLessonList
               lessons={lessons}
-              onPressLearn={handlePressLearn}
+              onPressLearn={props.onPressLearn}
             />
           </View>
         ) : (
@@ -156,4 +134,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CategoryOverviewScreen;
+export default CategoryOverview;

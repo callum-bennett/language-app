@@ -47,25 +47,26 @@ const CategoryLessonList = (props) => {
   return (
     <View style={styles.lessonContainer}>
       {lessons.length ? (
-        Object.values(lessons).map((lesson, i) => {
+        Object.values(lessons).map((lesson) => {
+          const { id, name } = lesson;
           const content = getLessonAction(lesson, available);
           const labels = lesson.lessonComponentInstances.map(
             (id) => components[id].name
           );
           const displayStep = available;
           let activeStep = 0;
-          if (userProgress[lesson.id]) {
-            const { activeComponent } = userProgress[lesson.id];
+          if (userProgress[id]) {
+            const { activeComponent } = userProgress[id];
             activeStep = activeComponent
               ? Object.keys(components).indexOf(activeComponent.toString())
               : Object.keys(components).length;
           }
 
-          available = userProgress[lesson.id]?.status === LESSON_COMPLETED;
+          available = userProgress[id]?.status === LESSON_COMPLETED;
 
           return (
-            <View key={i}>
-              <AppText style={styles.sectionHeading}>Lesson {i + 1}</AppText>
+            <View key={id}>
+              <AppText style={styles.sectionHeading}>{name}</AppText>
               {displayStep && (
                 <StepIndicator
                   stepCount={labels.length}
