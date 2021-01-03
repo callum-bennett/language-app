@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions } from "react-native";
 import Leaderboard from "../components/Leaderboard";
 import { TabView, TabBar, SceneMap } from "react-native-tab-view";
 import * as Colors from "../constants/Colors";
@@ -36,16 +36,9 @@ const LeaderboardScreen = () => {
         weekly: WeeklyRoute,
         monthly: MonthlyRoute,
       })}
-      style={styles.container}
       initialLayout={initialLayout}
     />
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    paddingTop: 40,
-  },
-});
 
 export default LeaderboardScreen;

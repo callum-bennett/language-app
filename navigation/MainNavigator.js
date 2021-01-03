@@ -7,7 +7,10 @@ import DrawerNavigator from "./DrawerNavigator";
 import { connect } from "react-redux";
 import { selectNotificationsByType } from "../store/selectors/app";
 import { AntDesign } from "@expo/vector-icons";
+import CategoriesScreen from "../screens/CategoriesScreen";
+import { createStackNavigator } from "@react-navigation/stack";
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
 const tabOptions = {
   initialRouteName: "Learn",
@@ -34,6 +37,26 @@ const tabOptions = {
   },
 };
 
+const LeaderboardNavigator = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="LeaderboardScreen"
+      component={LeaderboardScreen}
+      options={{ title: "Leaderboard" }}
+    />
+  </Stack.Navigator>
+);
+
+const BadgesNavigator = () => (
+  <Stack.Navigator>
+    <Stack.Screen
+      name="BadgeScreen"
+      component={BadgesScreen}
+      options={{ title: "My Badges" }}
+    />
+  </Stack.Navigator>
+);
+
 const MainNavigator = (props) => {
   let badgeNotificationCount;
   if (props.badgeNotifications.length > 0) {
@@ -42,11 +65,11 @@ const MainNavigator = (props) => {
 
   return (
     <Tab.Navigator {...tabOptions}>
-      <Tab.Screen name="Leaderboard" component={LeaderboardScreen} />
+      <Tab.Screen name="Leaderboard" component={LeaderboardNavigator} />
       <Tab.Screen name="Learn" component={DrawerNavigator} />
       <Tab.Screen
         name="Achievements"
-        component={BadgesScreen}
+        component={BadgesNavigator}
         options={{
           tabBarBadge: badgeNotificationCount,
           tabBarBadgeStyle: {
