@@ -74,6 +74,8 @@ const AppTextInput = React.forwardRef((props, inputRef) => {
       error = `${props.label} is not valid`;
     } else if (props.equalTo && value !== props.equalTo.value) {
       error = props.equalTo.message;
+    } else if (props.minLength && value.trim().length < props.minLength) {
+      error = `${props.label} must be at least ${props.minLength} characters`;
     }
 
     return error;

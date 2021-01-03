@@ -130,7 +130,8 @@ const AuthForm = (props) => {
           label="Username"
           autoCapitalize="none"
           required
-          maxLength={50}
+          maxLength={25}
+          minLength={3}
           value={state.fields.username.value}
           onChange={handleChange}
           blurOnSubmit={false}
@@ -150,7 +151,8 @@ const AuthForm = (props) => {
           ref={passwordInputRef}
           autoCapitalize="none"
           required
-          maxLength={50}
+          maxLength={30}
+          minLength={8}
           returnKeyType={props.isSignIn ? "done" : "next"}
           secureTextEntry={!showPassword}
           value={state.fields.password.value}
@@ -173,7 +175,8 @@ const AuthForm = (props) => {
             ref={confirmPasswordInputRef}
             autoCapitalize="none"
             required
-            maxLength={50}
+            maxLength={30}
+            minLength={8}
             equalTo={{
               message: "Passwords don't match",
               value: state.fields.password.value,
