@@ -24,7 +24,7 @@ const Leaderboard = (props) => {
       const res = await apiV1Client.get(`/xp/leaderboard/${props.type}`, {
         handleException: false,
       });
-      setData(JSON.parse(res.data));
+      setData(Object.values(JSON.parse(res.data)));
       setError(false);
     } catch (err) {
       setError(true);
@@ -58,7 +58,7 @@ const Leaderboard = (props) => {
 
   return (
     <ScrollView
-      contentContainerStyle={styles.scrollView}
+      contentContainerStyle={data.length == 0 ? styles.scrollView : {}}
       refreshControl={
         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
       }
@@ -67,11 +67,9 @@ const Leaderboard = (props) => {
         {loaded ? (
           error ? (
             <AppText>The leaderboard is currently unavailable.</AppText>
-          ) : data ? (
+          ) : data.length > 0 ? (
             <View style={styles.listItems}>
-              {Object.values(data).map((item, index) =>
-                renderItem(item, index)
-              )}
+              {data.map((item, index) => renderItem(item, index))}
             </View>
           ) : (
             <AppText>There are no scores to display.</AppText>
