@@ -7,6 +7,7 @@ import { ActivityIndicator } from "react-native-paper";
 import VocabularyList from "../components/VocabularyList";
 import { selectUserVocabularyByCategoryId } from "../store/selectors/userVocabulary";
 import { CategoryContext } from "../navigation/RootNavigation";
+import AppText from "../components/UI/AppText";
 
 const CategoryWordsScreen = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,11 @@ const CategoryWordsScreen = () => {
   return (
     <View style={styles.screen}>
       {dataLoaded ? (
-        <VocabularyList vocabulary={vocabArray} />
+        vocabArray.length > 0 ? (
+          <VocabularyList vocabulary={vocabArray} />
+        ) : (
+          <AppText>You haven't learned any words yet!</AppText>
+        )
       ) : (
         <ActivityIndicator />
       )}
