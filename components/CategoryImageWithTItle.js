@@ -5,16 +5,18 @@ import AppText from "./UI/AppText";
 const CategoryImageWithTitle = (props) => {
   return (
     <View style={{ height: "100%" }}>
-      <ImageBackground
-        source={{ uri: props.category.imageUrl }}
-        style={styles.image}
-      >
-        <View style={styles.titleContainer}>
-          <AppText style={styles.title} numberOfLines={1}>
-            {props.category.name}
-          </AppText>
-        </View>
-      </ImageBackground>
+      {props.category && (
+        <ImageBackground
+          source={{ uri: props.category.imageUrl }}
+          style={styles.image}
+        >
+          <View style={styles.titleContainer}>
+            <AppText style={styles.title} numberOfLines={1}>
+              {props.category.name}
+            </AppText>
+          </View>
+        </ImageBackground>
+      )}
     </View>
   );
 };

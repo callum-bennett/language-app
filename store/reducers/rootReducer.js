@@ -7,8 +7,9 @@ import lessonReducer from "./lessonReducer";
 import userVocabularyReducer from "./userVocabularyReducer";
 import wordReducer from "./wordReducer";
 import { combineReducers } from "redux";
+import { SIGN_USER_OUT } from "../actions/types";
 
-export default combineReducers({
+const combinedReducers = combineReducers({
   authentication: authenticationReducer,
   app: appReducer,
   categories: categoryReducer,
@@ -18,3 +19,11 @@ export default combineReducers({
   crossword: crosswordReducer,
   badges: badgeReducer,
 });
+
+export default (state, action) => {
+  if (action.type === SIGN_USER_OUT) {
+    state = undefined;
+  }
+
+  return combinedReducers(state, action);
+};
