@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import AppText from "./UI/AppText";
 import AppButton from "./UI/AppButton";
 import { useSelector } from "react-redux";

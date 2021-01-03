@@ -26,3 +26,7 @@ export const selectActiveComponent = (state, lessonId) => {
 
   return null;
 };
+
+export const selectLessonById = (state, lessonId) => {
+  return state.lessons.byId[lessonId];
+};

@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryLessonScreen from "../screens/CategoryLessonScreen";
 import CategoryScreen from "../screens/CategoryScreen";
+import ProgressHeader from "../components/ProgressHeader";
 
 const Stack = createStackNavigator();
 
@@ -27,6 +28,9 @@ export default () => {
         component={CategoryLessonScreen}
         options={({ route }) => ({
           title: route.params.title,
+          headerRight: () => {
+            return <ProgressHeader lessonId={route.params.lessonId} />;
+          },
         })}
       />
     </Stack.Navigator>

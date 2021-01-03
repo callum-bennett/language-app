@@ -10,7 +10,6 @@ import { selectWordsByLessonId } from "../store/selectors/word";
 import {
   selectActiveComponent,
   selectLessonProgress,
-  selectLessonResponsesByType,
 } from "../store/selectors/lesson";
 import Crossword from "../components/Lesson/Crossword";
 import AppButton from "../components/UI/AppButton";
