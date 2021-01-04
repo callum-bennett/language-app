@@ -1,6 +1,9 @@
 /* App */
 export const CLEAR_NOTIFICATIONS = "clear_notifications";
 export const SET_NOTIFICATIONS = "set_notifications";
+export const SET_ONBOARDED = "set_onboarded";
+export const FETCH_USER_CONFIG = "fetch_user_config";
+export const SET_TOKEN_CHECK = "set_token_check";
 
 /* Authentication */
 export const AUTHENTICATE_USER = "authenticate_user";

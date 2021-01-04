@@ -30,21 +30,26 @@ apiV1Client.interceptors.response.use(
   },
   (error) => {
     const { response } = error;
-    const redirectRoute = availableRoutes().includes("Authentication")
-      ? "Authentication"
-      : "Categories";
+    let redirectRoute;
+
+    if (availableRoutes().includes("Authentication")) {
+      redirectRoute = "Authentication";
+    } else if (availableRoutes().includes("Categories")) {
+      redirectRoute = "Categories";
+    }
 
     if (!response) {
-      return navigate(redirectRoute, {
-        error: "Oops! Something went wrong",
-      });
+      if (redirectRoute) {
+        return navigate(redirectRoute, {
+          error: "Oops! Something went wrong",
+        });
+      }
     } else if (response.config.handleException !== false) {
       const { status } = response;
       if (status === 401) {
         AsyncStorage.removeItem("authToken");
         return navigate("Authentication");
-      } else if (status === 500) {
-        // console.log(error.response.data);
+      } else if (status === 500 && redirectRoute) {
         return navigate(redirectRoute, {
           error: "Oops! Something went wrong",
         });

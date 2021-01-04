@@ -11,16 +11,25 @@ import { ActivityIndicator } from "react-native-paper";
 import CenteredView from "../components/UI/AppCenteredView";
 import * as Colors from "../constants/Colors";
 import MainNavigator from "./MainNavigator";
+import AppIntroScreen from "../screens/AppIntroScreen";
+import { fetchUserConfig, setTokenCheck } from "../store/actions/app";
+import apiV1Client from "../api/apiv1client";
 
 const Stack = createStackNavigator();
 
 export default () => {
-  const [tokenCheck, setTokenCheck] = useState(false);
-
   const dispatchStore = useDispatch();
-  const authenticated = useSelector(
-    (state) => state.authentication.authenticated
-  );
+  const [
+    authenticated,
+    onboarded,
+    configLoaded,
+    tokenCheck,
+  ] = useSelector((state) => [
+    state.authentication.authenticated,
+    state.app.onboarded,
+    state.app.configLoaded,
+    state.app.tokenCheck,
+  ]);
 
   useEffect(() => {
     (async () => {
@@ -28,7 +37,16 @@ export default () => {
       if (existingToken) {
         dispatchStore(setAuthenticated(existingToken));
       }
-      setTokenCheck(true);
+      dispatchStore(setTokenCheck(true));
+    })();
+  }, [authenticated]);
+
+  useEffect(() => {
+    (async () => {
+      if (!authenticated) {
+        return;
+      }
+      dispatchStore(fetchUserConfig(apiV1Client));
     })();
   }, [authenticated]);
 
@@ -36,11 +54,29 @@ export default () => {
     <NavigationContainer ref={navigationRef}>
       <Stack.Navigator>
         {authenticated ? (
-          <Stack.Screen
-            name="Learn"
-            component={MainNavigator}
-            options={{ headerShown: false }}
-          />
+          configLoaded ? (
+            onboarded ? (
+              <Stack.Screen
+                name="Learn"
+                component={MainNavigator}
+                options={{ headerShown: false }}
+              />
+            ) : (
+              <Stack.Screen
+                name="Intro"
+                component={AppIntroScreen}
+                options={{ headerShown: false }}
+              />
+            )
+          ) : (
+            <Stack.Screen name="Onboarding" options={{ headerShown: false }}>
+              {() => (
+                <CenteredView grow>
+                  <ActivityIndicator color={Colors.accent} />
+                </CenteredView>
+              )}
+            </Stack.Screen>
+          )
         ) : (
           <Stack.Screen
             name="Authentication"

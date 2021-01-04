@@ -7,7 +7,6 @@ import DrawerNavigator from "./DrawerNavigator";
 import { connect } from "react-redux";
 import { selectNotificationsByType } from "../store/selectors/app";
 import { AntDesign } from "@expo/vector-icons";
-import CategoriesScreen from "../screens/CategoriesScreen";
 import { createStackNavigator } from "@react-navigation/stack";
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

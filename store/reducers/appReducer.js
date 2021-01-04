@@ -1,7 +1,15 @@
-import { SET_NOTIFICATIONS } from "../actions/types";
+import {
+  FETCH_USER_CONFIG,
+  SET_NOTIFICATIONS,
+  SET_ONBOARDED,
+  SET_TOKEN_CHECK,
+} from "../actions/types";
 
 const initialState = {
   notifications: {},
+  onboarded: false,
+  tokenCheck: false,
+  configLoaded: false,
 };
 
 export default (state = initialState, action) => {
@@ -13,6 +21,27 @@ export default (state = initialState, action) => {
         notifications,
       };
       break;
+
+    case FETCH_USER_CONFIG: {
+      const { onboarded } = action.payload;
+      return {
+        ...state,
+        onboarded,
+        configLoaded: true,
+      };
+    }
+
+    case SET_ONBOARDED:
+      return {
+        ...state,
+        onboarded: true,
+      };
+
+    case SET_TOKEN_CHECK:
+      return {
+        ...state,
+        tokenCheck: true,
+      };
 
     default:
       return state;
