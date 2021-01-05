@@ -15,6 +15,7 @@ import AuthForm from "../components/AuthForm";
 import AppText from "../components/UI/AppText";
 import * as Colors from "../constants/Colors";
 import { ROOT_URI } from "../api";
+import AppCenteredView from "../components/UI/AppCenteredView";
 
 const SIGN_IN = "sign_in";
 const SIGN_UP = "sign_up";
@@ -107,31 +108,36 @@ const AuthenticationScreen = () => {
 
   return (
     <TouchableWithoutFeedback>
-      <ScrollView contentContainerStyle={styles.screen}>
-        <Image style={styles.logo} source={require("../assets/icon.png")} />
-        <AuthForm
-          loading={loading}
-          onSubmit={handleAuthenticate}
-          isSignIn={mode === SIGN_IN}
-        />
-        <View style={styles.switchModeText}>
-          <AppText>
-            {mode === SIGN_UP
-              ? "Already have an account? "
-              : "Don't have an account already? "}
-          </AppText>
-          <TouchableWithoutFeedback
-            hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
-            onPress={() => dispatch({ type: SWITCH_MODE })}
-          >
-            <View>
-              <AppText style={styles.switchModeCTA}>
-                {mode === SIGN_UP ? "Log in" : "Sign up!"}
-              </AppText>
-            </View>
-          </TouchableWithoutFeedback>
-        </View>
-        {error && <AppText style={styles.error}>{error}</AppText>}
+      <ScrollView
+        contentContainerStyle={styles.screen}
+        keyboardShouldPersistTaps="handled"
+      >
+        <AppCenteredView grow style={styles.container}>
+          <Image style={styles.logo} source={require("../assets/icon.png")} />
+          <AuthForm
+            loading={loading}
+            onSubmit={handleAuthenticate}
+            isSignIn={mode === SIGN_IN}
+          />
+          <View style={styles.switchModeText}>
+            <AppText>
+              {mode === SIGN_UP
+                ? "Already have an account? "
+                : "Don't have an account already? "}
+            </AppText>
+            <TouchableWithoutFeedback
+              hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
+              onPress={() => dispatch({ type: SWITCH_MODE })}
+            >
+              <View>
+                <AppText style={styles.switchModeCTA}>
+                  {mode === SIGN_UP ? "Log in" : "Sign up!"}
+                </AppText>
+              </View>
+            </TouchableWithoutFeedback>
+          </View>
+          {error && <AppText style={styles.error}>{error}</AppText>}
+        </AppCenteredView>
       </ScrollView>
     </TouchableWithoutFeedback>
   );
@@ -139,9 +145,12 @@ const AuthenticationScreen = () => {
 
 const styles = StyleSheet.create({
   screen: {
+    paddingVertical: 20,
+  },
+  container: {
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 20,
+    width: "100%",
   },
   logo: {
     width: 75,

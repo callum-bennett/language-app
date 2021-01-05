@@ -168,7 +168,7 @@ const styles = StyleSheet.create({
   },
   translation: {
     alignSelf: "center",
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
   },
   progressContainer: {
