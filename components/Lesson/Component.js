@@ -30,6 +30,7 @@ const Component = (props) => {
   const [allowScroll, setAllowScroll] = useState(false);
   const [allowHint, setAllowHint] = useState(hintsAvailable);
   const [activeSlide, setActiveSlide] = useState(props.start + 1);
+  const [visibleSlide, setVisibleSlide] = useState(props.start + 1);
 
   const isLastSlide = activeSlide === props.words.length;
 
@@ -67,12 +68,20 @@ const Component = (props) => {
     dispatch(markWordAsSeen(wordId));
   };
 
-  const handleBeforeSnap = () => {
-    setAllowScroll(false);
-    if (hintsAvailable) {
-      setAllowHint(true);
+  const handleBeforeSnap = (slidingTo) => {
+    if (slidingTo >= activeSlide) {
+      setAllowScroll(false);
+      if (hintsAvailable) {
+        setAllowHint(true);
+      }
+      setActiveSlide((prevValue) => prevValue + 1);
     }
-    setActiveSlide((prevValue) => prevValue + 1);
+  };
+
+  const handleAfterSnap = (slidingTo) => {
+    setVisibleSlide((prevValue) => {
+      return slidingTo >= prevValue ? ++prevValue : --prevValue;
+    });
   };
 
   const handleGoNext = () => {
@@ -88,9 +97,10 @@ const Component = (props) => {
       <CenteredView style={styles.progressContainer}>
         <AppText
           style={styles.progress}
-        >{`${activeSlide} / ${props.words.length}`}</AppText>
+        >{`${visibleSlide} / ${props.words.length}`}</AppText>
       </CenteredView>
       <Carousel
+        enableSnap={true}
         ref={carouselRef}
         firstItem={props.start}
         initialNumToRender={props.words.length}
@@ -102,6 +112,7 @@ const Component = (props) => {
         itemWidth={itemWidth}
         scrollEnabled={allowScroll}
         onBeforeSnapToItem={handleBeforeSnap}
+        onSnapToItem={handleAfterSnap}
       />
 
       <BottomContainer>
@@ -121,7 +132,7 @@ const Component = (props) => {
         </BottomContainerItem>
         <BottomContainerItem>
           <AppText style={styles.translation}>
-            {props.words[activeSlide - 1].translation}
+            {props.words[visibleSlide - 1].translation}
           </AppText>
         </BottomContainerItem>
 
