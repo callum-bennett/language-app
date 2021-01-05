@@ -100,7 +100,6 @@ const Component = (props) => {
         >{`${visibleSlide} / ${props.words.length}`}</AppText>
       </CenteredView>
       <Carousel
-        enableSnap={true}
         ref={carouselRef}
         firstItem={props.start}
         initialNumToRender={props.words.length}
@@ -110,7 +109,7 @@ const Component = (props) => {
         sliderWidth={carouselWidth}
         sliderHeight={carouselHeight}
         itemWidth={itemWidth}
-        scrollEnabled={allowScroll}
+        scrollEnabled={false}
         onBeforeSnapToItem={handleBeforeSnap}
         onSnapToItem={handleAfterSnap}
       />
