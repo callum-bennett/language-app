@@ -2,10 +2,8 @@ import React, { useEffect, useRef, useState, useReducer } from "react";
 import {
   ActivityIndicator,
   StyleSheet,
-  KeyboardAvoidingView,
   View,
   TouchableWithoutFeedback,
-  Platform,
   Keyboard,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -119,10 +117,7 @@ const AuthForm = (props) => {
   );
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS == "ios" ? "padding" : "height"}
-      style={[styles.form]}
-    >
+    <View style={styles.form}>
       <FormControl>
         <AppTextInput
           key="username"
@@ -198,7 +193,7 @@ const AuthForm = (props) => {
           <ActivityIndicator style={{ height: 36 }} color={Colors.accent} />
         )}
       </FormControl>
-    </KeyboardAvoidingView>
+    </View>
   );
 };
 
