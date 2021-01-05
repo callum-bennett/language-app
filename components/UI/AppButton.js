@@ -9,6 +9,7 @@ import {
 } from "react-native";
 
 import * as Colors from "../../constants/Colors";
+import AppText from "./AppText";
 
 const AppButton = (props) => {
   const Touchable =
@@ -42,7 +43,7 @@ const AppButton = (props) => {
       onPress={handleOnPress}
     >
       <View style={buttonStyle}>
-        <Text style={textStyle}>{props.children}</Text>
+        <AppText style={textStyle}>{props.children}</AppText>
       </View>
     </Touchable>
   );
