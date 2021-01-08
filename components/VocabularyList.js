@@ -1,10 +1,15 @@
 import React from "react";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet, View, Pressable } from "react-native";
 import AppText from "./UI/AppText";
 import { useSelector } from "react-redux";
+import { playSound } from "../utils/sounds";
 
 const VocabularyList = (props) => {
   const words = useSelector((state) => state.words.byId);
+
+  const handleOnPress = (word) => {
+    playSound({ uri: word.soundUrl });
+  };
 
   const renderItem = ({ item }) => {
     const word = words[item.word];
@@ -16,17 +21,21 @@ const VocabularyList = (props) => {
     }
 
     return (
-      <View style={styles.listItem}>
-        <AppText style={styles.word}>{word.name}</AppText>
-        <View>
-          <AppText style={styles.textSmall}>
-            No. of guesses: {totalGuesses}
-          </AppText>
-          <AppText style={styles.textSmall}>
-            Success rate: {successRate}
-          </AppText>
+      <Pressable onPress={() => handleOnPress(word)}>
+        <View style={styles.listItem}>
+          <View>
+            <AppText
+              style={styles.word}
+            >{`${word.name[0].toUpperCase()}${word.name.slice(1)}`}</AppText>
+            <AppText style={styles.translation}>{word.translation}</AppText>
+          </View>
+
+          <View style={styles.contentRight}>
+            <AppText style={styles.textSmall}>Attempts: {totalGuesses}</AppText>
+            <AppText style={styles.textSmall}>Success: {successRate}</AppText>
+          </View>
         </View>
-      </View>
+      </Pressable>
     );
   };
 
@@ -63,7 +72,15 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   word: {
-    fontSize: 22,
+    fontSize: 20,
+  },
+  translation: {
+    fontSize: 12,
+  },
+  contentRight: {
+    flex: 1,
+    alignItems: "flex-end",
+    justifyContent: "center",
   },
   textSmall: {
     fontSize: 14,
