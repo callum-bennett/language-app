@@ -17,7 +17,7 @@ const AppIntroScreen = (props) => {
 
   const pages = [
     {
-      backgroundColor: "#BDF2F2",
+      backgroundColor: "#FCACB4",
       title: "Learn",
       subtitle: "Choose a category from the home screen",
       image: (
@@ -28,9 +28,9 @@ const AppIntroScreen = (props) => {
       ),
     },
     {
-      backgroundColor: "#FCACB4",
-      title: "Unlock achievements",
-      subtitle: "View your achievements on the badges screen",
+      backgroundColor: "#FFFD82",
+      title: "Earn XP",
+      subtitle: "Points are awarded for each correct answer",
       image: (
         <Image
           source={require("../assets/images/ob2.jpg")}
@@ -39,13 +39,23 @@ const AppIntroScreen = (props) => {
       ),
     },
     {
-      backgroundColor: "#BDF2F2",
+      backgroundColor: "#5Eb3E8",
       title: "Compete with other users",
-      subtitle:
-        "Daily, weekly, and monthly leaderboards are available on the leaderboard screen",
+      subtitle: "Daily, weekly, and monthly leaderboards are available",
       image: (
         <Image
           source={require("../assets/images/ob3.jpg")}
+          style={styles.image}
+        />
+      ),
+    },
+    {
+      backgroundColor: "#BDF2F2",
+      title: "Unlock badges",
+      subtitle: "Badges are awarded for various achievements",
+      image: (
+        <Image
+          source={require("../assets/images/ob4.jpg")}
           style={styles.image}
         />
       ),
