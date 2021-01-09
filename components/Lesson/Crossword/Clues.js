@@ -87,12 +87,12 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
-    marginBottom: 30,
+    marginBottom: 10,
     width: "100%",
   },
   clue: {
     marginVertical: 1,
-    fontSize: 16,
+    fontSize: 12,
   },
   active: {
     textDecorationLine: "underline",
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     textDecorationLine: "line-through",
   },
   heading: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "bold",
   },
 });
