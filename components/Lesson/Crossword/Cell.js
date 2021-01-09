@@ -17,6 +17,7 @@ const Cell = ({
   number,
   value,
   answers,
+  answered,
   inActiveAnswer,
   locked,
 }) => {
@@ -31,15 +32,16 @@ const Cell = ({
       : TouchableOpacity;
 
   const handleTouch = () => {
-    if (empty || locked) {
+    if (empty || answers.size === answered.size) {
       return;
     }
 
-    let answerText = answers[0];
-    if (answers.length > 1 && activeAnswerText === answerText) {
-      answerText = answers[1];
+    for (let answer of answers) {
+      if (!answered.has(answer) && activeAnswerText !== answer) {
+        dispatch(setActiveAnswer(answer));
+        break;
+      }
     }
-    dispatch(setActiveAnswer(answerText));
   };
 
   let cellStyle = [styles.cell];

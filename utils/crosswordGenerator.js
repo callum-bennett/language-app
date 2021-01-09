@@ -36,12 +36,13 @@ const addAnswer = (grid, answer) => {
     if (grid[y][x] === null) {
       grid[y][x] = {
         number: i === 0 ? number : null,
-        answers: [text],
+        answers: new Set(),
         correctValue: char,
+        answered: new Set(),
       };
-    } else {
-      grid[y][x].answers.push(text);
     }
+
+    grid[y][x].answers.add(text);
 
     if (direction === DIR_HORIZONTAL) {
       x++;

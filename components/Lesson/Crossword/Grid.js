@@ -22,9 +22,10 @@ const Grid = (props) => {
           return (
             <Cell
               active={isActiveCell(i + 1, j + 1)}
-              inActiveAnswer={cellData?.answers.includes(activeAnswerText)}
+              inActiveAnswer={cellData?.answers.has(activeAnswerText)}
               empty={!cellData}
               answers={cellData?.answers ?? null}
+              answered={cellData?.answered ?? null}
               locked={cellData?.locked ?? false}
               value={cellData?.value ?? null}
               number={cellData?.number ?? null}

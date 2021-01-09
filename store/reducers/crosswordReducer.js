@@ -79,6 +79,7 @@ export default (state = initialState, action) => {
       newState.answers[activeAnswerText].status = ANSWER_CORRECT;
       newState.answers[activeAnswerText].cells.forEach(({ x, y }) => {
         newState.grid[y - 1][x - 1].locked = true;
+        newState.grid[y - 1][x - 1].answered.add(activeAnswerText);
       });
       newState.activeAnswerText = null;
 
@@ -97,6 +98,7 @@ export default (state = initialState, action) => {
         const cell = state.grid[y - 1][x - 1];
         cell.value = answerText[i];
         cell.locked = true;
+        cell.answered.add(answerText);
       }
 
       return newState;
