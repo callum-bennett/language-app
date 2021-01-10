@@ -154,6 +154,7 @@ const styles = StyleSheet.create({
   error: {
     color: Colors.error,
     fontWeight: "bold",
+    fontSize: 12,
   },
   inputError: {
     borderBottomColor: Colors.error,
