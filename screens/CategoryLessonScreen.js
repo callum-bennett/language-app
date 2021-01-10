@@ -17,9 +17,9 @@ import AppText from "../components/UI/AppText";
 import { selectUserVocabularyByLessonId } from "../store/selectors/userVocabulary";
 import { ActivityIndicator } from "react-native-paper";
 import { advanceLesson } from "../store/actions/lessons";
-import { submitAttempt } from "../store/actions/words";
 import { selectCategoryByLessonId } from "../store/selectors/category";
 import { crosswordConfig } from "../data/crosswords";
+import apiV1Client from "../api/apiv1client";
 
 const CategoryLessonScreen = (props) => {
   const dispatch = useDispatch();
@@ -66,8 +66,14 @@ const CategoryLessonScreen = (props) => {
     props.navigation.pop();
   };
 
-  const handleSubmitAnswer = (wordId, correct) => {
-    dispatch(submitAttempt(lessonId, wordId, correct));
+  const handleSubmitAnswer = async (wordId, userAnswer, correct) => {
+    try {
+      await apiV1Client.post(`/lesson/${lessonId}/submitAnswer`, {
+        wordId,
+        userAnswer,
+        correct,
+      });
+    } catch (e) {}
   };
 
   return (
@@ -97,12 +103,7 @@ const CategoryLessonScreen = (props) => {
             words={words}
             onComplete={handleCompleteComponent}
             onSubmitAnswer={handleSubmitAnswer}
-            completedAnswers={
-              // @todo tidy up
-              lessonProgress.responses?.crossword
-                ? Object.keys(lessonProgress.responses.crossword)
-                : []
-            }
+            responses={lessonProgress.responses?.crossword}
           />
         ) : (
           <View>

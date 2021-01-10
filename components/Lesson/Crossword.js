@@ -51,9 +51,14 @@ const Crossword = (props) => {
 
   useEffect(() => {
     dispatch(startCrossword(props.config));
-    props.completedAnswers.forEach((wordId) => {
-      dispatch(insertAnswer(wordsById[wordId].name));
-    });
+    if (props.responses) {
+      Object.keys(props.responses).forEach((wordId) => {
+        const response = props.responses[wordId];
+        if (response.correct) {
+          dispatch(insertAnswer(wordsById[wordId].name));
+        }
+      });
+    }
   }, [0]);
 
   useEffect(() => {
@@ -121,7 +126,11 @@ const Crossword = (props) => {
       animationRef.current?.shake();
       playSound(FEEDBACK_NEGATIVE);
     }
-    props.onSubmitAnswer(wordsByText[activeAnswerText].id, isCorrect);
+    props.onSubmitAnswer(
+      wordsByText[activeAnswerText].id,
+      inputValue,
+      isCorrect
+    );
   };
 
   const handlePressHint = () => {

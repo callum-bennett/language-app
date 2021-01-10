@@ -36,9 +36,9 @@ const MultipleChoice = (props) => {
     ]);
   }, []);
 
-  const handleChoose = (isCorrect) => {
+  const handleChoose = (isCorrect, value) => {
     if (!answerSubmitted) {
-      props.onSubmitAnswer(props.word.id, isCorrect);
+      props.onSubmitAnswer(props.word.id, value, isCorrect);
       setAnswerSubmitted(true);
     }
     if (isCorrect) {

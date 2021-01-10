@@ -16,7 +16,7 @@ const MultipleChoiceOption = (props) => {
   const handlePress = () => {
     if (!locked) {
       setSelected(true);
-      onChoose(isCorrect);
+      onChoose(isCorrect, value);
     }
   };
 

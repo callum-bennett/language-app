@@ -39,14 +39,3 @@ export const markWordAsSeen = (id) => async (dispatch) => {
     }
   } catch (err) {}
 };
-
-export const submitAttempt = (id, wordId, correct) => async (dispatch) => {
-  try {
-    const res = await apiV1Client.post(`/lesson/${id}/submitAnswer`, {
-      wordId,
-      correct,
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
