@@ -19,6 +19,9 @@ const Leaderboard = (props) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
 
+  let lastPosition = null;
+  let lastScore = null;
+
   const loadData = async () => {
     try {
       const res = await apiV1Client.get(`/xp/leaderboard/${props.type}`, {
@@ -45,10 +48,22 @@ const Leaderboard = (props) => {
   }, []);
 
   const renderItem = (item, index) => {
+    const position = index + 1;
+
+    let positionText;
+    if (lastPosition && item.score === lastScore) {
+      positionText = `=${lastPosition}.`;
+    } else {
+      positionText = position <= 10 ? `${position}.` : ".....";
+    }
+
+    lastPosition = position;
+    lastScore = item.score;
+
     return (
       <AppListItem key={index}>
         <View style={styles.entry}>
-          <AppText style={styles.position}>#{index + 1}</AppText>
+          <AppText style={styles.position}>{positionText}</AppText>
           <AppText style={styles.name}>{item.username}</AppText>
           <AppText style={styles.score}>{item.score}</AppText>
         </View>
@@ -101,11 +116,13 @@ const styles = StyleSheet.create({
   },
   position: {
     fontSize: 22,
+    minWidth: 30,
+    textAlign: "right",
   },
   name: {
     fontSize: 22,
     fontWeight: "bold",
-    marginLeft: 10,
+    marginLeft: 15,
   },
   score: {
     fontSize: 28,
