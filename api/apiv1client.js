@@ -4,6 +4,7 @@ import { availableRoutes, navigate } from "../navigation/RootNavigation";
 import { ROOT_URI } from "./index";
 import store from "../store/store";
 import { setNotifications } from "../store/actions/app";
+import { signUserOut } from "../store/actions/authentication";
 
 const apiV1Client = axios.create({
   baseURL: `${ROOT_URI}/api/v1`,
@@ -48,7 +49,7 @@ apiV1Client.interceptors.response.use(
       const { status } = response;
       if (status === 401) {
         AsyncStorage.removeItem("authToken");
-        return navigate("Authentication");
+        return store.dispatch(signUserOut());
       } else if (status === 500 && redirectRoute) {
         return navigate(redirectRoute, {
           error: "Oops! Something went wrong",
