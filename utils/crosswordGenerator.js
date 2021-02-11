@@ -22,7 +22,6 @@ const generateGrid = (width, height) => {
     }
     i++;
   }
-
   return grid;
 };
 
@@ -49,7 +48,6 @@ const addAnswer = (grid, answer) => {
     } else {
       y++;
     }
-
     i++;
   }
 };

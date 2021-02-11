@@ -19,6 +19,7 @@ export const crosswordConfig = {
         new CrosswordAnswer("hermano", 4, 4, DIR_VERTICAL, 4),
       ],
     },
+
     {
       width: 11,
       height: 13,
