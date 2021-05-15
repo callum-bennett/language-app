@@ -1,5 +1,5 @@
 import axios from "axios";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { availableRoutes, navigate } from "../navigation/RootNavigation";
 import { ROOT_URI } from "./index";
 import store from "../store/store";

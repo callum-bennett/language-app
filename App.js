@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import * as Font from "expo-font";
-import { AppLoading } from "expo";
+import AppLoading from "expo-app-loading";
 
 import AppNavigator from "./navigation/AuthNavigator";
 import { Provider } from "react-redux";
@@ -21,6 +21,7 @@ export default function App() {
     return (
       <AppLoading
         startAsync={fetchFonts}
+        onError={() => console.warn}
         onFinish={() => setFontLoaded(true)}
       />
     );

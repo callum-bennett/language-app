@@ -6,7 +6,7 @@ import {
 } from "@react-navigation/drawer";
 import { useDispatch } from "react-redux";
 import { signUserOut } from "../store/actions/authentication";
-import AsyncStorage from "@react-native-community/async-storage";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const DrawerMenu = (props) => {
   const dispatch = useDispatch();
