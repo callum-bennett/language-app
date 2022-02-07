@@ -1,4 +1,4 @@
-import { arrayToObjectByKey } from "../../util";
+import { arrayToObjectByKey } from "@utils";
 import {
   ADVANCE_LESSON,
   FETCH_CATEGORY_PROGRESS,

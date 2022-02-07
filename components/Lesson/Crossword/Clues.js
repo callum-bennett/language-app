@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
-import { DIR_HORIZONTAL } from "../../../utils/crosswordGenerator";
 import { useDispatch, useSelector } from "react-redux";
-import AppText from "../../UI/AppText";
-import { setActiveAnswer } from "../../../store/actions/crossword";
-import { arrayToObjectByKey } from "../../../util";
-import { ANSWER_CORRECT } from "../../../store/reducers/crosswordReducer";
+
+import AppText from "@components/UI/AppText";
+import { setActiveAnswer } from "@store/actions/crossword";
+import { ANSWER_CORRECT } from "@store/reducers/crosswordReducer";
+import { arrayToObjectByKey } from "@utils";
+import { DIR_HORIZONTAL } from "@utils/crosswordGenerator";
 
 const Clues = (props) => {
   const dispatch = useDispatch();

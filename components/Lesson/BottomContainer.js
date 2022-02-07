@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import * as Colors from "../../constants/Colors";
+
+import * as Colors from "@constants/Colors";
 import BottomContainerItem from "./BottomContainerItem";
 
 const BottomContainer = (props) => {

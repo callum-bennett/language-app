@@ -1,4 +1,4 @@
-import { arrayToObjectByKey } from "../../util";
+import { arrayToObjectByKey } from "@utils";
 import { FETCH_CATEGORIES } from "../actions/types";
 
 const initialState = {

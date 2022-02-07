@@ -1,4 +1,4 @@
-import { arrayToObjectByKey } from "../../util";
+import { arrayToObjectByKey } from "@utils";
 import { FETCH_BADGES, FETCH_USER_BADGES } from "../actions/types";
 
 const initialState = {

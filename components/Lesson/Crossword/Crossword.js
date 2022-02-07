@@ -8,25 +8,23 @@ import {
   ScrollView,
   TextInput,
 } from "react-native";
+import * as Animatable from "react-native-animatable";
 
-import Grid from "./Crossword/Grid";
-import Clues from "./Crossword/Clues";
+import { Clues, Grid } from "";
 import {
   clearActiveAnswer,
   startCrossword,
   updateAnswer,
   markAnswerCorrect,
   insertAnswer,
-} from "../../store/actions/crossword";
-import AppButton from "../UI/AppButton";
-import { selectCompleteCount } from "../../store/selectors/crossword";
-import { arrayToObjectByKey } from "../../util";
-import AppText from "../UI/AppText";
-import * as Animatable from "react-native-animatable";
-import { playSound } from "../../utils/sounds";
-import { FEEDBACK_NEGATIVE, FEEDBACK_POSITIVE } from "../../utils/sounds";
-import BottomContainer from "./BottomContainer";
-import * as Colors from "../../constants/Colors";
+} from "@store/actions/crossword";
+
+import { AppButton, AppText } from "@components/UI";
+import { selectCompleteCount } from "@store/selectors/crossword";
+import { arrayToObjectByKey } from "@utils";
+import { playSound, FEEDBACK_NEGATIVE, FEEDBACK_POSITIVE } from "@utils/sounds";
+import BottomContainer from "../BottomContainer";
+import * as Colors from "@constants/Colors";
 
 const Crossword = (props) => {
   const dispatch = useDispatch();

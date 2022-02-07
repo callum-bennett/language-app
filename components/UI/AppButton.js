@@ -1,14 +1,13 @@
 import React from "react";
 import {
   StyleSheet,
-  Text,
   View,
   Platform,
   TouchableOpacity,
   TouchableNativeFeedback,
 } from "react-native";
 
-import * as Colors from "../../constants/Colors";
+import * as Colors from "@constants/Colors";
 import AppText from "./AppText";
 
 const AppButton = (props) => {

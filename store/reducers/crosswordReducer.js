@@ -1,4 +1,4 @@
-import { arrayToObjectByKey } from "../../util";
+import { arrayToObjectByKey } from "@utils";
 import { drawCrossword } from "../../utils/crosswordGenerator";
 import {
   CLEAR_ACTIVE_ANSWER,

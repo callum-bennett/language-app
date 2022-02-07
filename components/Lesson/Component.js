@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import { StyleSheet, View, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel/src/carousel/Carousel";
+
 import WordCard from "./WordCard";
 import { markWordAsSeen } from "../../store/actions/words";
 import { useDispatch } from "react-redux";

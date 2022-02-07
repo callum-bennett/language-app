@@ -1,4 +1,4 @@
-import { arrayToObjectByKey } from "../../util";
+import { arrayToObjectByKey } from "@utils";
 import { ADD_USER_VOCABULARY, FETCH_USER_VOCABULARY } from "../actions/types";
 
 const initialState = {

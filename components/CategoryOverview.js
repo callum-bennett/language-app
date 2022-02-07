@@ -15,11 +15,11 @@ import { selectUserVocabularyByCategoryId } from "../store/selectors/userVocabul
 import { selectLessonsByCategoryId } from "../store/selectors/lesson";
 import { selectCategoryById } from "../store/selectors/category";
 import { fetchUserVocabulary, fetchWords } from "../store/actions/words";
-import CategoryHeader from "../components/CategoryHeader";
-import CategoryLessonList from "../components/CategoryLessonList";
+import CategoryHeader from "@components/CategoryHeader";
+import CategoryLessonList from "@components/CategoryLessonList";
 import { ActivityIndicator } from "react-native-paper";
 import { CategoryContext } from "../navigation/RootNavigation";
-import CenteredView from "../components/UI/AppCenteredView";
+import CenteredView from "@components/UI/AppCenteredView";
 
 const wait = (timeout) => {
   return new Promise((resolve) => {
