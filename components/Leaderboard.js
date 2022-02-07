@@ -15,7 +15,7 @@ const wait = (timeout) => {
 
 const Leaderboard = (props) => {
   const [loaded, setLoaded] = useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState([]);
   const [error, setError] = useState(false);
 

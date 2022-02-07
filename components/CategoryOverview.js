@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -33,8 +33,8 @@ const CategoryOverview = (props) => {
 
   const { categoryId } = useContext(CategoryContext);
 
-  const [loaded, setLoaded] = React.useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
   const [category, lessons, vocabulary] = useSelector((state) => [
     selectCategoryById(state, categoryId),
@@ -77,7 +77,7 @@ const CategoryOverview = (props) => {
     }
   }, [refreshing]);
 
-  const handleRefresh = React.useCallback(async () => {
+  const handleRefresh = useCallback(async () => {
     setRefreshing(true);
     await wait(1000);
     setRefreshing(false);

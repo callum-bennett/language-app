@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import {
   StyleSheet,
   View,
@@ -114,4 +114,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo((props) => <Cell {...props} />);
+export default memo((props) => <Cell {...props} />);

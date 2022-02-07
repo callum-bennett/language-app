@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -63,4 +63,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default React.memo((props) => <MultipleChoiceOption {...props} />);
+export default memo((props) => <MultipleChoiceOption {...props} />);

@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { forwardRef, useEffect, useReducer } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 import AppText from "./AppText";
 import * as Colors from "../../constants/Colors";
@@ -42,7 +42,7 @@ const reducer = (state, action) => {
   }
 };
 
-const AppTextInput = React.forwardRef((props, inputRef) => {
+const AppTextInput = forwardRef((props, inputRef) => {
   const [{ touched, error, value }, dispatch] = useReducer(reducer, {
     focused: false,
     touched: false,
