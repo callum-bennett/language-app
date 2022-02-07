@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import { Clues, Grid } from "";
+import { Clues, Grid } from ".";
 import {
   clearActiveAnswer,
   startCrossword,

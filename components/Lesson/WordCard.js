@@ -11,9 +11,9 @@ import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
 
-import AppText from "../UI/AppText";
-import * as Colors from "../../constants/Colors";
-import { playSound } from "../../utils/sounds";
+import AppText from "@components/UI/AppText";
+import * as Colors from "@constants/Colors";
+import { playSound } from "@utils/sounds";
 
 const WordCard = (props) => {
   const AnimationRef = useRef(null);

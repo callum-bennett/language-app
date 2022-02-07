@@ -1,18 +1,18 @@
 import React, { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { StyleSheet, View, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel/src/carousel/Carousel";
 
-import WordCard from "./WordCard";
-import { markWordAsSeen } from "../../store/actions/words";
-import { useDispatch } from "react-redux";
-import AppText from "../UI/AppText";
-import AppButton from "../UI/AppButton";
-import MultipleChoice from "./MultipleChoice";
-import CenteredView from "../UI/AppCenteredView";
-import BottomContainer from "./BottomContainer";
-import * as Colors from "../../constants/Colors";
-import BottomContainerItem from "./BottomContainerItem";
-import { playSound } from "../../utils/sounds";
+import {
+  BottomContainer,
+  BottomContainerItem,
+  MultipleChoice,
+  WordCard,
+} from "./";
+import { markWordAsSeen } from "@store/actions/words";
+import { AppButton, AppText, AppCenteredView } from "@components/UI";
+import * as Colors from "@constants/Colors";
+import { playSound } from "@utils/sounds";
 
 const carouselWidth = Dimensions.get("window").width;
 const carouselHeight = Dimensions.get("window").height;
@@ -94,12 +94,12 @@ const Component = (props) => {
   };
 
   return (
-    <CenteredView grow>
-      <CenteredView style={styles.progressContainer}>
+    <AppCenteredView grow>
+      <AppCenteredView style={styles.progressContainer}>
         <AppText
           style={styles.progress}
         >{`${visibleSlide} / ${props.words.length}`}</AppText>
-      </CenteredView>
+      </AppCenteredView>
       <Carousel
         ref={carouselRef}
         firstItem={props.start}
@@ -156,7 +156,7 @@ const Component = (props) => {
           )}
         </BottomContainerItem>
       </BottomContainer>
-    </CenteredView>
+    </AppCenteredView>
   );
 };
 

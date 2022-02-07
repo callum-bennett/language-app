@@ -6,9 +6,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from "react-native";
-import AppCard from "../UI/AppCard";
-import AppText from "../UI/AppText";
-import * as Colors from "../../constants/Colors";
+
+import { AppCard, AppText } from "@components/UI";
+import * as Colors from "@constants/Colors";
 
 const MultipleChoiceOption = (props) => {
   const [selected, setSelected] = useState(false);
