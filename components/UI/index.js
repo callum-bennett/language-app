@@ -1,8 +1,8 @@
-export { default as AppButton } from "./AppButton.js";
-export { default as AppCard } from "./AppCard.js";
-export { default as AppCenteredView } from "./AppCenteredView.js";
-export { default as AppListItem } from "./AppListItem.js";
-export { default as AppModal } from "./AppModal.js";
-export { default as AppProgressDonut } from "./AppProgressDonut.js";
-export { default as AppText } from "./AppText.js";
-export { default as AppTextInput } from "./AppTextInput.js";
+export UIButton from "./UIButton.js";
+export UICard from "./UICard.js";
+export UICenteredView from "./UICenteredView.js";
+export UIListItem from "./UIListItem.js";
+export UIModal from "./UIModal.js";
+export UIProgressDonut from "./UIProgressDonut.js";
+export UIText from "./UIText.js";
+export UITextInput from "./UITextInput.js";

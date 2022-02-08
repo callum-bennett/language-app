@@ -5,9 +5,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
 
 import apiV1Client from "@api/apiv1client";
-import Badge from "@components/Badge";
-import { AppModal, AppText, CenteredView } from "@components/UI";
-
+import { Badge, UIModal, UIText, UICenteredView } from "@components";
 import {
   clearNotifications,
   fetchBadges,
@@ -84,7 +82,7 @@ const BadgesScreen = () => {
   };
 
   return (
-    <CenteredView grow>
+    <UICenteredView grow>
       {loaded ? (
         Object.values(groupedBadges).map((badgeGroup, i) =>
           renderBadgeGroup(badgeGroup, i)
@@ -93,20 +91,20 @@ const BadgesScreen = () => {
         <ActivityIndicator />
       )}
       {selectedBadge && (
-        <AppModal onTouchAway={handleHideModal}>
-          <CenteredView>
+        <UIModal onTouchAway={handleHideModal}>
+          <UICenteredView>
             {renderBadge(
               selectedBadge,
               userBadges[selectedBadge.id] ?? null,
               true
             )}
-            <AppText style={styles.description}>
+            <UIText style={styles.description}>
               {selectedBadge.description}
-            </AppText>
-          </CenteredView>
-        </AppModal>
+            </UIText>
+          </UICenteredView>
+        </UIModal>
       )}
-    </CenteredView>
+    </UICenteredView>
   );
 };
 

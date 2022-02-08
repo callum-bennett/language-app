@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, View, Pressable } from "react-native";
 
-import { AppText, CenteredView } from "./UI";
+import { UIText, CenteredView } from "./UI";
 import * as Colors from "@constants/Colors";
 
 const Badge = (props) => {
@@ -15,12 +15,12 @@ const Badge = (props) => {
   }
   return (
     <Pressable onPress={() => props.onSelectBadge(badge)}>
-      <CenteredView>
+      <UICenteredView>
         <View style={containerStyle}>
           <Image source={{ uri: icon }} style={styles.icon} />
         </View>
-        <AppText style={styles.name}>{badge.name}</AppText>
-      </CenteredView>
+        <UIText style={styles.name}>{badge.name}</UIText>
+      </UICenteredView>
     </Pressable>
   );
 };

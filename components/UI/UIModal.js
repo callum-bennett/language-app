@@ -6,10 +6,9 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
-import AppCenteredView from "./AppCenteredView";
-import AppCard from "./AppCard";
+import { UICard, UICenteredView } from "./";
 
-const AppModal = (props) => {
+const UIModal = (props) => {
   return (
     <Modal
       animationType="fade"
@@ -22,16 +21,16 @@ const AppModal = (props) => {
         <View style={styles.overlay} />
       </TouchableWithoutFeedback>
 
-      <AppCenteredView grow>
-        <AppCard style={[styles.card, props.style.card]}>
-          <AppCenteredView>{props.children}</AppCenteredView>
-        </AppCard>
-      </AppCenteredView>
+      <UICenteredView grow>
+        <UICard style={[styles.card, props.style.card]}>
+          <UICenteredView>{props.children}</UICenteredView>
+        </UICard>
+      </UICenteredView>
     </Modal>
   );
 };
 
-AppModal.defaultProps = {
+UIModal.defaultProps = {
   style: {
     card: {},
   },
@@ -51,4 +50,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppModal;
+export default UIModal;

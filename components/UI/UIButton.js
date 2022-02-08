@@ -8,9 +8,9 @@ import {
 } from "react-native";
 
 import * as Colors from "@constants/Colors";
-import AppText from "./AppText";
+import UIText from "./UIText";
 
-const AppButton = (props) => {
+const UIButton = (props) => {
   const Touchable =
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
@@ -42,13 +42,13 @@ const AppButton = (props) => {
       onPress={handleOnPress}
     >
       <View style={buttonStyle}>
-        <AppText style={textStyle}>{props.children}</AppText>
+        <UIText style={textStyle}>{props.children}</UIText>
       </View>
     </Touchable>
   );
 };
 
-AppButton.defaultProps = {
+UIButton.defaultProps = {
   variant: "medium",
   style: {
     button: {},
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppButton;
+export default UIButton;

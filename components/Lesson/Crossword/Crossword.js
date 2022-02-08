@@ -11,7 +11,7 @@ import {
 import * as Animatable from "react-native-animatable";
 
 import { Clues, Grid } from ".";
-import { AppButton, AppText } from "@components/UI";
+import { UIButton, UIText } from "@components";
 import BottomContainer from "@components/Lesson/BottomContainer";
 import * as Colors from "@constants/Colors";
 import { selectCompleteCount } from "@store/selectors/crossword";
@@ -171,7 +171,7 @@ const Crossword = (props) => {
                 value={inputValue}
                 onSubmitEditing={handleConfirm}
               />
-              <AppButton
+              <UIButton
                 variant="small"
                 onPress={handlePressHint}
                 style={{
@@ -179,28 +179,28 @@ const Crossword = (props) => {
                 }}
               >
                 Hint
-              </AppButton>
+              </UIButton>
             </>,
-            <AppText style={styles.clue}>
+            <UIText style={styles.clue}>
               {wordsByText[activeAnswerText].translation}
-            </AppText>,
-            <AppButton variant="small" onPress={handleConfirm}>
+            </UIText>,
+            <UIButton variant="small" onPress={handleConfirm}>
               Submit
-            </AppButton>,
+            </UIButton>,
           ]}
         />
       ) : (
         <BottomContainer
           items={[
             <></>,
-            <AppText>
+            <UIText>
               {`Completed: ${completedCount} / ${props.words.length}`}
-            </AppText>,
+            </UIText>,
             <View>
               {completedCount === props.words.length && (
-                <AppButton variant="small" onPress={handleContinue}>
+                <UIButton variant="small" onPress={handleContinue}>
                   Continue
-                </AppButton>
+                </UIButton>
               )}
             </View>,
           ]}
@@ -208,7 +208,7 @@ const Crossword = (props) => {
       )}
     </View>
   ) : (
-    <AppText>Loading</AppText>
+    <UIText>Loading</UIText>
   );
 };
 

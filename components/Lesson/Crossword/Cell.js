@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import AppText from "@components/UI/AppText";
+import UIText from "@components";
 import { setActiveAnswer } from "@store/actions/crossword";
 
 const Cell = ({
@@ -65,10 +65,10 @@ const Cell = ({
   return (
     <Touchable onPress={() => handleTouch()}>
       <View style={cellStyle}>
-        <AppText style={styles.letter}>{value}</AppText>
+        <UIText style={styles.letter}>{value}</UIText>
         {number && (
           <View style={styles.origin}>
-            <AppText style={styles.number}>{number}</AppText>
+            <UIText style={styles.number}>{number}</UIText>
           </View>
         )}
       </View>

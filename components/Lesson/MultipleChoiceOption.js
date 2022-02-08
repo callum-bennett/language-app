@@ -7,7 +7,7 @@ import {
   View,
 } from "react-native";
 
-import { AppCard, AppText } from "@components/UI";
+import { UICard, UIText } from "@components";
 import * as Colors from "@constants/Colors";
 
 const MultipleChoiceOption = (props) => {
@@ -32,14 +32,14 @@ const MultipleChoiceOption = (props) => {
     : TouchableNativeFeedback;
 
   return (
-    <AppCard style={containerStyle}>
+    <UICard style={containerStyle}>
       <TouchableComponent onPress={handlePress}>
         <View style={styles.content}>
           <Image style={styles.image} source={{ uri: image }} />
-          <AppText style={{ fontSize: 20 }}>{value}</AppText>
+          <UIText style={{ fontSize: 20 }}>{value}</UIText>
         </View>
       </TouchableComponent>
-    </AppCard>
+    </UICard>
   );
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList, StyleSheet, View, Pressable } from "react-native";
 import { useSelector } from "react-redux";
 
-import { AppText } from "@components/UI";
+import { UIText } from "@components";
 import { playSound } from "@utils/sounds";
 
 const VocabularyList = (props) => {
@@ -25,15 +25,15 @@ const VocabularyList = (props) => {
       <Pressable onPress={() => handleOnPress(word)}>
         <View style={styles.listItem}>
           <View>
-            <AppText
+            <UIText
               style={styles.word}
-            >{`${word.name[0].toUpperCase()}${word.name.slice(1)}`}</AppText>
-            <AppText style={styles.translation}>{word.translation}</AppText>
+            >{`${word.name[0].toUpperCase()}${word.name.slice(1)}`}</UIText>
+            <UIText style={styles.translation}>{word.translation}</UIText>
           </View>
 
           <View style={styles.contentRight}>
-            <AppText style={styles.textSmall}>Attempts: {totalGuesses}</AppText>
-            <AppText style={styles.textSmall}>Success: {successRate}</AppText>
+            <UIText style={styles.textSmall}>Attempts: {totalGuesses}</UIText>
+            <UIText style={styles.textSmall}>Success: {successRate}</UIText>
           </View>
         </View>
       </Pressable>

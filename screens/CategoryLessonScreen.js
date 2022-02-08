@@ -5,7 +5,7 @@ import { ActivityIndicator } from "react-native-paper";
 
 import apiV1Client from "@api/apiv1client";
 import Crossword from "@components/Lesson/Crossword";
-import { AppButton, AppText } from "@components/UI";
+import { UIButton, UIText } from "@components";
 import Component, {
   LESSON_TYPE_CROSSWORD,
   LESSON_TYPE_MULTIPLE_CHOICE,
@@ -83,8 +83,8 @@ const CategoryLessonScreen = (props) => {
       {lessonProgress ? (
         lessonProgress.status === 1 ? (
           <>
-            <AppText style={styles.completeText}>Lesson complete!</AppText>
-            <AppButton onPress={handleSectionComplete}>Continue</AppButton>
+            <UIText style={styles.completeText}>Lesson complete!</UIText>
+            <UIButton onPress={handleSectionComplete}>Continue</UIButton>
           </>
         ) : [LESSON_TYPE_SLIDES, LESSON_TYPE_MULTIPLE_CHOICE].includes(
             activeComponentKey
@@ -109,7 +109,7 @@ const CategoryLessonScreen = (props) => {
           />
         ) : (
           <View>
-            <AppText>Oops! Something went wrong</AppText>
+            <UIText>Oops! Something went wrong</UIText>
           </View>
         )
       ) : (

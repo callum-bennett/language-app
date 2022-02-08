@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 
 import * as Colors from "@constants/Colors";
 
-const AppCard = (props) => {
+const UICard = (props) => {
   return <View style={[styles.card, props.style]}>{props.children}</View>;
 };
 
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AppCard;
+export default UICard;

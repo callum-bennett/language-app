@@ -10,8 +10,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
 
-import { CategoryHeader, CategoryLessonList } from "@components";
-import { AppText, CenteredView } from "@components/UI";
+import {
+  CategoryHeader,
+  CategoryLessonList,
+  UIText,
+  UICenteredView,
+} from "@components";
 import { CategoryContext } from "@navigation/RootNavigation";
 import {
   selectUserVocabularyByCategoryId,
@@ -98,9 +102,9 @@ const CategoryOverview = (props) => {
           <View style={styles.mainContainer}>
             {vocabArray.length > 0 && (
               <View>
-                <AppText style={styles.wordsLearned}>
+                <UIText style={styles.wordsLearned}>
                   Words learned: {wordsLearnedCount} / {wordCount}
-                </AppText>
+                </UIText>
               </View>
             )}
             <CategoryLessonList
@@ -109,9 +113,9 @@ const CategoryOverview = (props) => {
             />
           </View>
         ) : (
-          <CenteredView grow style={styles.loadingContainer}>
+          <UICenteredView grow style={styles.loadingContainer}>
             <ActivityIndicator />
-          </CenteredView>
+          </UICenteredView>
         )}
       </ScrollView>
     </SafeAreaView>

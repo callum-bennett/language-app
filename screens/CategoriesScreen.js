@@ -3,8 +3,7 @@ import { FlatList, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Snackbar } from "react-native-paper";
 
-import { CategoryTile } from "@components";
-import { AppText } from "@components/UI";
+import { CategoryTile, UIText } from "@components";
 import * as Colors from "@constants/Colors";
 import {
   fetchCategories,
@@ -64,7 +63,7 @@ const CategoryScreen = (props) => {
         style={{ backgroundColor: Colors.error }}
       >
         <View>
-          <AppText style={{ color: "#FFF" }}>{snackbarMessage}</AppText>
+          <UIText style={{ color: "#FFF" }}>{snackbarMessage}</UIText>
         </View>
       </Snackbar>
     </>

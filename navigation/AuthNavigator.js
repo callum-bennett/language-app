@@ -6,11 +6,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator } from "react-native-paper";
 
 import { AppIntroScreen, AuthenticationScreen } from "@screens";
-import { setAuthenticated } from "@store/actions/authentication";
 import { MainNavigator, navigationRef } from "@navigation";
-import CenteredView from "@components/UI/AppCenteredView";
+import { UICenteredView } from "@components";
 import * as Colors from "@constants/Colors";
-import { fetchUserConfig, setTokenCheck } from "@store/actions/app";
+import {
+  fetchUserConfig,
+  setTokenCheck,
+  setAuthenticated,
+} from "@store/actions";
 import apiV1Client from "@api/apiv1client";
 
 const Stack = createStackNavigator();
@@ -69,9 +72,9 @@ export default () => {
           ) : (
             <Stack.Screen name="Onboarding" options={{ headerShown: false }}>
               {() => (
-                <CenteredView grow>
+                <UICenteredView grow>
                   <ActivityIndicator color={Colors.accent} />
-                </CenteredView>
+                </UICenteredView>
               )}
             </Stack.Screen>
           )
@@ -88,8 +91,8 @@ export default () => {
       </Stack.Navigator>
     </NavigationContainer>
   ) : (
-    <CenteredView grow>
+    <UICenteredView grow>
       <ActivityIndicator color={Colors.accent} />
-    </CenteredView>
+    </UICenteredView>
   );
 };

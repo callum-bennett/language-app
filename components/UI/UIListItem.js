@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-const AppListItem = (props) => {
+const UIListItem = (props) => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>{props.children}</View>
@@ -21,4 +21,4 @@ const styles = StyleSheet.create({
   content: {},
 });
 
-export default AppListItem;
+export default UIListItem;
