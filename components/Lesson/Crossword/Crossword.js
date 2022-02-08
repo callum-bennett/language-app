@@ -11,6 +11,10 @@ import {
 import * as Animatable from "react-native-animatable";
 
 import { Clues, Grid } from ".";
+import { AppButton, AppText } from "@components/UI";
+import BottomContainer from "@components/Lesson/BottomContainer";
+import * as Colors from "@constants/Colors";
+import { selectCompleteCount } from "@store/selectors/crossword";
 import {
   clearActiveAnswer,
   startCrossword,
@@ -18,13 +22,12 @@ import {
   markAnswerCorrect,
   insertAnswer,
 } from "@store/actions/crossword";
-
-import { AppButton, AppText } from "@components/UI";
-import { selectCompleteCount } from "@store/selectors/crossword";
-import { arrayToObjectByKey } from "@utils";
-import { playSound, FEEDBACK_NEGATIVE, FEEDBACK_POSITIVE } from "@utils/sounds";
-import BottomContainer from "../BottomContainer";
-import * as Colors from "@constants/Colors";
+import {
+  arrayToObjectByKey,
+  playSound,
+  FEEDBACK_NEGATIVE,
+  FEEDBACK_POSITIVE,
+} from "@utils";
 
 const Crossword = (props) => {
   const dispatch = useDispatch();

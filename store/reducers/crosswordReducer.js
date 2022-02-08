@@ -1,5 +1,4 @@
-import { arrayToObjectByKey } from "@utils";
-import { drawCrossword } from "../../utils/crosswordGenerator";
+import { arrayToObjectByKey, drawCrossword } from "@utils";
 import {
   CLEAR_ACTIVE_ANSWER,
   INSERT_ANSWER,
@@ -7,7 +6,7 @@ import {
   SET_ACTIVE_ANSWER,
   START_CROSSWORD,
   UPDATE_ANSWER,
-} from "../actions/types";
+} from "@store/actions/types";
 
 const initialState = {
   initialized: false,

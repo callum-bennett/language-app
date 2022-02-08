@@ -1,4 +1,4 @@
-import { AUTHENTICATE_USER, SIGN_USER_OUT } from "../actions/types";
+import { AUTHENTICATE_USER, SIGN_USER_OUT } from "@store/actions/types";
 
 const initialState = {
   authenticated: false,

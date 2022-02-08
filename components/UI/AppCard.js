@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+
 import * as Colors from "@constants/Colors";
+
 const AppCard = (props) => {
   return <View style={[styles.card, props.style]}>{props.children}</View>;
 };

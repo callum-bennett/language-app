@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { RefreshControl, ScrollView, StyleSheet, View } from "react-native";
-import AppText from "./UI/AppText";
-import AppListItem from "./UI/AppListItem";
-import * as Colors from "../constants/Colors";
-import apiV1Client from "../api/apiv1client";
 import { ActivityIndicator } from "react-native-paper";
-import CenteredView from "./UI/AppCenteredView";
+
+import apiV1Client from "@api/apiv1client";
+import * as Colors from "@constants/Colors";
+import { AppListItem, AppText, CenteredView } from "@components/UI";
 
 const wait = (timeout) => {
   return new Promise((resolve) => {

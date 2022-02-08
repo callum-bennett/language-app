@@ -7,7 +7,7 @@ import lessonReducer from "./lessonReducer";
 import userVocabularyReducer from "./userVocabularyReducer";
 import wordReducer from "./wordReducer";
 import { combineReducers } from "redux";
-import { SIGN_USER_OUT } from "../actions/types";
+import { SIGN_USER_OUT } from "@store/actions/types";
 
 const combinedReducers = combineReducers({
   authentication: authenticationReducer,

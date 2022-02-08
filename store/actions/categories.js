@@ -1,4 +1,4 @@
-import apiV1Client from "../../api/apiv1client";
+import apiV1Client from "@api/apiv1client";
 import { FETCH_CATEGORIES, FETCH_CATEGORY_PROGRESS } from "./types";
 
 export const fetchCategories = () => async (dispatch) => {

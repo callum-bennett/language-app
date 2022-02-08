@@ -1,4 +1,4 @@
-import apiV1Client from "../../api/apiv1client";
+import apiV1Client from "@api/apiv1client";
 import {
   ADD_USER_VOCABULARY,
   FETCH_USER_VOCABULARY,

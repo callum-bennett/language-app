@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, View, TouchableOpacity } from "react-native";
-import CategoryImageWithTitle from "./CategoryImageWithTItle";
+
+import CategoryImageWithTitle from "./CategoryImageWithTitle";
 
 const CategoryTile = (props) => {
   return (

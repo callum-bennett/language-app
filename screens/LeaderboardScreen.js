@@ -1,8 +1,10 @@
 import React from "react";
 import { Dimensions } from "react-native";
-import Leaderboard from "../components/Leaderboard";
 import { TabView, TabBar, SceneMap } from "react-native-tab-view";
-import * as Colors from "../constants/Colors";
+
+import Leaderboard from "@components/Leaderboard";
+import * as Colors from "@constants/Colors";
+
 const initialLayout = { width: Dimensions.get("window").width };
 
 const DailyRoute = () => <Leaderboard type="daily" />;

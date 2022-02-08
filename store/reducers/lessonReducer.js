@@ -5,7 +5,7 @@ import {
   FETCH_LESSON_COMPONENTS,
   FETCH_LESSONS,
   START_LESSON,
-} from "../actions/types";
+} from "@store/actions/types";
 
 const initialState = {
   byId: {},

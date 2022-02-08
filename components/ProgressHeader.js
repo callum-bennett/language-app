@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
-
-import * as Colors from "../constants/Colors";
 import StepIndicator from "react-native-step-indicator";
-import { selectLessonById } from "../store/selectors/lesson";
+
+import * as Colors from "@constants/Colors";
+import { selectLessonById } from "@store/selectors";
 
 const ProgressHeader = (props) => {
   const { lessonId } = props;

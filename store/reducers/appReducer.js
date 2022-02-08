@@ -3,7 +3,7 @@ import {
   SET_NOTIFICATIONS,
   SET_ONBOARDED,
   SET_TOKEN_CHECK,
-} from "../actions/types";
+} from "@store/actions/types";
 
 const initialState = {
   notifications: {},

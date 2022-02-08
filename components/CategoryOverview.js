@@ -8,18 +8,21 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
-
-import AppText from "../components/UI/AppText";
-import { fetchCategoryProgress } from "../store/actions/categories";
-import { selectUserVocabularyByCategoryId } from "../store/selectors/userVocabulary";
-import { selectLessonsByCategoryId } from "../store/selectors/lesson";
-import { selectCategoryById } from "../store/selectors/category";
-import { fetchUserVocabulary, fetchWords } from "../store/actions/words";
-import CategoryHeader from "@components/CategoryHeader";
-import CategoryLessonList from "@components/CategoryLessonList";
 import { ActivityIndicator } from "react-native-paper";
-import { CategoryContext } from "../navigation/RootNavigation";
-import CenteredView from "@components/UI/AppCenteredView";
+
+import { CategoryHeader, CategoryLessonList } from "@components";
+import { AppText, CenteredView } from "@components/UI";
+import { CategoryContext } from "@navigation/RootNavigation";
+import {
+  selectUserVocabularyByCategoryId,
+  selectLessonsByCategoryId,
+  selectCategoryById,
+} from "@store/selectors";
+import {
+  fetchCategoryProgress,
+  fetchUserVocabulary,
+  fetchWords,
+} from "@store/actions";
 
 const wait = (timeout) => {
   return new Promise((resolve) => {

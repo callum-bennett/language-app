@@ -1,5 +1,5 @@
 import { arrayToObjectByKey } from "@utils";
-import { FETCH_WORDS } from "../actions/types";
+import { FETCH_WORDS } from "@store/actions/types";
 
 const initialState = {
   byId: {},

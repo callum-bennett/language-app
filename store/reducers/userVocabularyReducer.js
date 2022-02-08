@@ -1,5 +1,8 @@
 import { arrayToObjectByKey } from "@utils";
-import { ADD_USER_VOCABULARY, FETCH_USER_VOCABULARY } from "../actions/types";
+import {
+  ADD_USER_VOCABULARY,
+  FETCH_USER_VOCABULARY,
+} from "@store/actions/types";
 
 const initialState = {
   byWordId: {},

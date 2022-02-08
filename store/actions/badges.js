@@ -1,4 +1,4 @@
-import apiV1Client from "../../api/apiv1client";
+import apiV1Client from "@api/apiv1client";
 import { FETCH_BADGES, FETCH_USER_BADGES } from "./types";
 
 export const fetchBadges = () => async (dispatch) => {

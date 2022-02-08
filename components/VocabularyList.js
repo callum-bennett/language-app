@@ -1,8 +1,9 @@
 import React from "react";
 import { FlatList, StyleSheet, View, Pressable } from "react-native";
-import AppText from "./UI/AppText";
 import { useSelector } from "react-redux";
-import { playSound } from "../utils/sounds";
+
+import { AppText } from "@components/UI";
+import { playSound } from "@utils/sounds";
 
 const VocabularyList = (props) => {
   const words = useSelector((state) => state.words.byId);

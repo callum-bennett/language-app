@@ -3,13 +3,16 @@ import { FlatList, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Snackbar } from "react-native-paper";
 
-import { fetchCategories } from "../store/actions/categories";
-import CategoryTile from "../components/CategoryTile";
-import { selectCategoriesAsArray } from "../store/selectors/category";
-import { fetchLessons, fetchLessonComponents } from "../store/actions/lessons";
-import AppText from "../components/UI/AppText";
-import * as Colors from "../constants/Colors";
-import { fetchWords } from "../store/actions/words";
+import { CategoryTile } from "@components";
+import { AppText } from "@components/UI";
+import * as Colors from "@constants/Colors";
+import {
+  fetchCategories,
+  fetchLessons,
+  fetchLessonComponents,
+  fetchWords,
+} from "@store/actions";
+import { selectCategoriesAsArray } from "@store/selectors";
 
 const CategoryScreen = (props) => {
   const dispatch = useDispatch();

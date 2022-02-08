@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-
-import { fetchUserVocabulary } from "../store/actions/words";
 import { ActivityIndicator } from "react-native-paper";
-import VocabularyList from "../components/VocabularyList";
-import { selectUserVocabularyByCategoryId } from "../store/selectors/userVocabulary";
-import { CategoryContext } from "../navigation/RootNavigation";
-import AppText from "../components/UI/AppText";
+
+import AppText from "@components/UI/AppText";
+import VocabularyList from "@components/VocabularyList";
+import { CategoryContext } from "@navigation/RootNavigation";
+import { fetchUserVocabulary } from "@store/actions/words";
+import { selectUserVocabularyByCategoryId } from "@store/selectors/userVocabulary";
 
 const CategoryWordsScreen = () => {
   const dispatch = useDispatch();

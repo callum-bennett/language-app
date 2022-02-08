@@ -1,10 +1,10 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import AppText from "./UI/AppText";
-import AppButton from "./UI/AppButton";
 import { useSelector } from "react-redux";
 import StepIndicator from "react-native-step-indicator";
-import * as Colors from "../constants/Colors";
+
+import { AppButton, AppText } from "@components/UI";
+import * as Colors from "@constants/Colors";
 
 const LESSON_IN_PROGRESS = 0;
 const LESSON_COMPLETED = 1;

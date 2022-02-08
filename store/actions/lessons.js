@@ -1,4 +1,4 @@
-import apiV1Client from "../../api/apiv1client";
+import apiV1Client from "@api/apiv1client";
 import {
   ADVANCE_LESSON,
   FETCH_LESSON_COMPONENTS,

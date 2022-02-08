@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchBadges, fetchUserBadges } from "../store/actions/badges";
-import Badge from "../components/Badge";
-import { ActivityIndicator } from "react-native-paper";
-import CenteredView from "../components/UI/AppCenteredView";
-import { selectBadgesGroupedByType } from "../store/selectors/badge";
-import AppModal from "../components/UI/AppModal";
-import AppText from "../components/UI/AppText";
-import { selectNotificationsByType } from "../store/selectors/app";
-import { clearNotifications } from "../store/actions/app";
-import apiV1Client from "../api/apiv1client";
 import { useIsFocused } from "@react-navigation/native";
+import { ActivityIndicator } from "react-native-paper";
+
+import apiV1Client from "@api/apiv1client";
+import Badge from "@components/Badge";
+import { AppModal, AppText, CenteredView } from "@components/UI";
+
+import {
+  clearNotifications,
+  fetchBadges,
+  fetchUserBadges,
+} from "@store/actions";
+import {
+  selectBadgesGroupedByType,
+  selectNotificationsByType,
+} from "@store/selectors";
 
 const BadgesScreen = () => {
   const dispatch = useDispatch();

@@ -1,25 +1,27 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import { ActivityIndicator } from "react-native-paper";
+
+import apiV1Client from "@api/apiv1client";
+import Crossword from "@components/Lesson/Crossword";
+import { AppButton, AppText } from "@components/UI";
 import Component, {
   LESSON_TYPE_CROSSWORD,
   LESSON_TYPE_MULTIPLE_CHOICE,
   LESSON_TYPE_SLIDES,
-} from "../components/Lesson/Component";
-import { useDispatch, useSelector } from "react-redux";
-import { selectWordsByLessonId } from "../store/selectors/word";
+} from "@components/Lesson/Component";
+
+import { advanceLesson } from "@store/actions/lessons";
 import {
   selectActiveComponent,
   selectLessonProgress,
-} from "../store/selectors/lesson";
-import Crossword from "../components/Lesson/Crossword";
-import AppButton from "../components/UI/AppButton";
-import AppText from "../components/UI/AppText";
-import { selectUserVocabularyByLessonId } from "../store/selectors/userVocabulary";
-import { ActivityIndicator } from "react-native-paper";
-import { advanceLesson } from "../store/actions/lessons";
-import { selectCategoryByLessonId } from "../store/selectors/category";
+  selectUserVocabularyByLessonId,
+  selectCategoryByLessonId,
+  selectWordsByLessonId,
+} from "@store/selectors";
+
 import { crosswordConfig } from "../data/crosswords";
-import apiV1Client from "../api/apiv1client";
 
 const CategoryLessonScreen = (props) => {
   const dispatch = useDispatch();

@@ -5,6 +5,7 @@ import {
   View,
   TouchableWithoutFeedback,
 } from "react-native";
+
 import AppCenteredView from "./AppCenteredView";
 import AppCard from "./AppCard";
 

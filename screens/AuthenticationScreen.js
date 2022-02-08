@@ -10,12 +10,11 @@ import {
 } from "react-native";
 import axios from "axios";
 
-import { setAuthenticated } from "../store/actions/authentication";
-import AuthForm from "../components/AuthForm";
-import AppText from "../components/UI/AppText";
-import * as Colors from "../constants/Colors";
-import { ROOT_URI } from "../api";
-import AppCenteredView from "../components/UI/AppCenteredView";
+import { setAuthenticated } from "@store/actions/authentication";
+import { AuthForm } from "@components";
+import { AppCenteredView, AppText } from "@components/UI";
+import * as Colors from "@constants/Colors";
+import { ROOT_URI } from "@api";
 
 const SIGN_IN = "sign_in";
 const SIGN_UP = "sign_up";

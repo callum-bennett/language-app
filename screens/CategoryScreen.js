@@ -1,13 +1,14 @@
 import React from "react";
 import { StyleSheet, Dimensions } from "react-native";
-import { TabView, TabBar, SceneMap } from "react-native-tab-view";
-import * as Colors from "../constants/Colors";
-import CategoryWordsScreen from "./CategoryWordsScreen";
-import CategoryOverview from "../components/CategoryOverview";
-import { CategoryContext } from "../navigation/RootNavigation";
-import { startLesson } from "../store/actions/lessons";
+import { TabView, TabBar } from "react-native-tab-view";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCategoryById } from "../store/selectors/category";
+
+import * as Colors from "@constants/Colors";
+import CategoryWordsScreen from "@screens/CategoryWordsScreen";
+import CategoryOverview from "@components/CategoryOverview";
+import { CategoryContext } from "@navigation/RootNavigation";
+import { startLesson } from "@store/actions";
+import { selectCategoryById } from "@store/selectors";
 
 const initialLayout = { width: Dimensions.get("window").width };
 

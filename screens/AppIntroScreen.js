@@ -2,8 +2,9 @@ import React from "react";
 import { StyleSheet, Image, Dimensions } from "react-native";
 import Onboarding from "react-native-onboarding-swiper";
 import { useDispatch } from "react-redux";
-import { setOnboarded } from "../store/actions/app";
-import apiV1Client from "../api/apiv1client";
+
+import { setOnboarded } from "@store/actions/app";
+import apiV1Client from "@api/apiv1client";
 
 const imageHeight = Dimensions.get("window").height * 0.6;
 const imageWidth = imageHeight * 0.54;
