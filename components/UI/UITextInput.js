@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useReducer } from "react";
 import { StyleSheet, TextInput, View } from "react-native";
 
-import UIText from "./UIText";
+import { UIText } from "@components";
 import * as Colors from "@constants/Colors";
 
 const SET_FOCUSSED = "set_focussed";

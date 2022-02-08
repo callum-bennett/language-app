@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
-
-import AppNavigator from "./navigation/AuthNavigator";
 import { Provider } from "react-redux";
 
-import store from "./store/store";
+import AppNavigator from "@navigation/AuthNavigator";
+import store from "@store/store";
 
 const fetchFonts = () => {
   return Font.loadAsync({

@@ -1,8 +1,7 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-import UIProgressDonut from "./UI/UIProgressDonut";
-import CategoryImageWithTitle from "./CategoryImageWithTitle";
+import { CategoryImageWithTitle, UIProgressDonut } from "@components";
 
 const CategoryHeader = (props) => {
   return (

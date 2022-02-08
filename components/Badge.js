@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, View, Pressable } from "react-native";
 
-import { UIText, CenteredView } from "./UI";
+import { UIText, UICenteredView } from "@components";
 import * as Colors from "@constants/Colors";
 
 const Badge = (props) => {
