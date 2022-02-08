@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-import AuthenticationScreen from "../screens/AuthenticationScreen";
-import { setAuthenticated } from "../store/actions/authentication";
-import { navigationRef } from "./RootNavigation";
 import { ActivityIndicator } from "react-native-paper";
-import CenteredView from "../components/UI/AppCenteredView";
-import * as Colors from "../constants/Colors";
-import MainNavigator from "./MainNavigator";
-import AppIntroScreen from "../screens/AppIntroScreen";
-import { fetchUserConfig, setTokenCheck } from "../store/actions/app";
-import apiV1Client from "../api/apiv1client";
+
+import { AppIntroScreen, AuthenticationScreen } from "@screens";
+import { setAuthenticated } from "@store/actions/authentication";
+import { MainNavigator, navigationRef } from "@navigation";
+import CenteredView from "@components/UI/AppCenteredView";
+import * as Colors from "@constants/Colors";
+import { fetchUserConfig, setTokenCheck } from "@store/actions/app";
+import apiV1Client from "@api/apiv1client";
 
 const Stack = createStackNavigator();
 

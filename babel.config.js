@@ -8,12 +8,14 @@ module.exports = function (api) {
         {
           extensions: [".js", ".jsx", "json"],
           alias: {
+            "@api": "./api",
+            "@assets": "./assets",
             "@components": "./components",
+            "@constants": "./constants",
+            "@navigation": "./navigation",
             "@screens": "./screens",
             "@store": "./store",
             "@utils": "./utils",
-            "@assets": "./assets",
-            "@constants": "./constants",
           },
         },
       ],

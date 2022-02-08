@@ -1,13 +1,14 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import * as Colors from "../constants/Colors";
-import LeaderboardScreen from "../screens/LeaderboardScreen";
-import BadgesScreen from "../screens/BadgesScreen";
-import DrawerNavigator from "./DrawerNavigator";
-import { connect } from "react-redux";
-import { selectNotificationsByType } from "../store/selectors/app";
 import { AntDesign } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
+import { connect } from "react-redux";
+
+import * as Colors from "@constants/Colors";
+import { BadgesScreen, LeaderboardScreen } from "@screens";
+import DrawerNavigator from "./DrawerNavigator";
+import { selectNotificationsByType } from "@store/selectors/app";
+
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
