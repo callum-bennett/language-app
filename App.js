@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { LogBox } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { Provider } from "react-redux";
 
 import AppNavigator from "@navigation/AuthNavigator";
 import store from "@store/store";
+
+LogBox.ignoreLogs(["Require cycle:"]);
 
 const fetchFonts = () => {
   return Font.loadAsync({
