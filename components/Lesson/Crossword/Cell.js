@@ -6,44 +6,27 @@ import {
   Platform,
   TouchableOpacity,
 } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
 
-import UIText from "@components";
-import { setActiveAnswer } from "@store/actions/crossword";
+import { UIText } from "@components";
 
-const Cell = ({
-  active,
-  cellDimension,
-  empty,
-  number,
-  value,
-  answers,
-  answered,
-  inActiveAnswer,
-  locked,
-}) => {
-  const dispatch = useDispatch();
-  const activeAnswerText = useSelector(
-    (state) => state.crossword.activeAnswerText
-  );
+const Cell = (props) => {
+  const {
+    active,
+    cellDimension,
+    empty,
+    number,
+    value,
+    inActiveAnswer,
+    locked,
+    i,
+    j,
+    onTouch,
+  } = props;
 
   const Touchable =
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
       : TouchableOpacity;
-
-  const handleTouch = () => {
-    if (empty || answers.size === answered.size) {
-      return;
-    }
-
-    for (let answer of answers) {
-      if (!answered.has(answer) && activeAnswerText !== answer) {
-        dispatch(setActiveAnswer(answer));
-        break;
-      }
-    }
-  };
 
   let cellStyle = [styles.cell];
   if (empty) {
@@ -63,7 +46,7 @@ const Cell = ({
   cellStyle.push({ width: cellDimension, height: cellDimension });
 
   return (
-    <Touchable onPress={() => handleTouch()}>
+    <Touchable onPress={() => onTouch(i, j)}>
       <View style={cellStyle}>
         <UIText style={styles.letter}>{value}</UIText>
         {number && (
@@ -115,4 +98,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default memo((props) => <Cell {...props} />);
+export default memo(Cell);
