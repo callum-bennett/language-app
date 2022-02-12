@@ -1,5 +1,13 @@
-import React, { forwardRef, useEffect, useReducer } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import React, { forwardRef, ReactElement, useEffect, useReducer } from "react";
+import {
+  NativeSyntheticEvent,
+  StyleSheet,
+  TextInput,
+  TextInputChangeEventData,
+  TextInputEndEditingEventData,
+  View,
+} from "react-native";
+import { AnyAction } from "redux";
 
 import { UIText } from "@components";
 import * as Colors from "@constants/Colors";
@@ -9,7 +17,32 @@ const SET_TOUCHED = "set_touched";
 const SET_UNTOUCHED = "set_untouched";
 const VALUE_CHANGE = "value_change";
 
-const reducer = (state, action) => {
+type State = {
+  focused: boolean;
+  error: string;
+  touched: boolean;
+  value: string;
+};
+
+type Props = {
+  id: string;
+  icon?: ReactElement;
+  value?: string;
+  onChange?: (id: string, value: any, valid: boolean) => any;
+  changed: boolean;
+  validate: boolean;
+  required: any;
+  label: string;
+  regex: any;
+  equalTo?: {
+    value: string;
+    message: string;
+  };
+  minLength?: number;
+  style: Style;
+};
+
+const reducer = (state: State, action: AnyAction) => {
   switch (action.type) {
     case SET_FOCUSSED:
       return {
@@ -43,7 +76,7 @@ const reducer = (state, action) => {
   }
 };
 
-const UITextInput = forwardRef((props, inputRef) => {
+const UITextInput = forwardRef((props: Props, inputRef) => {
   const [{ touched, error, value }, dispatch] = useReducer(reducer, {
     focused: false,
     touched: false,
@@ -66,7 +99,7 @@ const UITextInput = forwardRef((props, inputRef) => {
     }
   }, [props.validate]);
 
-  const validateInput = (value) => {
+  const validateInput = (value: any) => {
     let error;
 
     if (props.required && value.trim().length === 0) {
@@ -86,13 +119,15 @@ const UITextInput = forwardRef((props, inputRef) => {
     dispatch({ type: SET_FOCUSSED });
   };
 
-  const handleEndEditing = (e) => {
+  const handleEndEditing = (
+    e: NativeSyntheticEvent<TextInputEndEditingEventData>
+  ) => {
     const value = e.nativeEvent.text;
     const error = validateInput(value);
     dispatch({ type: SET_TOUCHED, error });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
     const value = e.nativeEvent.text;
     const error = validateInput(value);
     dispatch({ type: VALUE_CHANGE, value, error });
@@ -127,7 +162,17 @@ const UITextInput = forwardRef((props, inputRef) => {
   );
 });
 
-const styles = StyleSheet.create({
+type Style = {
+  container: any;
+  inputWrapper: any;
+  label: any;
+  icon: any;
+  textInput: any;
+  error: any;
+  inputError: any;
+};
+
+const styles = StyleSheet.create<Style>({
   container: {
     flexDirection: "column",
     width: "100%",

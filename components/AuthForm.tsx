@@ -157,7 +157,7 @@ const AuthForm = (props) => {
           }}
           changed={props.isSignIn}
           validate={state.dirty}
-          icon={<ShowHideToggle />}
+          types={<ShowHideToggle />}
         />
       </FormControl>
       {!props.isSignIn && (

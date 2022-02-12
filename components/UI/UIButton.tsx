@@ -10,13 +10,21 @@ import {
 import * as Colors from "@constants/Colors";
 import { UIText } from "@components";
 
-const UIButton = (props) => {
-  const Touchable =
+type Props = {
+  disabled: boolean;
+  onPress: (e: Event) => any;
+  style: Style;
+  variant: "small";
+  children: any;
+};
+
+const UIButton = (props: Props) => {
+  const Touchable: any =
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
       : TouchableOpacity;
 
-  const handleOnPress = (e) => {
+  const handleOnPress = (e: Event) => {
     if (!props.disabled) {
       props.onPress(e);
     }
@@ -55,7 +63,15 @@ UIButton.defaultProps = {
   },
 };
 
-const styles = StyleSheet.create({
+type Style = {
+  button: any;
+  buttonSmall: any;
+  text: any;
+  textSmall: any;
+  disabled: any;
+};
+
+const styles = StyleSheet.create<Style>({
   button: {
     backgroundColor: Colors.primary,
     paddingHorizontal: 16,

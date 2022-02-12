@@ -1,5 +1,3 @@
-// @create-index
-
 export { default as BottomContainer } from "./BottomContainer.js";
 export { default as BottomContainerItem } from "./BottomContainerItem.js";
 export { default as Component } from "./Component.js";
