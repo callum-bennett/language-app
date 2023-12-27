@@ -5,8 +5,7 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject",
-    "postinstall": "node ./scripts/ignoreRequireCycles.js"
+    "eject": "expo eject"
   },
   "dependencies": {
     "@expo-google-fonts/roboto": "^0.1.0",
