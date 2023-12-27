@@ -5,7 +5,10 @@ import { useIsFocused } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
 
 import apiV1Client from "@api/apiv1client";
-import { Badge, UIModal, UIText, UICenteredView } from "@components";
+import Badge from "@components/Badge";
+import UIModal from "@components/UI/UIModal";
+import UIText from "@components/UI/UIText";
+import UICenteredView from "@components/UI/UICenteredView";
 import {
   clearNotifications,
   fetchBadges,

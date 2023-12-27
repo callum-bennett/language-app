@@ -5,7 +5,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { connect } from "react-redux";
 
 import * as Colors from "@constants/Colors";
-import { BadgesScreen, LeaderboardScreen } from "@screens";
+import BadgesScreen from "@screens/BadgesScreen";
+import LeaderboardScreen from "@screens/LeaderboardScreen";
 import DrawerNavigator from "./DrawerNavigator";
 import { selectNotificationsByType } from "@store/selectors/app";
 

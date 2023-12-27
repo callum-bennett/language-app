@@ -11,7 +11,10 @@ import {
 import axios from "axios";
 
 import { setAuthenticated } from "@store/actions/authentication";
-import { AuthForm, UICenteredView, UIText } from "@components";
+import AuthForm from "@components/AuthForm";
+import UICenteredView from "@components/UI/UICenteredView";
+import UIText from "@components/UI/UIText";
+
 import * as Colors from "@constants/Colors";
 import { ROOT_URI } from "@api";
 

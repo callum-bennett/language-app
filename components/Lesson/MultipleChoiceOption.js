@@ -7,7 +7,9 @@ import {
   View,
 } from "react-native";
 
-import { UICard, UIText } from "@components";
+import UICard from "@components/UI/UICard";
+import UIText from "@components/UI/UIText";
+
 import * as Colors from "@constants/Colors";
 
 const MultipleChoiceOption = (props) => {

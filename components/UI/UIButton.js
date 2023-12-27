@@ -8,7 +8,7 @@ import {
 } from "react-native";
 
 import * as Colors from "@constants/Colors";
-import { UIText } from "@components";
+import UIText from "@components/UI/UIText";
 
 const UIButton = (props) => {
   const Touchable =

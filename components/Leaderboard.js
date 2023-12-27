@@ -4,7 +4,9 @@ import { ActivityIndicator } from "react-native-paper";
 
 import apiV1Client from "@api/apiv1client";
 import * as Colors from "@constants/Colors";
-import { UIListItem, UIText, UICenteredView } from "@components";
+import UIListItem from "@components/UI/UIListItem";
+import UIText from "@components/UI/UIText";
+import UICenteredView from "@components/UI/UICenteredView";
 
 const wait = (timeout) => {
   return new Promise((resolve) => {

@@ -3,7 +3,8 @@ import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import StepIndicator from "react-native-step-indicator";
 
-import { UIButton, UIText } from "@components/UI";
+import UIButton from "@components/UI/UIButton";
+import UIText from "@components/UI/UIText";
 import * as Colors from "@constants/Colors";
 
 const LESSON_IN_PROGRESS = 0;

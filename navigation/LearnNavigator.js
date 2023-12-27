@@ -1,11 +1,9 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import {
-  CategoriesScreen,
-  CategoryLessonScreen,
-  CategoryScreen,
-} from "@screens";
+import CategoriesScreen from "@screens/CategoriesScreen";
+import CategoryLessonScreen from "@screens/CategoryLessonScreen";
+import CategoryScreen from "@screens/CategoriesScreen";
 import ProgressHeader from "@components/ProgressHeader";
 
 const Stack = createStackNavigator();

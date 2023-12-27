@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import { UIText } from "@components";
+import UIText from "@components/UI/UIText";
 
 const Cell = (props) => {
   const {

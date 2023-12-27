@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { ActivityIndicator } from "react-native-paper";
 
 import apiV1Client from "@api/apiv1client";
-import Crossword from "@components/Lesson/Crossword";
-import { UIButton, UIText } from "@components";
+import Crossword from "@components/Lesson/Crossword/Crossword";
+import UIButton from "@components/UI/UIButton";
+import UIText from "@components/UI/UIText";
 import Component, {
   LESSON_TYPE_CROSSWORD,
   LESSON_TYPE_MULTIPLE_CHOICE,
@@ -47,16 +48,18 @@ const CategoryLessonScreen = (props) => {
   let startSlide = 0;
 
   if (activeComponentKey === LESSON_TYPE_SLIDES) {
-    const vocabLength = Object.values(userLessonVocabulary).filter((v) => v)
-      .length;
+    const vocabLength = Object.values(userLessonVocabulary).filter(
+      (v) => v
+    ).length;
     startSlide = vocabLength;
     if (vocabLength === words.length) {
       startSlide--;
     }
   } else if (activeComponentKey === LESSON_TYPE_MULTIPLE_CHOICE) {
     if (lessonProgress.responses[activeComponentKey]) {
-      startSlide = Object.keys(lessonProgress.responses[activeComponentKey])
-        .length;
+      startSlide = Object.keys(
+        lessonProgress.responses[activeComponentKey]
+      ).length;
     }
   }
 

@@ -5,9 +5,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ActivityIndicator } from "react-native-paper";
 
-import { AppIntroScreen, AuthenticationScreen } from "@screens";
-import { MainNavigator, navigationRef } from "@navigation";
-import { UICenteredView } from "@components";
+import AppIntroScreen from "@screens/AppIntroScreen";
+import AuthenticationScreen from "@screens/AuthenticationScreen";
+
+import MainNavigator from "@navigation/MainNavigator";
+import { navigationRef } from "@navigation/RootNavigation";
+
+import UICenteredView from "@components/UI/UICenteredView";
 import * as Colors from "@constants/Colors";
 import {
   fetchUserConfig,
@@ -20,17 +24,14 @@ const Stack = createStackNavigator();
 
 export default () => {
   const dispatchStore = useDispatch();
-  const [
-    authenticated,
-    onboarded,
-    configLoaded,
-    tokenCheck,
-  ] = useSelector((state) => [
-    state.authentication.authenticated,
-    state.app.onboarded,
-    state.app.configLoaded,
-    state.app.tokenCheck,
-  ]);
+  const [authenticated, onboarded, configLoaded, tokenCheck] = useSelector(
+    (state) => [
+      state.authentication.authenticated,
+      state.app.onboarded,
+      state.app.configLoaded,
+      state.app.tokenCheck,
+    ]
+  );
 
   useEffect(() => {
     (async () => {

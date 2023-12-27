@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import { UIText } from "@components";
+import UIText from "@components/UI/UIText";
 import { setActiveAnswer } from "@store/actions/crossword";
 import { ANSWER_CORRECT } from "@store/reducers/crosswordReducer";
 import { arrayToObjectByKey } from "@utils";

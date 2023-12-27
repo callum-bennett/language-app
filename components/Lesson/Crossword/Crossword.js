@@ -10,8 +10,12 @@ import {
 } from "react-native";
 import * as Animatable from "react-native-animatable";
 
-import { Clues, Grid } from ".";
-import { UIButton, UIText } from "@components";
+import Clues from "./Clues";
+import Grid from "./Grid";
+
+import UIButton from "@components/UI/UIButton";
+import UIText from "@components/UI/UIText";
+
 import BottomContainer from "@components/Lesson/BottomContainer";
 import * as Colors from "@constants/Colors";
 import { selectCompleteCount } from "@store/selectors/crossword";

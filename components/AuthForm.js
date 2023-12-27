@@ -8,7 +8,9 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { UIButton, UITextInput } from "@components";
+import UIButton from "@components/UI/UIButton";
+import UITextInput from "@components/UI/UITextInput";
+
 import FormControl from "./FormControl";
 import * as Colors from "@constants/Colors";
 

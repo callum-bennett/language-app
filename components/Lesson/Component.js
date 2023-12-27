@@ -3,14 +3,16 @@ import { useDispatch } from "react-redux";
 import { StyleSheet, View, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel/src/carousel/Carousel";
 
-import {
-  BottomContainer,
-  BottomContainerItem,
-  MultipleChoice,
-  WordCard,
-} from "./";
+import BottomContainer from "./BottomContainer";
+import BottomContainerItem from "./BottomContainerItem";
+import MultipleChoice from "./MultipleChoice";
+import WordCard from "./WordCard";
+
 import { markWordAsSeen } from "@store/actions/words";
-import { UIButton, UIText, UICenteredView } from "@components";
+import UIButton from "@components/UI/UIButton";
+import UIText from "@components/UI/UIText";
+import UICenteredView from "@components/UI/UICenteredView";
+
 import * as Colors from "@constants/Colors";
 import { playSound } from "@utils/sounds";
 

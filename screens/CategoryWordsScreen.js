@@ -3,7 +3,9 @@ import { StyleSheet, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { ActivityIndicator } from "react-native-paper";
 
-import { VocabularyList, UIText } from "@components/";
+import VocabularyList from "@components/VocabularyList";
+import UIText from "@components/UI/UIText";
+
 import { CategoryContext } from "@navigation/RootNavigation";
 import { fetchUserVocabulary } from "@store/actions/words";
 import { selectUserVocabularyByCategoryId } from "@store/selectors/userVocabulary";

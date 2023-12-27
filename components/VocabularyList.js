@@ -2,7 +2,7 @@ import React from "react";
 import { FlatList, StyleSheet, View, Pressable } from "react-native";
 import { useSelector } from "react-redux";
 
-import { UIText } from "@components";
+import UIText from "@components/UI/UIText";
 import { playSound } from "@utils/sounds";
 
 const VocabularyList = (props) => {

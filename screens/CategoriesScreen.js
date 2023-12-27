@@ -3,7 +3,9 @@ import { FlatList, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { Snackbar } from "react-native-paper";
 
-import { CategoryTile, UIText } from "@components";
+import CategoryTile from "@components/CategoryTile";
+import UIText from "@components/UI/UIText";
+
 import * as Colors from "@constants/Colors";
 import {
   fetchCategories,

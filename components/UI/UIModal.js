@@ -6,7 +6,8 @@ import {
   TouchableWithoutFeedback,
 } from "react-native";
 
-import { UICard, UICenteredView } from "./";
+import UICard from "./UICard";
+import UICenteredView from "./UICenteredView";
 
 const UIModal = (props) => {
   return (

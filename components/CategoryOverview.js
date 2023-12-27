@@ -10,12 +10,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useIsFocused } from "@react-navigation/native";
 import { ActivityIndicator } from "react-native-paper";
 
-import {
-  CategoryHeader,
-  CategoryLessonList,
-  UIText,
-  UICenteredView,
-} from "@components";
+import CategoryHeader from "@components/CategoryHeader";
+import CategoryLessonList from "@components/CategoryLessonList";
+import UIText from "@components/UI/UIText";
+import UICenteredView from "@components/UI/UICenteredView";
+
 import { CategoryContext } from "@navigation/RootNavigation";
 import {
   selectUserVocabularyByCategoryId,
