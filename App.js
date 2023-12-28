@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { LogBox } from "react-native";
 import * as Font from "expo-font";
 import AppLoading from "expo-app-loading";
 import { Provider } from "react-redux";
