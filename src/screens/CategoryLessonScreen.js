@@ -22,7 +22,7 @@ import {
   selectWordsByLessonId,
 } from "@store/selectors";
 
-import { crosswordConfig } from "../data/crosswords";
+import { crosswordConfig } from "../../data/crosswords";
 
 const CategoryLessonScreen = (props) => {
   const dispatch = useDispatch();

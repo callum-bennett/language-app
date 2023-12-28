@@ -23,7 +23,7 @@ const AppIntroScreen = (props) => {
       subtitle: "Choose a category from the home screen",
       image: (
         <Image
-          source={require("../assets/images/ob1.jpg")}
+          source={require("../../assets/images/ob1.jpg")}
           style={styles.image}
         />
       ),
@@ -34,7 +34,7 @@ const AppIntroScreen = (props) => {
       subtitle: "Points are awarded for each correct answer",
       image: (
         <Image
-          source={require("../assets/images/ob2.jpg")}
+          source={require("../../assets/images/ob2.jpg")}
           style={styles.image}
         />
       ),
@@ -45,7 +45,7 @@ const AppIntroScreen = (props) => {
       subtitle: "Daily, weekly, and monthly leaderboards are available",
       image: (
         <Image
-          source={require("../assets/images/ob3.jpg")}
+          source={require("../../assets/images/ob3.jpg")}
           style={styles.image}
         />
       ),
@@ -56,7 +56,7 @@ const AppIntroScreen = (props) => {
       subtitle: "Badges are awarded for various achievements",
       image: (
         <Image
-          source={require("../assets/images/ob4.jpg")}
+          source={require("../../assets/images/ob4.jpg")}
           style={styles.image}
         />
       ),

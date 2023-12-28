@@ -1,5 +1,5 @@
-import CrosswordAnswer from "../models/crosswordAnswer";
-import { DIR_HORIZONTAL, DIR_VERTICAL } from "../utils/crosswordGenerator";
+import CrosswordAnswer from "@models/crosswordAnswer";
+import { DIR_HORIZONTAL, DIR_VERTICAL } from "@utils/crosswordGenerator";
 
 export const crosswordConfig = {
   family: [

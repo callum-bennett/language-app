@@ -114,7 +114,10 @@ const AuthenticationScreen = () => {
         keyboardShouldPersistTaps="handled"
       >
         <CenteredView grow style={styles.container}>
-          <Image style={styles.logo} source={require("../assets/icon.png")} />
+          <Image
+            style={styles.logo}
+            source={require("../../assets/icon.png")}
+          />
           <AuthForm
             loading={loading}
             onSubmit={handleAuthenticate}

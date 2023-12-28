@@ -1,7 +1,7 @@
 import { Audio } from "expo-av";
 
-export const FEEDBACK_POSITIVE = require("../assets/sounds/success.wav");
-export const FEEDBACK_NEGATIVE = require("../assets/sounds/error.wav");
+export const FEEDBACK_POSITIVE = require("../../assets/sounds/success.wav");
+export const FEEDBACK_NEGATIVE = require("../../assets/sounds/error.wav");
 
 export const playSound = async (sound) => {
   try {
