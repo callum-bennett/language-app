@@ -13,10 +13,10 @@ import * as Animatable from "react-native-animatable";
 import Clues from "./Clues";
 import Grid from "./Grid";
 
-import UIButton from "@components/UI/UIButton";
-import UIText from "@components/UI/UIText";
+import Button from "@components/ui/Button";
+import Text from "@components/ui/Text";
 
-import BottomContainer from "@components/Lesson/BottomContainer";
+import BottomContainer from "@components/lesson/BottomContainer";
 import * as Colors from "@constants/Colors";
 import { selectCompleteCount } from "@store/selectors/crossword";
 import {
@@ -175,7 +175,7 @@ const Crossword = (props) => {
                 value={inputValue}
                 onSubmitEditing={handleConfirm}
               />
-              <UIButton
+              <Button
                 variant="small"
                 onPress={handlePressHint}
                 style={{
@@ -183,28 +183,28 @@ const Crossword = (props) => {
                 }}
               >
                 Hint
-              </UIButton>
+              </Button>
             </>,
-            <UIText style={styles.clue}>
+            <Text style={styles.clue}>
               {wordsByText[activeAnswerText].translation}
-            </UIText>,
-            <UIButton variant="small" onPress={handleConfirm}>
+            </Text>,
+            <Button variant="small" onPress={handleConfirm}>
               Submit
-            </UIButton>,
+            </Button>,
           ]}
         />
       ) : (
         <BottomContainer
           items={[
             <></>,
-            <UIText>
+            <Text>
               {`Completed: ${completedCount} / ${props.words.length}`}
-            </UIText>,
+            </Text>,
             <View>
               {completedCount === props.words.length && (
-                <UIButton variant="small" onPress={handleContinue}>
+                <Button variant="small" onPress={handleContinue}>
                   Continue
-                </UIButton>
+                </Button>
               )}
             </View>,
           ]}
@@ -212,7 +212,7 @@ const Crossword = (props) => {
       )}
     </View>
   ) : (
-    <UIText>Loading</UIText>
+    <Text>Loading</Text>
   );
 };
 

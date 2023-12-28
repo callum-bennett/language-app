@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ActivityIndicator } from "react-native-paper";
 
 import VocabularyList from "@components/VocabularyList";
-import UIText from "@components/UI/UIText";
+import Text from "@components/ui/Text";
 
 import { CategoryContext } from "@navigation/RootNavigation";
 import { fetchUserVocabulary } from "@store/actions/words";
@@ -35,7 +35,7 @@ const CategoryWordsScreen = () => {
         vocabArray.length > 0 ? (
           <VocabularyList vocabulary={vocabArray} />
         ) : (
-          <UIText>You haven't learned any words yet!</UIText>
+          <Text>You haven't learned any words yet!</Text>
         )
       ) : (
         <ActivityIndicator />

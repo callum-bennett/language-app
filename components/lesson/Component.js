@@ -9,9 +9,9 @@ import MultipleChoice from "./MultipleChoice";
 import WordCard from "./WordCard";
 
 import { markWordAsSeen } from "@store/actions/words";
-import UIButton from "@components/UI/UIButton";
-import UIText from "@components/UI/UIText";
-import UICenteredView from "@components/UI/UICenteredView";
+import Button from "@components/ui/Button";
+import Text from "@components/ui/Text";
+import CenteredView from "@components/ui/CenteredView";
 
 import * as Colors from "@constants/Colors";
 import { playSound } from "@utils/sounds";
@@ -96,12 +96,12 @@ const Component = (props) => {
   };
 
   return (
-    <UICenteredView grow>
-      <UICenteredView style={styles.progressContainer}>
-        <UIText
+    <CenteredView grow>
+      <CenteredView style={styles.progressContainer}>
+        <Text
           style={styles.progress}
-        >{`${visibleSlide} / ${props.words.length}`}</UIText>
-      </UICenteredView>
+        >{`${visibleSlide} / ${props.words.length}`}</Text>
+      </CenteredView>
       <Carousel
         ref={carouselRef}
         firstItem={props.start}
@@ -120,7 +120,7 @@ const Component = (props) => {
       <BottomContainer>
         <BottomContainerItem>
           {hintsAvailable && (
-            <UIButton
+            <Button
               variant="small"
               onPress={handlePressHint}
               disabled={!allowHint}
@@ -129,36 +129,36 @@ const Component = (props) => {
               }}
             >
               Hint
-            </UIButton>
+            </Button>
           )}
         </BottomContainerItem>
         <BottomContainerItem>
-          <UIText style={styles.translation}>
+          <Text style={styles.translation}>
             {props.words[visibleSlide - 1].translation}
-          </UIText>
+          </Text>
         </BottomContainerItem>
 
         <BottomContainerItem>
           {isLastSlide ? (
-            <UIButton
+            <Button
               variant="small"
               disabled={!allowScroll}
               onPress={props.onComplete}
             >
               Continue
-            </UIButton>
+            </Button>
           ) : (
-            <UIButton
+            <Button
               variant="small"
               disabled={!allowScroll}
               onPress={handleGoNext}
             >
               Next
-            </UIButton>
+            </Button>
           )}
         </BottomContainerItem>
       </BottomContainer>
-    </UICenteredView>
+    </CenteredView>
   );
 };
 

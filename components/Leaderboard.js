@@ -4,9 +4,9 @@ import { ActivityIndicator } from "react-native-paper";
 
 import apiV1Client from "@api/apiv1client";
 import * as Colors from "@constants/Colors";
-import UIListItem from "@components/UI/UIListItem";
-import UIText from "@components/UI/UIText";
-import UICenteredView from "@components/UI/UICenteredView";
+import ListItem from "@components/ui/ListItem";
+import Text from "@components/ui/Text";
+import CenteredView from "@components/ui/CenteredView";
 
 const wait = (timeout) => {
   return new Promise((resolve) => {
@@ -62,13 +62,13 @@ const Leaderboard = (props) => {
     lastScore = item.score;
 
     return (
-      <UIListItem key={index}>
+      <ListItem key={index}>
         <View style={styles.entry}>
-          <UIText style={styles.position}>{positionText}</UIText>
-          <UIText style={styles.name}>{item.username}</UIText>
-          <UIText style={styles.score}>{item.score}</UIText>
+          <Text style={styles.position}>{positionText}</Text>
+          <Text style={styles.name}>{item.username}</Text>
+          <Text style={styles.score}>{item.score}</Text>
         </View>
-      </UIListItem>
+      </ListItem>
     );
   };
 
@@ -79,21 +79,21 @@ const Leaderboard = (props) => {
         <RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />
       }
     >
-      <UICenteredView grow>
+      <CenteredView grow>
         {loaded ? (
           error ? (
-            <UIText>The leaderboard is currently unavailable.</UIText>
+            <Text>The leaderboard is currently unavailable.</Text>
           ) : data.length > 0 ? (
             <View style={styles.listItems}>
               {data.map((item, index) => renderItem(item, index))}
             </View>
           ) : (
-            <UIText>There are no scores to display.</UIText>
+            <Text>There are no scores to display.</Text>
           )
         ) : (
           <ActivityIndicator />
         )}
-      </UICenteredView>
+      </CenteredView>
     </ScrollView>
   );
 };

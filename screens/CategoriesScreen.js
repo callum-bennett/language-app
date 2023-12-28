@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Snackbar } from "react-native-paper";
 
 import CategoryTile from "@components/CategoryTile";
-import UIText from "@components/UI/UIText";
+import Text from "@components/ui/Text";
 
 import * as Colors from "@constants/Colors";
 import {
@@ -65,7 +65,7 @@ const CategoryScreen = (props) => {
         style={{ backgroundColor: Colors.error }}
       >
         <View>
-          <UIText style={{ color: "#FFF" }}>{snackbarMessage}</UIText>
+          <Text style={{ color: "#FFF" }}>{snackbarMessage}</Text>
         </View>
       </Snackbar>
     </>

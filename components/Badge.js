@@ -1,8 +1,8 @@
 import React from "react";
 import { Image, StyleSheet, View, Pressable } from "react-native";
 
-import UIText from "@components/UI/UIText";
-import UICenteredView from "@components/UI/UICenteredView";
+import Text from "@components/ui/Text";
+import CenteredView from "@components/ui/CenteredView";
 
 import * as Colors from "@constants/Colors";
 
@@ -17,12 +17,12 @@ const Badge = (props) => {
   }
   return (
     <Pressable onPress={() => props.onSelectBadge(badge)}>
-      <UICenteredView>
+      <CenteredView>
         <View style={containerStyle}>
           <Image source={{ uri: icon }} style={styles.icon} />
         </View>
-        <UIText style={styles.name}>{badge.name}</UIText>
-      </UICenteredView>
+        <Text style={styles.name}>{badge.name}</Text>
+      </CenteredView>
     </Pressable>
   );
 };

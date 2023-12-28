@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import UIText from "@components/UI/UIText";
+import Text from "@components/ui/Text";
 import { setActiveAnswer } from "@store/actions/crossword";
 import { ANSWER_CORRECT } from "@store/reducers/crosswordReducer";
 import { arrayToObjectByKey } from "@utils";
@@ -50,9 +50,9 @@ const Clues = (props) => {
         key={answer.text}
         onPress={() => handleTouch(answer)}
       >
-        <UIText style={textStyle}>
+        <Text style={textStyle}>
           {answer.number}. {wordsByText[answer.text].translation}
-        </UIText>
+        </Text>
       </TouchableOpacity>
     );
 
@@ -67,16 +67,16 @@ const Clues = (props) => {
   return (
     <View style={styles.instructions}>
       <View>
-        <UIText key="across" style={styles.heading}>
+        <Text key="across" style={styles.heading}>
           Across
-        </UIText>
+        </Text>
         {instructions.across.map((item) => item)}
       </View>
 
       <View>
-        <UIText key="down" style={styles.heading}>
+        <Text key="down" style={styles.heading}>
           Down
-        </UIText>
+        </Text>
         {instructions.down.map((item) => item)}
       </View>
     </View>

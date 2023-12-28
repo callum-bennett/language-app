@@ -11,7 +11,7 @@ import GestureRecognizer, {
   swipeDirections,
 } from "react-native-swipe-gestures";
 
-import UIText from "@components/UI/UIText";
+import Text from "@components/ui/Text";
 import * as Colors from "@constants/Colors";
 import { playSound } from "@utils/sounds";
 
@@ -43,7 +43,7 @@ const WordCard = (props) => {
         <Image source={{ uri: word.imageUrl }} style={styles.image} />
       </View>
 
-      <UIText style={styles.word}>{word.name}</UIText>
+      <Text style={styles.word}>{word.name}</Text>
       <Animatable.View ref={AnimationRef} direction="alternate">
         <TouchableWithoutFeedback
           hitSlop={{ left: 30, right: 30, top: 30, bottom: 30 }}

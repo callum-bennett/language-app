@@ -12,8 +12,8 @@ import axios from "axios";
 
 import { setAuthenticated } from "@store/actions/authentication";
 import AuthForm from "@components/AuthForm";
-import UICenteredView from "@components/UI/UICenteredView";
-import UIText from "@components/UI/UIText";
+import CenteredView from "@components/ui/CenteredView";
+import Text from "@components/ui/Text";
 
 import * as Colors from "@constants/Colors";
 import { ROOT_URI } from "@api";
@@ -113,7 +113,7 @@ const AuthenticationScreen = () => {
         contentContainerStyle={styles.screen}
         keyboardShouldPersistTaps="handled"
       >
-        <UICenteredView grow style={styles.container}>
+        <CenteredView grow style={styles.container}>
           <Image style={styles.logo} source={require("../assets/icon.png")} />
           <AuthForm
             loading={loading}
@@ -121,24 +121,24 @@ const AuthenticationScreen = () => {
             isSignIn={mode === SIGN_IN}
           />
           <View style={styles.switchModeText}>
-            <UIText>
+            <Text>
               {mode === SIGN_UP
                 ? "Already have an account? "
                 : "Don't have an account already? "}
-            </UIText>
+            </Text>
             <TouchableWithoutFeedback
               hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
               onPress={() => dispatch({ type: SWITCH_MODE })}
             >
               <View>
-                <UIText style={styles.switchModeCTA}>
+                <Text style={styles.switchModeCTA}>
                   {mode === SIGN_UP ? "Log in" : "Sign up!"}
-                </UIText>
+                </Text>
               </View>
             </TouchableWithoutFeedback>
           </View>
-          {error && <UIText style={styles.error}>{error}</UIText>}
-        </UICenteredView>
+          {error && <Text style={styles.error}>{error}</Text>}
+        </CenteredView>
       </ScrollView>
     </TouchableWithoutFeedback>
   );
