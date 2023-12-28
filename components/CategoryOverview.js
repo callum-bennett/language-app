@@ -12,8 +12,8 @@ import { ActivityIndicator } from "react-native-paper";
 
 import CategoryHeader from "@components/CategoryHeader";
 import CategoryLessonList from "@components/CategoryLessonList";
-import UIText from "@components/UI/UIText";
-import UICenteredView from "@components/UI/UICenteredView";
+import Text from "@components/ui/Text";
+import CenteredView from "@components/ui/CenteredView";
 
 import { CategoryContext } from "@navigation/RootNavigation";
 import {
@@ -101,9 +101,9 @@ const CategoryOverview = (props) => {
           <View style={styles.mainContainer}>
             {vocabArray.length > 0 && (
               <View>
-                <UIText style={styles.wordsLearned}>
+                <Text style={styles.wordsLearned}>
                   Words learned: {wordsLearnedCount} / {wordCount}
-                </UIText>
+                </Text>
               </View>
             )}
             <CategoryLessonList
@@ -112,9 +112,9 @@ const CategoryOverview = (props) => {
             />
           </View>
         ) : (
-          <UICenteredView grow style={styles.loadingContainer}>
+          <CenteredView grow style={styles.loadingContainer}>
             <ActivityIndicator />
-          </UICenteredView>
+          </CenteredView>
         )}
       </ScrollView>
     </SafeAreaView>

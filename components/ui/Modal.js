@@ -1,17 +1,17 @@
 import React from "react";
 import {
   StyleSheet,
-  Modal,
+  Modal as RnModal,
   View,
   TouchableWithoutFeedback,
 } from "react-native";
 
-import UICard from "./UICard";
-import UICenteredView from "./UICenteredView";
+import Card from "./Card";
+import CenteredView from "./CenteredView";
 
-const UIModal = (props) => {
+const Modal = (props) => {
   return (
-    <Modal
+    <RnModal
       animationType="fade"
       transparent={true}
       visible={props.visible}
@@ -22,16 +22,16 @@ const UIModal = (props) => {
         <View style={styles.overlay} />
       </TouchableWithoutFeedback>
 
-      <UICenteredView grow>
-        <UICard style={[styles.card, props.style.card]}>
-          <UICenteredView>{props.children}</UICenteredView>
-        </UICard>
-      </UICenteredView>
-    </Modal>
+      <CenteredView grow>
+        <Card style={[styles.card, props.style.card]}>
+          <CenteredView>{props.children}</CenteredView>
+        </Card>
+      </CenteredView>
+    </RnModal>
   );
 };
 
-UIModal.defaultProps = {
+Modal.defaultProps = {
   style: {
     card: {},
   },
@@ -51,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UIModal;
+export default Modal;

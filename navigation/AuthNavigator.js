@@ -11,7 +11,7 @@ import AuthenticationScreen from "@screens/AuthenticationScreen";
 import MainNavigator from "@navigation/MainNavigator";
 import { navigationRef } from "@navigation/RootNavigation";
 
-import UICenteredView from "@components/UI/UICenteredView";
+import CenteredView from "@components/ui/CenteredView";
 import * as Colors from "@constants/Colors";
 import {
   fetchUserConfig,
@@ -73,9 +73,9 @@ export default () => {
           ) : (
             <Stack.Screen name="Onboarding" options={{ headerShown: false }}>
               {() => (
-                <UICenteredView grow>
+                <CenteredView grow>
                   <ActivityIndicator color={Colors.accent} />
-                </UICenteredView>
+                </CenteredView>
               )}
             </Stack.Screen>
           )
@@ -92,8 +92,8 @@ export default () => {
       </Stack.Navigator>
     </NavigationContainer>
   ) : (
-    <UICenteredView grow>
+    <CenteredView grow>
       <ActivityIndicator color={Colors.accent} />
-    </UICenteredView>
+    </CenteredView>
   );
 };

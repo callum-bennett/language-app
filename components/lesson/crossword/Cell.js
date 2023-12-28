@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 
-import UIText from "@components/UI/UIText";
+import Text from "@components/ui/Text";
 
 const Cell = (props) => {
   const {
@@ -48,10 +48,10 @@ const Cell = (props) => {
   return (
     <Touchable onPress={() => onTouch(i, j)}>
       <View style={cellStyle}>
-        <UIText style={styles.letter}>{value}</UIText>
+        <Text style={styles.letter}>{value}</Text>
         {number && (
           <View style={styles.origin}>
-            <UIText style={styles.number}>{number}</UIText>
+            <Text style={styles.number}>{number}</Text>
           </View>
         )}
       </View>

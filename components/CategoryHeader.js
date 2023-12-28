@@ -2,13 +2,13 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 import CategoryImageWithTitle from "@components/CategoryImageWithTitle";
-import UIProgressDonut from "@components/UI/UIProgressDonut";
+import ProgressDonut from "@components/ui/ProgressDonut";
 
 const CategoryHeader = (props) => {
   return (
     <View>
       <View style={styles.progressContainer}>
-        <UIProgressDonut progress={props.progress} />
+        <ProgressDonut progress={props.progress} />
       </View>
       <View style={styles.imageContainer}>
         <CategoryImageWithTitle category={props.category} />

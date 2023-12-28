@@ -8,9 +8,9 @@ import {
 } from "react-native";
 
 import * as Colors from "@constants/Colors";
-import UIText from "@components/UI/UIText";
+import Text from "@components/ui/Text";
 
-const UIButton = (props) => {
+const Button = (props) => {
   const Touchable =
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
@@ -42,13 +42,13 @@ const UIButton = (props) => {
       onPress={handleOnPress}
     >
       <View style={buttonStyle}>
-        <UIText style={textStyle}>{props.children}</UIText>
+        <Text style={textStyle}>{props.children}</Text>
       </View>
     </Touchable>
   );
 };
 
-UIButton.defaultProps = {
+Button.defaultProps = {
   variant: "medium",
   style: {
     button: {},
@@ -83,4 +83,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UIButton;
+export default Button;

@@ -3,7 +3,7 @@ import AnimatedProgressWheel from "react-native-progress-wheel";
 
 import * as Colors from "@constants/Colors";
 
-const UIProgressDonut = (props) => {
+const ProgressDonut = (props) => {
   return (
     <AnimatedProgressWheel
       size={props.size}
@@ -16,7 +16,7 @@ const UIProgressDonut = (props) => {
   );
 };
 
-UIProgressDonut.defaultProps = {
+ProgressDonut.defaultProps = {
   size: 40,
   width: 8,
   progress: 0,
@@ -25,4 +25,4 @@ UIProgressDonut.defaultProps = {
   backgroundColor: "#DDD",
 };
 
-export default UIProgressDonut;
+export default ProgressDonut;

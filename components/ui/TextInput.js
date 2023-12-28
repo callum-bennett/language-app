@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useReducer } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import { StyleSheet, TextInput as RnTextInput, View } from "react-native";
 
-import UIText from "@components/UI/UIText";
+import Text from "@components/ui/Text";
 import * as Colors from "@constants/Colors";
 
 const SET_FOCUSSED = "set_focussed";
@@ -43,7 +43,7 @@ const reducer = (state, action) => {
   }
 };
 
-const UITextInput = forwardRef((props, inputRef) => {
+const TextInput = forwardRef((props, inputRef) => {
   const [{ touched, error, value }, dispatch] = useReducer(reducer, {
     focused: false,
     touched: false,
@@ -105,9 +105,9 @@ const UITextInput = forwardRef((props, inputRef) => {
 
   return (
     <View style={styles.container}>
-      {props.label && <UIText style={styles.label}>{props.label}</UIText>}
+      {props.label && <Text style={styles.label}>{props.label}</Text>}
       <View style={styles.inputWrapper}>
-        <TextInput
+        <RnTextInput
           {...props}
           style={inputStyle}
           ref={inputRef}
@@ -120,7 +120,7 @@ const UITextInput = forwardRef((props, inputRef) => {
       </View>
       {touched && error && (
         <View>
-          <UIText style={styles.error}>{error}</UIText>
+          <Text style={styles.error}>{error}</Text>
         </View>
       )}
     </View>
@@ -162,4 +162,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UITextInput;
+export default TextInput;

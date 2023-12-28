@@ -1,14 +1,14 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, Text as RnText } from "react-native";
 
-const UIText = (props) => {
+const Text = (props) => {
   return (
-    <Text {...props} style={[styles.text, props.style]}>
+    <RnText {...props} style={[styles.text, props.style]}>
       {props.children}
-    </Text>
+    </RnText>
   );
 };
-UIText.defaultProps = {
+Text.defaultProps = {
   allowFontScaling: false,
 };
 const styles = StyleSheet.create({
@@ -17,4 +17,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default UIText;
+export default Text;

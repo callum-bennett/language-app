@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { ActivityIndicator } from "react-native-paper";
 
 import apiV1Client from "@api/apiv1client";
-import Crossword from "@components/Lesson/Crossword/Crossword";
-import UIButton from "@components/UI/UIButton";
-import UIText from "@components/UI/UIText";
+import Crossword from "@components/lesson/crossword/Crossword";
+import Button from "@components/ui/Button";
+import Text from "@components/ui/Text";
 import Component, {
   LESSON_TYPE_CROSSWORD,
   LESSON_TYPE_MULTIPLE_CHOICE,
   LESSON_TYPE_SLIDES,
-} from "@components/Lesson/Component";
+} from "@components/lesson/Component";
 
 import { advanceLesson } from "@store/actions/lessons";
 import {
@@ -86,8 +86,8 @@ const CategoryLessonScreen = (props) => {
       {lessonProgress ? (
         lessonProgress.status === 1 ? (
           <>
-            <UIText style={styles.completeText}>Lesson complete!</UIText>
-            <UIButton onPress={handleSectionComplete}>Continue</UIButton>
+            <Text style={styles.completeText}>Lesson complete!</Text>
+            <Button onPress={handleSectionComplete}>Continue</Button>
           </>
         ) : [LESSON_TYPE_SLIDES, LESSON_TYPE_MULTIPLE_CHOICE].includes(
             activeComponentKey
@@ -112,7 +112,7 @@ const CategoryLessonScreen = (props) => {
           />
         ) : (
           <View>
-            <UIText>Oops! Something went wrong</UIText>
+            <Text>Oops! Something went wrong</Text>
           </View>
         )
       ) : (

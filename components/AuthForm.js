@@ -8,8 +8,8 @@ import {
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import UIButton from "@components/UI/UIButton";
-import UITextInput from "@components/UI/UITextInput";
+import Button from "@components/ui/Button";
+import TextInput from "@components/ui/TextInput";
 
 import FormControl from "./FormControl";
 import * as Colors from "@constants/Colors";
@@ -120,7 +120,7 @@ const AuthForm = (props) => {
   return (
     <View style={styles.form}>
       <FormControl>
-        <UITextInput
+        <TextInput
           key="username"
           id="username"
           label="Username"
@@ -140,7 +140,7 @@ const AuthForm = (props) => {
         />
       </FormControl>
       <FormControl>
-        <UITextInput
+        <TextInput
           key="password"
           id="password"
           label="Password"
@@ -164,7 +164,7 @@ const AuthForm = (props) => {
       </FormControl>
       {!props.isSignIn && (
         <FormControl>
-          <UITextInput
+          <TextInput
             key="confirmPassword"
             id="confirmPassword"
             label="Confirm Password"
@@ -187,9 +187,9 @@ const AuthForm = (props) => {
       )}
       <FormControl>
         {!props.loading ? (
-          <UIButton onPress={handleSubmit}>
+          <Button onPress={handleSubmit}>
             {props.isSignIn ? "Log in" : "Create Account"}
-          </UIButton>
+          </Button>
         ) : (
           <ActivityIndicator style={{ height: 36 }} color={Colors.accent} />
         )}

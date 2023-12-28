@@ -3,8 +3,8 @@ import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
 import StepIndicator from "react-native-step-indicator";
 
-import UIButton from "@components/UI/UIButton";
-import UIText from "@components/UI/UIText";
+import Button from "@components/ui/Button";
+import Text from "@components/ui/Text";
 import * as Colors from "@constants/Colors";
 
 const LESSON_IN_PROGRESS = 0;
@@ -25,19 +25,19 @@ const CategoryLessonList = (props) => {
     if (available) {
       if (!lessonProgress) {
         content = (
-          <UIButton onPress={() => props.onPressLearn(lesson)}>
+          <Button onPress={() => props.onPressLearn(lesson)}>
             Start lesson
-          </UIButton>
+          </Button>
         );
       } else if (lessonProgress.status === LESSON_IN_PROGRESS) {
         content = (
-          <UIButton onPress={() => props.onPressLearn(lesson)}>
+          <Button onPress={() => props.onPressLearn(lesson)}>
             Continue lesson
-          </UIButton>
+          </Button>
         );
-      } else content = <UIText style={{ fontSize: 18 }}>Complete!</UIText>;
+      } else content = <Text style={{ fontSize: 18 }}>Complete!</Text>;
     } else {
-      content = <UIButton disabled>Locked</UIButton>;
+      content = <Button disabled>Locked</Button>;
     }
 
     return content;
@@ -67,7 +67,7 @@ const CategoryLessonList = (props) => {
 
           return (
             <View key={id}>
-              <UIText style={styles.sectionHeading}>{name}</UIText>
+              <Text style={styles.sectionHeading}>{name}</Text>
               {displayStep && (
                 <StepIndicator
                   stepCount={labels.length}
@@ -103,9 +103,7 @@ const CategoryLessonList = (props) => {
           );
         })
       ) : (
-        <UIText style={styles.noLessons}>
-          There are no lessons available.
-        </UIText>
+        <Text style={styles.noLessons}>There are no lessons available.</Text>
       )}
     </View>
   );
