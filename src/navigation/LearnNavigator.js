@@ -8,7 +8,7 @@ import ProgressHeader from "@components/ProgressHeader";
 
 const Stack = createStackNavigator();
 
-export default () => {
+export default function () {
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -28,11 +28,11 @@ export default () => {
         component={CategoryLessonScreen}
         options={({ route }) => ({
           title: route.params.title,
-          headerRight: () => {
-            return <ProgressHeader lessonId={route.params.lessonId} />;
-          },
+          headerRight: () => (
+            <ProgressHeader lessonId={route.params.lessonId} />
+          ),
         })}
       />
     </Stack.Navigator>
   );
-};
+}

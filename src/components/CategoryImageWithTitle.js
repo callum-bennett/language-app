@@ -3,7 +3,7 @@ import { ImageBackground, StyleSheet, View } from "react-native";
 
 import Text from "@components/ui/Text";
 
-const CategoryImageWithTitle = (props) => {
+function CategoryImageWithTitle(props) {
   return (
     <View style={{ height: "100%" }}>
       {props.category && (
@@ -20,7 +20,7 @@ const CategoryImageWithTitle = (props) => {
       )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   titleContainer: {

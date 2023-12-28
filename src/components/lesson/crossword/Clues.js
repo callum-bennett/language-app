@@ -8,7 +8,7 @@ import { ANSWER_CORRECT } from "@store/reducers/crosswordReducer";
 import { arrayToObjectByKey } from "@utils";
 import { DIR_HORIZONTAL } from "@utils/crosswordGenerator";
 
-const Clues = (props) => {
+function Clues(props) {
   const dispatch = useDispatch();
   const [answers, activeAnswerText] = useSelector(({ crossword }) => [
     crossword.answers,
@@ -20,24 +20,24 @@ const Clues = (props) => {
   const sortedAnswers = Object.values(answers).sort((a, b) => {
     if (a.originY < b.originY) {
       return -1;
-    } else if (a.originY > b.originY) {
-      return 1;
-    } else {
-      return a.originX > b.originX;
     }
+    if (a.originY > b.originY) {
+      return 1;
+    }
+    return a.originX > b.originX;
   });
 
   const handleTouch = (answer) => {
     dispatch(setActiveAnswer(answer.text));
   };
 
-  let instructions = {
+  const instructions = {
     across: [],
     down: [],
   };
 
   let i = 1;
-  for (let answer of sortedAnswers) {
+  for (const answer of sortedAnswers) {
     let textStyle = styles.clue;
     if (answer.status === ANSWER_CORRECT) {
       textStyle = { ...textStyle, ...styles.guessed };
@@ -51,7 +51,7 @@ const Clues = (props) => {
         onPress={() => handleTouch(answer)}
       >
         <Text style={textStyle}>
-          {answer.number}. {wordsByText[answer.text].translation}
+          {answer.number}.{wordsByText[answer.text].translation}
         </Text>
       </TouchableOpacity>
     );
@@ -81,7 +81,7 @@ const Clues = (props) => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   instructions: {

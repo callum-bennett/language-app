@@ -9,13 +9,13 @@ import {
 import Card from "./Card";
 import CenteredView from "./CenteredView";
 
-const Modal = (props) => {
+function Modal(props) {
   return (
     <RnModal
       animationType="fade"
-      transparent={true}
+      transparent
       visible={props.visible}
-      closeOnClick={true}
+      closeOnClick
       onRequestClose={props.onTouchAway}
     >
       <TouchableWithoutFeedback onPress={props.onTouchAway}>
@@ -29,7 +29,7 @@ const Modal = (props) => {
       </CenteredView>
     </RnModal>
   );
-};
+}
 
 Modal.defaultProps = {
   style: {

@@ -6,12 +6,11 @@ import { Provider } from "react-redux";
 import AppNavigator from "@navigation/AuthNavigator";
 import store from "@store/store";
 
-const fetchFonts = () => {
-  return Font.loadAsync({
+const fetchFonts = () =>
+  Font.loadAsync({
     roboto: require("../assets/fonts/Roboto-Regular.ttf"),
     "roboto-bold": require("../assets/fonts/Roboto-Bold.ttf"),
   });
-};
 
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);

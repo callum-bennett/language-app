@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { FEEDBACK_NEGATIVE, FEEDBACK_POSITIVE, playSound } from "@utils/sounds";
 import MultipleChoiceOption from "./MultipleChoiceOption";
 
-import { FEEDBACK_NEGATIVE, FEEDBACK_POSITIVE, playSound } from "@utils/sounds";
-
-const MultipleChoice = (props) => {
+function MultipleChoice(props) {
   const [canProgress, setCanProgress] = useState(false);
   const [answerSubmitted, setAnswerSubmitted] = useState(false);
   const [data, setData] = useState([]);
@@ -64,7 +63,7 @@ const MultipleChoice = (props) => {
       ))}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   optionContainer: {

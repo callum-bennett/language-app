@@ -12,7 +12,7 @@ import Text from "@components/ui/Text";
 
 import * as Colors from "@constants/Colors";
 
-const MultipleChoiceOption = (props) => {
+function MultipleChoiceOption(props) {
   const [selected, setSelected] = useState(false);
   const { image, isCorrect, locked, onChoose, value } = props;
   const handlePress = () => {
@@ -22,7 +22,7 @@ const MultipleChoiceOption = (props) => {
     }
   };
 
-  let containerStyle = [styles.container];
+  const containerStyle = [styles.container];
   if (selected) {
     containerStyle.push({
       backgroundColor: isCorrect ? Colors.correctBg : Colors.wrongBg,
@@ -43,7 +43,7 @@ const MultipleChoiceOption = (props) => {
       </TouchableComponent>
     </Card>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

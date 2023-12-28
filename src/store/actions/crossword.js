@@ -7,48 +7,36 @@ import {
   UPDATE_ANSWER,
 } from "./types";
 
-export const startCrossword = (config) => {
-  return {
-    type: START_CROSSWORD,
-    payload: config,
-  };
-};
+export const startCrossword = (config) => ({
+  type: START_CROSSWORD,
+  payload: config,
+});
 
-export const setActiveAnswer = (answerText, col, row) => {
-  return {
-    type: SET_ACTIVE_ANSWER,
-    payload: {
-      answerText,
-      col,
-      row,
-    },
-  };
-};
+export const setActiveAnswer = (answerText, col, row) => ({
+  type: SET_ACTIVE_ANSWER,
+  payload: {
+    answerText,
+    col,
+    row,
+  },
+});
 
-export const clearActiveAnswer = () => {
-  return {
-    type: CLEAR_ACTIVE_ANSWER,
-    payload: null,
-  };
-};
+export const clearActiveAnswer = () => ({
+  type: CLEAR_ACTIVE_ANSWER,
+  payload: null,
+});
 
-export const updateAnswer = (text) => {
-  return {
-    type: UPDATE_ANSWER,
-    payload: text,
-  };
-};
+export const updateAnswer = (text) => ({
+  type: UPDATE_ANSWER,
+  payload: text,
+});
 
-export const markAnswerCorrect = (answer) => {
-  return {
-    type: MARK_ANSWER_CORRECT,
-    payload: answer,
-  };
-};
+export const markAnswerCorrect = (answer) => ({
+  type: MARK_ANSWER_CORRECT,
+  payload: answer,
+});
 
-export const insertAnswer = (answer) => {
-  return {
-    type: INSERT_ANSWER,
-    payload: answer,
-  };
-};
+export const insertAnswer = (answer) => ({
+  type: INSERT_ANSWER,
+  payload: answer,
+});

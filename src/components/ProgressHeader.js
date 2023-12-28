@@ -6,7 +6,7 @@ import StepIndicator from "react-native-step-indicator";
 import * as Colors from "@constants/Colors";
 import { selectLessonById } from "@store/selectors";
 
-const ProgressHeader = (props) => {
+function ProgressHeader(props) {
   const { lessonId } = props;
   const [lesson, lessonProgress, components] = useSelector((state) => [
     selectLessonById(state, lessonId),
@@ -55,7 +55,7 @@ const ProgressHeader = (props) => {
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

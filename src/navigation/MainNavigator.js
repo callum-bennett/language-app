@@ -7,8 +7,8 @@ import { connect } from "react-redux";
 import * as Colors from "@constants/Colors";
 import BadgesScreen from "@screens/BadgesScreen";
 import LeaderboardScreen from "@screens/LeaderboardScreen";
-import DrawerNavigator from "./DrawerNavigator";
 import { selectNotificationsByType } from "@store/selectors/app";
+import DrawerNavigator from "./DrawerNavigator";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -38,27 +38,31 @@ const tabOptions = {
   },
 };
 
-const LeaderboardNavigator = () => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="LeaderboardScreen"
-      component={LeaderboardScreen}
-      options={{ title: "Leaderboard" }}
-    />
-  </Stack.Navigator>
-);
+function LeaderboardNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="LeaderboardScreen"
+        component={LeaderboardScreen}
+        options={{ title: "Leaderboard" }}
+      />
+    </Stack.Navigator>
+  );
+}
 
-const BadgesNavigator = () => (
-  <Stack.Navigator>
-    <Stack.Screen
-      name="BadgeScreen"
-      component={BadgesScreen}
-      options={{ title: "My Badges" }}
-    />
-  </Stack.Navigator>
-);
+function BadgesNavigator() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="BadgeScreen"
+        component={BadgesScreen}
+        options={{ title: "My Badges" }}
+      />
+    </Stack.Navigator>
+  );
+}
 
-const MainNavigator = (props) => {
+function MainNavigator(props) {
   let badgeNotificationCount;
   if (props.badgeNotifications.length > 0) {
     badgeNotificationCount = props.badgeNotifications.length;
@@ -83,10 +87,8 @@ const MainNavigator = (props) => {
       />
     </Tab.Navigator>
   );
-};
+}
 
-export default connect((state) => {
-  return {
-    badgeNotifications: selectNotificationsByType(state, "badge"),
-  };
-})(MainNavigator);
+export default connect((state) => ({
+  badgeNotifications: selectNotificationsByType(state, "badge"),
+}))(MainNavigator);

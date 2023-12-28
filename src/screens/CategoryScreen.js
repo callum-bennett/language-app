@@ -20,7 +20,7 @@ const renderTabBar = (props) => (
   />
 );
 
-const CategoryScreen = (props) => {
+function CategoryScreen(props) {
   const dispatch = useDispatch();
 
   const [index, setIndex] = React.useState(0);
@@ -70,7 +70,7 @@ const CategoryScreen = (props) => {
       />
     </CategoryContext.Provider>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {},

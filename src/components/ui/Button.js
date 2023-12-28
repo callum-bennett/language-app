@@ -10,7 +10,7 @@ import {
 import * as Colors from "@constants/Colors";
 import Text from "@components/ui/Text";
 
-const Button = (props) => {
+function Button(props) {
   const Touchable =
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
@@ -22,8 +22,8 @@ const Button = (props) => {
     }
   };
 
-  let buttonStyle = [styles.button];
-  let textStyle = [styles.text];
+  const buttonStyle = [styles.button];
+  const textStyle = [styles.text];
 
   if (props.variant === "small") {
     buttonStyle.push(styles.buttonSmall);
@@ -38,7 +38,12 @@ const Button = (props) => {
 
   return (
     <Touchable
-      hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
+      hitSlop={{
+        left: 20,
+        right: 20,
+        top: 20,
+        bottom: 20,
+      }}
       onPress={handleOnPress}
     >
       <View style={buttonStyle}>
@@ -46,7 +51,7 @@ const Button = (props) => {
       </View>
     </Touchable>
   );
-};
+}
 
 Button.defaultProps = {
   variant: "medium",

@@ -10,7 +10,7 @@ import { CategoryContext } from "@navigation/RootNavigation";
 import { fetchUserVocabulary } from "@store/actions/words";
 import { selectUserVocabularyByCategoryId } from "@store/selectors/userVocabulary";
 
-const CategoryWordsScreen = () => {
+function CategoryWordsScreen() {
   const dispatch = useDispatch();
   const [dataLoaded, setDataLoaded] = useState(false);
 
@@ -42,7 +42,7 @@ const CategoryWordsScreen = () => {
       )}
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   screen: {

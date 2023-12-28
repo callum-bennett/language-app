@@ -6,12 +6,10 @@ import {
   SET_TOKEN_CHECK,
 } from "./types";
 
-export const setNotifications = (notifications) => {
-  return {
-    payload: notifications,
-    type: SET_NOTIFICATIONS,
-  };
-};
+export const setNotifications = (notifications) => ({
+  payload: notifications,
+  type: SET_NOTIFICATIONS,
+});
 
 export const clearNotifications = (type, apiV1Client) => async (dispatch) => {
   const res = await apiV1Client.post("/user/clear_notifications", { type });
@@ -45,8 +43,6 @@ export const fetchUserConfig = (apiV1Client) => async (dispatch) => {
   }
 };
 
-export const setTokenCheck = () => {
-  return {
-    type: SET_TOKEN_CHECK,
-  };
-};
+export const setTokenCheck = () => ({
+  type: SET_TOKEN_CHECK,
+});

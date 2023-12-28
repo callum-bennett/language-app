@@ -9,7 +9,7 @@ import apiV1Client from "@api/apiv1client";
 const imageHeight = Dimensions.get("window").height * 0.6;
 const imageWidth = imageHeight * 0.54;
 
-const AppIntroScreen = (props) => {
+function AppIntroScreen(props) {
   const dispatch = useDispatch();
 
   const onComplete = () => {
@@ -71,7 +71,7 @@ const AppIntroScreen = (props) => {
       onSkip={onComplete}
     />
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

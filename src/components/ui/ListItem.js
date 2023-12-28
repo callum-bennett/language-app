@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-const ListItem = (props) => {
+function ListItem(props) {
   return (
     <View style={styles.container}>
       <View style={styles.content}>{props.children}</View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

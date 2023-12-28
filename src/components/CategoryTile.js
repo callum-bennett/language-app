@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity } from "react-native";
 
 import CategoryImageWithTitle from "./CategoryImageWithTitle";
 
-const CategoryTile = (props) => {
+function CategoryTile(props) {
   return (
     <View style={styles.tile}>
       <TouchableOpacity
@@ -14,7 +14,7 @@ const CategoryTile = (props) => {
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   tile: {

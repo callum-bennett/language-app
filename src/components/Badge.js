@@ -6,11 +6,11 @@ import CenteredView from "@components/ui/CenteredView";
 
 import * as Colors from "@constants/Colors";
 
-const Badge = (props) => {
+function Badge(props) {
   const { badge, userBadge } = props;
 
   let icon = badge.iconHidden;
-  let containerStyle = [styles.iconContainer];
+  const containerStyle = [styles.iconContainer];
   if (userBadge) {
     icon = badge.icon;
     containerStyle.push(styles.iconObtainedContainer);
@@ -25,7 +25,7 @@ const Badge = (props) => {
       </CenteredView>
     </Pressable>
   );
-};
+}
 
 const styles = StyleSheet.create({
   name: {

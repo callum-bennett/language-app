@@ -1,3 +1,5 @@
+import { combineReducers } from "redux";
+import { SIGN_USER_OUT } from "@store/actions/types";
 import appReducer from "./appReducer";
 import authenticationReducer from "./authenticationReducer";
 import badgeReducer from "./badgeReducer";
@@ -6,8 +8,6 @@ import crosswordReducer from "./crosswordReducer";
 import lessonReducer from "./lessonReducer";
 import userVocabularyReducer from "./userVocabularyReducer";
 import wordReducer from "./wordReducer";
-import { combineReducers } from "redux";
-import { SIGN_USER_OUT } from "@store/actions/types";
 
 const combinedReducers = combineReducers({
   authentication: authenticationReducer,

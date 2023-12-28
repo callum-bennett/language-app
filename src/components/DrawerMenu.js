@@ -9,7 +9,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { signUserOut } from "@store/actions/authentication";
 
-const DrawerMenu = (props) => {
+function DrawerMenu(props) {
   const dispatch = useDispatch();
   return (
     <DrawerContentScrollView {...props} style={{ position: "relative" }}>
@@ -23,6 +23,6 @@ const DrawerMenu = (props) => {
       />
     </DrawerContentScrollView>
   );
-};
+}
 
 export default DrawerMenu;

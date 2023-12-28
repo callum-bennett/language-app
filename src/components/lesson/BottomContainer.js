@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import * as Colors from "@constants/Colors";
 import BottomContainerItem from "./BottomContainerItem";
 
-const BottomContainer = (props) => {
+function BottomContainer(props) {
   let content;
   if (props.items) {
     content = props.items.map((item, i) => (
@@ -15,7 +15,7 @@ const BottomContainer = (props) => {
   }
 
   return <View style={styles.container}>{content}</View>;
-};
+}
 
 const styles = StyleSheet.create({
   container: {

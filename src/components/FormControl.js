@@ -1,14 +1,14 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
-const FormControl = (props) => {
-  let style = [styles.container];
+function FormControl(props) {
+  const style = [styles.container];
   if (props.noMargin) {
     style.push(styles.noMargin);
   }
 
   return <View style={style}>{props.children}</View>;
-};
+}
 
 const styles = StyleSheet.create({
   container: {

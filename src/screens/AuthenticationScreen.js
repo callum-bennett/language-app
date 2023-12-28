@@ -60,7 +60,7 @@ const reducer = (state, action) => {
   }
 };
 
-const AuthenticationScreen = () => {
+function AuthenticationScreen() {
   const storeDispatch = useDispatch();
 
   const [{ error, loading, mode }, dispatch] = useReducer(
@@ -130,7 +130,12 @@ const AuthenticationScreen = () => {
                 : "Don't have an account already? "}
             </Text>
             <TouchableWithoutFeedback
-              hitSlop={{ left: 20, right: 20, top: 20, bottom: 20 }}
+              hitSlop={{
+                left: 20,
+                right: 20,
+                top: 20,
+                bottom: 20,
+              }}
               onPress={() => dispatch({ type: SWITCH_MODE })}
             >
               <View>
@@ -145,7 +150,7 @@ const AuthenticationScreen = () => {
       </ScrollView>
     </TouchableWithoutFeedback>
   );
-};
+}
 
 const styles = StyleSheet.create({
   screen: {

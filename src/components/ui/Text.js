@@ -1,13 +1,13 @@
 import React from "react";
 import { StyleSheet, Text as RnText } from "react-native";
 
-const Text = (props) => {
+function Text(props) {
   return (
     <RnText {...props} style={[styles.text, props.style]}>
       {props.children}
     </RnText>
   );
-};
+}
 Text.defaultProps = {
   allowFontScaling: false,
 };

@@ -27,13 +27,12 @@ import {
   fetchWords,
 } from "@store/actions";
 
-const wait = (timeout) => {
-  return new Promise((resolve) => {
+const wait = (timeout) =>
+  new Promise((resolve) => {
     setTimeout(resolve, timeout);
   });
-};
 
-const CategoryOverview = (props) => {
+function CategoryOverview(props) {
   const dispatch = useDispatch();
   const isFocused = useIsFocused();
 
@@ -72,9 +71,8 @@ const CategoryOverview = (props) => {
       return () => {
         setLoaded(false);
       };
-    } else {
-      setLoaded(false);
     }
+    setLoaded(false);
   }, [isFocused]);
 
   useEffect(() => {
@@ -119,7 +117,7 @@ const CategoryOverview = (props) => {
       </ScrollView>
     </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   screen: {

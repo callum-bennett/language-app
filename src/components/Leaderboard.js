@@ -8,13 +8,12 @@ import ListItem from "@components/ui/ListItem";
 import Text from "@components/ui/Text";
 import CenteredView from "@components/ui/CenteredView";
 
-const wait = (timeout) => {
-  return new Promise((resolve) => {
+const wait = (timeout) =>
+  new Promise((resolve) => {
     setTimeout(resolve, timeout);
   });
-};
 
-const Leaderboard = (props) => {
+function Leaderboard(props) {
   const [loaded, setLoaded] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState([]);
@@ -96,7 +95,7 @@ const Leaderboard = (props) => {
       </CenteredView>
     </ScrollView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   scrollView: {

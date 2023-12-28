@@ -74,7 +74,7 @@ export default (state = initialState, action) => {
 
       const progressByLessonId = arrayToObjectByKey(lessonProgress, "lesson");
 
-      let userProgress = {};
+      const userProgress = {};
       if (state.allIds.length > 0) {
         state.allIds.forEach((lessonId) => {
           userProgress[lessonId] = progressByLessonId[lessonId];

@@ -4,14 +4,14 @@ export const DIR_VERTICAL = "v";
 export const drawCrossword = (crosswordConfig) => {
   const { width, height, answers } = crosswordConfig;
   const grid = generateGrid(width, height);
-  for (let answer of answers) {
+  for (const answer of answers) {
     addAnswer(grid, answer);
   }
   return grid;
 };
 
 const generateGrid = (width, height) => {
-  let grid = [];
+  const grid = [];
   let i = 0;
   while (i < height) {
     let j = 0;
@@ -31,7 +31,7 @@ const addAnswer = (grid, answer) => {
   let y = originY - 1;
   let i = 0;
 
-  for (let char of answer.text) {
+  for (const char of answer.text) {
     if (grid[y][x] === null) {
       grid[y][x] = {
         number: i === 0 ? number : null,

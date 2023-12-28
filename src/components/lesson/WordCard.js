@@ -15,7 +15,7 @@ import Text from "@components/ui/Text";
 import * as Colors from "@constants/Colors";
 import { playSound } from "@utils/sounds";
 
-const WordCard = (props) => {
+function WordCard(props) {
   const AnimationRef = useRef(null);
   const [listened, setListened] = useState(false);
 
@@ -46,7 +46,12 @@ const WordCard = (props) => {
       <Text style={styles.word}>{word.name}</Text>
       <Animatable.View ref={AnimationRef} direction="alternate">
         <TouchableWithoutFeedback
-          hitSlop={{ left: 30, right: 30, top: 30, bottom: 30 }}
+          hitSlop={{
+            left: 30,
+            right: 30,
+            top: 30,
+            bottom: 30,
+          }}
           onPress={handleAudioPress}
         >
           <View>
@@ -56,7 +61,7 @@ const WordCard = (props) => {
       </Animatable.View>
     </GestureRecognizer>
   );
-};
+}
 
 const styles = StyleSheet.create({
   image: {

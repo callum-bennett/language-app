@@ -50,7 +50,8 @@ apiV1Client.interceptors.response.use(
       if (status === 401) {
         AsyncStorage.removeItem("authToken");
         return store.dispatch(signUserOut());
-      } else if (status === 500 && redirectRoute) {
+      }
+      if (status === 500 && redirectRoute) {
         return navigate(redirectRoute, {
           error: "Oops! Something went wrong",
         });

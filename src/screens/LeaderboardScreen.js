@@ -7,9 +7,15 @@ import * as Colors from "@constants/Colors";
 
 const initialLayout = { width: Dimensions.get("window").width };
 
-const DailyRoute = () => <Leaderboard type="daily" />;
-const WeeklyRoute = () => <Leaderboard type="weekly" />;
-const MonthlyRoute = () => <Leaderboard type="monthly" />;
+function DailyRoute() {
+  return <Leaderboard type="daily" />;
+}
+function WeeklyRoute() {
+  return <Leaderboard type="weekly" />;
+}
+function MonthlyRoute() {
+  return <Leaderboard type="monthly" />;
+}
 
 const renderTabBar = (props) => (
   <TabBar
@@ -19,7 +25,7 @@ const renderTabBar = (props) => (
   />
 );
 
-const LeaderboardScreen = () => {
+function LeaderboardScreen() {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "daily", title: "Daily" },
@@ -41,6 +47,6 @@ const LeaderboardScreen = () => {
       initialLayout={initialLayout}
     />
   );
-};
+}
 
 export default LeaderboardScreen;

@@ -16,7 +16,7 @@ export const fetchBadges = () => async (dispatch) => {
 
 export const fetchUserBadges = () => async (dispatch) => {
   try {
-    const res = await apiV1Client.get(`/user_badge`);
+    const res = await apiV1Client.get("/user_badge");
 
     if (res.data) {
       dispatch({

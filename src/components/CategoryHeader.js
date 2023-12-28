@@ -4,7 +4,7 @@ import { StyleSheet, View } from "react-native";
 import CategoryImageWithTitle from "@components/CategoryImageWithTitle";
 import ProgressDonut from "@components/ui/ProgressDonut";
 
-const CategoryHeader = (props) => {
+function CategoryHeader(props) {
   return (
     <View>
       <View style={styles.progressContainer}>
@@ -15,7 +15,7 @@ const CategoryHeader = (props) => {
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   imageContainer: {

@@ -22,7 +22,7 @@ import apiV1Client from "@api/apiv1client";
 
 const Stack = createStackNavigator();
 
-export default () => {
+export default function () {
   const dispatchStore = useDispatch();
   const [authenticated, onboarded, configLoaded, tokenCheck] = useSelector(
     (state) => [
@@ -96,4 +96,4 @@ export default () => {
       <ActivityIndicator color={Colors.accent} />
     </CenteredView>
   );
-};
+}

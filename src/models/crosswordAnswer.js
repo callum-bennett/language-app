@@ -8,11 +8,11 @@ class CrosswordAnswer {
     this.direction = direction;
     this.number = number;
 
-    let x = originX,
-      y = originY;
-    let cells = [];
+    let x = originX;
+    let y = originY;
+    const cells = [];
 
-    for (let char of text) {
+    for (const char of text) {
       if (direction === "v") {
         cells.push(new CrosswordCell(x, y++));
       } else {

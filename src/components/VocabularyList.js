@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import Text from "@components/ui/Text";
 import { playSound } from "@utils/sounds";
 
-const VocabularyList = (props) => {
+function VocabularyList(props) {
   const words = useSelector((state) => state.words.byId);
 
   const handleOnPress = (word) => {
@@ -18,22 +18,28 @@ const VocabularyList = (props) => {
 
     let successRate = "-";
     if (totalGuesses > 0) {
-      successRate = Math.round((item.correct / totalGuesses) * 100) + "%";
+      successRate = `${Math.round((item.correct / totalGuesses) * 100)}%`;
     }
 
     return (
       <Pressable onPress={() => handleOnPress(word)}>
         <View style={styles.listItem}>
           <View>
-            <Text
-              style={styles.word}
-            >{`${word.name[0].toUpperCase()}${word.name.slice(1)}`}</Text>
+            <Text style={styles.word}>
+              {`${word.name[0].toUpperCase()}${word.name.slice(1)}`}
+            </Text>
             <Text style={styles.translation}>{word.translation}</Text>
           </View>
 
           <View style={styles.contentRight}>
-            <Text style={styles.textSmall}>Attempts: {totalGuesses}</Text>
-            <Text style={styles.textSmall}>Success: {successRate}</Text>
+            <Text style={styles.textSmall}>
+              Attempts:
+              {totalGuesses}
+            </Text>
+            <Text style={styles.textSmall}>
+              Success:
+              {successRate}
+            </Text>
           </View>
         </View>
       </Pressable>
@@ -50,7 +56,7 @@ const VocabularyList = (props) => {
       />
     </View>
   );
-};
+}
 
 VocabularyList.defaultProps = {
   vocabulary: [],

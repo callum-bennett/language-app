@@ -6,10 +6,10 @@ import LearnNavigator from "./LearnNavigator";
 
 const Drawer = createDrawerNavigator();
 
-export default () => {
+export default function () {
   return (
     <Drawer.Navigator drawerContent={(props) => <DrawerMenu {...props} />}>
       <Drawer.Screen name="Home" component={LearnNavigator} />
     </Drawer.Navigator>
   );
-};
+}

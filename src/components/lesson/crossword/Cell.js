@@ -9,7 +9,7 @@ import {
 
 import Text from "@components/ui/Text";
 
-const Cell = (props) => {
+function Cell(props) {
   const {
     active,
     cellDimension,
@@ -28,7 +28,7 @@ const Cell = (props) => {
       ? TouchableNativeFeedback
       : TouchableOpacity;
 
-  let cellStyle = [styles.cell];
+  const cellStyle = [styles.cell];
   if (empty) {
     cellStyle.push(styles.empty);
   } else {
@@ -57,7 +57,7 @@ const Cell = (props) => {
       </View>
     </Touchable>
   );
-};
+}
 const styles = StyleSheet.create({
   cell: {
     borderStyle: "solid",
