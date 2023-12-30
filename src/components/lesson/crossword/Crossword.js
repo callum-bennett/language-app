@@ -69,11 +69,6 @@ const Crossword = (props) => {
   useEffect(() => {
     Keyboard.addListener("keyboardDidShow", scrollToAnswer);
     Keyboard.addListener("keyboardDidHide", handleTouchAway);
-
-    return () => {
-      Keyboard.removeListener("keyboardDidShow", scrollToAnswer);
-      Keyboard.removeListener("keyboardDidHide", handleTouchAway);
-    };
   });
 
   const scrollToAnswer = () => {
